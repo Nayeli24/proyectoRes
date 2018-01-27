@@ -4,10 +4,8 @@
 <div class="fieldcontain ${hasErrors(bean: incidenteInstance, field: 'folio', 'error')} required">
     <label for="folio">
         <g:message code="incidente.folio.label" default="Folio" />
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="folio" required="" value="${incidenteInstance?.folio}"/>
-
+        </label>
+<g:textField name="folio" required="" value="${incidenteInstance?.folio}" readonly="true"/>
 </div>
 <div class="fieldcontain ${hasErrors(bean: incidenteInstance, field: 'descripcion', 'error')} required">
     <label for="descripcion">

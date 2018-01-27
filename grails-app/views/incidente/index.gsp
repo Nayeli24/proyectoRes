@@ -11,8 +11,14 @@
 		<a href="#list-incidente" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                             <sec:ifAnyGranted roles='ROLE_ADMIN'>
+                                    <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+                                    <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                                    <li><g:link class="asignar" action="asignar"><g:message code="Asignar" args="" /></g:link></li>
+                                </sec:ifAnyGranted>          
+                                <sec:ifAnyGranted roles='ROLE_USER'>
+                                    <li><g:link class="asignados" action="listarAsignados"><g:message code="Asigandos" args="" /></g:link></li>
+                                </sec:ifAnyGranted>  
 			</ul>
 		</div>
 		<div id="list-incidente" class="content scaffold-list" role="main">
@@ -48,7 +54,7 @@
 					
 						<td>${fieldValue(bean: incidenteInstance, field: "folio")}</td>
 					
-						<td>${fieldValue(bean: incidenteInstance, field: "registradoPor")}</td>
+						<td>${incidenteInstance?.registradoPor?.username}</td>
 					
 						<td>${fieldValue(bean: incidenteInstance, field: "asignadoA")}</td>
 					

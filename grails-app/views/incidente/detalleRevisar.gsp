@@ -1,30 +1,30 @@
 
-<%@ page import="pruebaSeguridad.Ticket" %>
+<%@ page import="pruebaSeguridad.Incidente" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'ticket.label', default: 'Ticket')}" />
-		<title><g:message code="Detalle ticket" args="[entityName]" /></title>
+		<g:set var="entityName" value="${message(code: 'incidente.label', default: 'Incidente')}" />
+		<title><g:message code="Detalle incidente" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#show-ticket" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+		<a href="#show-incidente" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
 				<li><g:link class="asignados" action="listarAsignados"><g:message code="Asigandos" args="" /></g:link></li>
 			</ul>
 		</div>
-		<div id="show-ticket" class="content scaffold-show" role="main">
-			<h1><g:message code="Detalle Ticket Asignado" args="[entityName]" /></h1>
+		<div id="show-incidente" class="content scaffold-show" role="main">
+			<h1><g:message code="Detalle Incidente Asignado" args="[entityName]" /></h1>
 			<g:if test="${detalle}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
                         
-			<ol class="property-list ticket">
+			<ol class="property-list incidente">
                             
                                 <g:if test="${detalle.folio}">
 				<li class="fieldcontain">
-					<span id="descripcion-label" class="property-label"><g:message code="folioTicket.folio" default="Folio " /></span>
+					<span id="descripcion-label" class="property-label"><g:message code="folioIncidente.folio" default="Folio " /></span>
 					
 						<span class="property-value" aria-labelledby="folio-label">${detalle.folio}</span>
 					
@@ -33,7 +33,7 @@
                                 
                                 <g:if test="${detalle.descripcion}">
 				<li class="fieldcontain">
-					<span id="descripcion-label" class="property-label"><g:message code="folioTicket.descripcion" default="Descripción" /></span>
+					<span id="descripcion-label" class="property-label"><g:message code="folioIncidente.descripcion" default="Descripción" /></span>
 					
 						<span class="property-value" aria-labelledby="folio-label">${detalle.descripcion}</span>
 					
@@ -51,7 +51,7 @@
 			
 				<g:if test="${detalle.registradoPor}">
 				<li class="fieldcontain">
-					<span id="descripcion-label" class="property-label"><g:message code="folioTicket.registradoPor" default="Usuario Que Registró" /></span>
+					<span id="descripcion-label" class="property-label"><g:message code="folioIncidente.registradoPor" default="Usuario Que Registró" /></span>
 					
 						<span class="property-value" aria-labelledby="folio-label">${detalle.registradoPor.username}</span>
 					
@@ -74,11 +74,11 @@
 			<g:form >
 				<fieldset class="buttons">
                                     <g:if  test="${detalle.estatus?.id == 2}">
-                                        <g:link class="edit" action="revisar" resource="${ticketInstance}" id="${detalle.id}"><g:message code="default.button.revisar.label" default="Revisar" /></g:link>
+                                        <g:link class="edit" action="revisar" resource="${incidenteInstance}" id="${detalle.id}"><g:message code="default.button.revisar.label" default="Revisar" /></g:link>
                                    
                                     </g:if>    
                                     <g:elseif test="${detalle.estatus?.id == 3}">
-                                            <g:form controller="ticket" action="atender">
+                                            <g:form controller="incidente" action="atender">
                                                 <g:hiddenField name="id"  value="${detalle.id}"/>
                                                 <g:textArea cols="30" rows="4" name="respuesta"  style="width:400px; height: 200px;"/>
                                                 <g:actionSubmit  class="edit" value="Atender"/>

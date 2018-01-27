@@ -54,7 +54,7 @@
 				<li class="fieldcontain">
 					<span id="registradoPor-label" class="property-label"><g:message code="incidente.registradoPor.label" default="Registrado Por" /></span>
 					
-						<span class="property-value" aria-labelledby="registradoPor-label"><g:link controller="usuario" action="show" id="${incidenteInstance?.registradoPor?.id}">${incidenteInstance?.registradoPor?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="registradoPor-label"><g:link controller="usuario" action="show" id="${incidenteInstance?.registradoPor?.id}">${incidenteInstance?.registradoPor?.username}</g:link></span>
 					
 				</li>
 				</g:if>
@@ -81,7 +81,7 @@
 				<li class="fieldcontain">
 					<span id="fechaRegistro-label" class="property-label"><g:message code="incidente.fechaRegistro.label" default="Fecha Registro" /></span>
 					
-						<span class="property-value" aria-labelledby="fechaRegistro-label"><g:formatDate date="${incidenteInstance?.fechaRegistro}" /></span>
+						<span class="property-value" aria-labelledby="fechaRegistro-label"><g:formatDate format="dd / MM / yyyy" date="${incidenteInstance?.fechaRegistro}" /></span>
 					
 				</li>
 				</g:if>

@@ -1,14 +1,14 @@
 
-<%@ page import="pruebaSeguridad.Ticket" %>
+<%@ page import="pruebaSeguridad.Incidente" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'ticket.label', default: 'Ticket')}" />
+		<g:set var="entityName" value="${message(code: 'incidente.label', default: 'Incidente')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#list-ticket" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+		<a href="#list-incidente" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
@@ -16,10 +16,10 @@
 			</ul>
 		</div>
             <sec:ifAnyGranted roles='ROLE_ADMIN'>
-		<div id="list-ticket" class="content scaffold-list" role="main">
-			<h1><g:message code="Asignar Tickets"  /></h1>
+		<div id="list-incidente" class="content scaffold-list" role="main">
+			<h1><g:message code="Asignar Incidentes"  /></h1>
                 
-			<g:form controller="ticket" action="asignarTicket" >
+			<g:form controller="incidente" action="asignarIncidente" >
                             <g:if test="${detalle}">
                                 <div class="message" role="status">${flash.message}</div>
                             </g:if>
@@ -27,18 +27,19 @@
 				<fieldset class="form">
                                     <div class="fieldcontain ">
                                         <label for="asignadoA">
-                                            <g:message code="asignadoA" default="AsignadoA" />
+                                            <g:message code="asignadoA" default="Asignado A" />
 		
                                         </label>
                                             <g:select id="asignadoA" name="asignadoA" from="${detalle.usuarios}"   optionKey="id"  value="${detalle.usuarios?.id}" noSelection="['':'Selecciona un Usuario']" multiple="true" />
                                     </div>
 
                                     <div class="fieldcontain ">
-                                        <label for="ticket">
-                                            <g:message code="ticket" default="Folio Ticket" />
+                                        <label for="incidente">
+                                            <g:message code="incidente" default="Folio Incidente" />
                                 	</label>
-                                            <g:select id="ticket" name="ticket" from="${detalle.tickets}" optionKey="id"  value="${detalle.tickets?.id}" noSelection="['':'Selecciona un Ticket']" />
-
+                                            <g:select id="incidente" name="incidente" from="${detalle.incidentes}" optionKey="id"  value="${detalle.incidentes?.id}" noSelection="['':'Selecciona un Incidente']" />
+                                         
+                                              
                                     </div>
 					
 				</fieldset>

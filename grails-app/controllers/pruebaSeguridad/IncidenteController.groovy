@@ -14,6 +14,8 @@ class IncidenteController {
     
    def springSecurityService
    def incidenteService
+   static final int i=0
+   def flujoController
    
     def index(Integer max) {
         
@@ -26,8 +28,18 @@ class IncidenteController {
     }
 
     def create() {
+        i
+       
+               def folio_cont= "F000"+i 
+             
+         params.folio=folio_cont
+        i++
         
-
+          
+       
+            
+        println params.folio
+        
         respond new Incidente(params)
     }
 
@@ -85,11 +97,18 @@ class IncidenteController {
 
     @Transactional
     def delete(Incidente incidenteInstance) {
-
+        
+          println "paramssssssssss 90::::::::::$params"
+      //Recuperar id del flujo con la relacion id_incidente
+        def res= Flujo.findByIncidente(Incidente.get(params.id))
+          
+          println "flujo:::::::::::::::::"+res
         if (incidenteInstance == null) {
             notFound()
             return
         }
+        
+        res.delete flush:true
 
         incidenteInstance.delete flush:true
 
