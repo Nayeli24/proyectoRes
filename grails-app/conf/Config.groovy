@@ -117,21 +117,21 @@ log4j.main = {
            'net.sf.ehcache.hibernate'
 }
 
-
-// Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'pruebaSeguridad.Usuario'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'pruebaSeguridad.UsuarioRole'
-grails.plugin.springsecurity.authority.className = 'pruebaSeguridad.Role'
-grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-	'/':                ['permitAll'],
-	'/index':           ['permitAll'],
-	'/index.gsp':       ['permitAll'],
-	'/assets/**':       ['permitAll'],
-	'/**/js/**':        ['permitAll'],
-	'/**/css/**':       ['permitAll'],
-	'/**/images/**':    ['permitAll'],
-	'/**/favicon.ico':  ['permitAll']
-]
+//
+//// Added by the Spring Security Core plugin:
+//grails.plugin.springsecurity.userLookup.userDomainClassName = 'pruebaSeguridad.Usuario'
+//grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'pruebaSeguridad.UsuarioRole'
+//grails.plugin.springsecurity.authority.className = 'pruebaSeguridad.Role'
+//grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+//	'/':                ['permitAll'],
+//	'/index':           ['permitAll'],
+//	'/index.gsp':       ['permitAll'],
+//	'/assets/**':       ['permitAll'],
+//	'/**/js/**':        ['permitAll'],
+//	'/**/css/**':       ['permitAll'],
+//	'/**/images/**':    ['permitAll'],
+//	'/**/favicon.ico':  ['permitAll']
+//]
 
 
 
@@ -148,8 +148,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/css/**':       ['permitAll'],
 	'/**/images/**':    ['permitAll'],
 	'/**/favicon.ico':  ['permitAll'],
-      '/estatus/**':  ['isFullyAuthenticated()'],
+      '/estatus/**':  ['ROLE_ADMIN'],
         '/incidente/**':  ['isFullyAuthenticated()'],
+    '/usuario/**':  ['ROLE_ADMIN'],
         '/jasper/**':    ['permitAll']
 ]
 

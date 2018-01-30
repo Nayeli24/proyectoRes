@@ -19,19 +19,19 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:postgresql://localhost:5432/ayuda"
+            url = "jdbc:postgresql://localhost:5432/ayudabd"
         }
     }
     test {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:postgresql://localhost:5432/ayuda"
+            url = "jdbc:postgresql://localhost:5432/ayudabd"
         }
     }
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:postgresql://localhost:5432/ayuda"
+            url = "jdbc:postgresql://localhost:5432/ayudabd"
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                jmxEnabled = true

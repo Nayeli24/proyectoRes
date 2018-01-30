@@ -8,6 +8,7 @@ import groovy.sql.Sql
 @Transactional
 class IncidenteService {
     def springSecurityService
+     def dataSource
     
     def obtenerIncidentes(def tipo , def usuario) {
         def datos = []
@@ -58,6 +59,14 @@ class IncidenteService {
         println "46 ::::::::  " + flujo
     }
     
+    
+    def ultimoRegistro(){
+        def query=("select id_ticket from Incidente  order by id_ticket desc limit 1 ")
+        def sql = new Sql(dataSource)
+        def resultado = sql.rows(query)
+        def idt = resultado.id_ticket
+        return idt
+    }
     
     
 }

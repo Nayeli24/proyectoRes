@@ -14,7 +14,7 @@ class IncidenteController {
     
    def springSecurityService
    def incidenteService
-   static final int i=0
+   static final  int i=0
    def flujoController
    
     def index(Integer max) {
@@ -28,17 +28,17 @@ class IncidenteController {
     }
 
     def create() {
-        i
-       
-               def folio_cont= "F000"+i 
-             
-         params.folio=folio_cont
-        i++
         
-          
-       
-            
-        println params.folio
+     
+        println "31:::::::::::::$params"
+        
+        
+         def resp= incidenteService.ultimoRegistro()
+           // def valor =resp.id_ticket as int
+//        def valor=Integer.valueOf(resp)
+           params.folio=resp
+          println "Folio$params.folio"
+ 
         
         respond new Incidente(params)
     }
@@ -59,6 +59,7 @@ class IncidenteController {
         incidenteInstance.estatus = Estatus.get(1 as long)
         incidenteInstance.save flush:true
         def inf = incidenteService.guardarFlujo(us,1,incidenteInstance)
+        
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'incidente.label', default: 'Incidente'), incidenteInstance.id])

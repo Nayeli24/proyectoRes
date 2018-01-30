@@ -5,7 +5,7 @@
     <label for="folio">
         <g:message code="incidente.folio.label" default="Folio" />
         </label>
-<g:textField name="folio" required="" value="${incidenteInstance?.folio}" readonly="true"/>
+<g:textField name="folio" required="" value="F000${incidenteInstance?.folio}" readonly="true"/>
 </div>
 <div class="fieldcontain ${hasErrors(bean: incidenteInstance, field: 'descripcion', 'error')} required">
     <label for="descripcion">
