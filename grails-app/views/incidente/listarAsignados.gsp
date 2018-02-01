@@ -1,5 +1,5 @@
 
-<%@ page import="pruebaSeguridad.Ticket" %>
+<%@ page import="pruebaSeguridad.Incidente" %>
 <!DOCTYPE html>
 <html>
 	<head>

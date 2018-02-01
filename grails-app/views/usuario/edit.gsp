@@ -31,6 +31,8 @@
 				<g:hiddenField name="version" value="${usuarioInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
+                                         <p>Cliente <input type="radio" name="rolUsuario" value="cliente" /></p>
+                                         <p>Empleado <input type="radio" name="rolUsuario" value="empleado" /></p>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

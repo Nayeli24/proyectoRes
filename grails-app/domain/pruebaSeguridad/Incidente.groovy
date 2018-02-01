@@ -22,7 +22,7 @@ class Incidente {
     
     static mapping = {
         
-        id generator: 'sequence', column: 'id_ticket', params:[sequence:'sec_id_ticket']
+        id generator: 'sequence', column: 'id_incidente', params:[sequence:'sec_id_incidente']
         
     }
     

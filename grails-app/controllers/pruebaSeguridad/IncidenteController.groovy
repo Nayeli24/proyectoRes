@@ -138,13 +138,16 @@ class IncidenteController {
         render (view:"asignar", model: [detalle: data])
         
     }
-     def asignarIncidente (){
+    def asignarIncidente (){
         def incidente = Incidente.get(params.incidente as long)
+        println "incidente"+incidente
         incidente.asignadoA = Usuario.get(params.asignadoA as long )
-        incidente.estatus = Estatus.get(2 as long)
+        incidente.estatus = Estatus.get(2 as int)
         incidente.fechaAsignacion = new Date()
-        incidente.save()
+        println "incidente"+incidente
+        incidente.save flush:true
         def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incidente)
+     
     }
     
    def listarAsignados(){

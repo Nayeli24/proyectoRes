@@ -25,7 +25,7 @@ class Usuario implements Serializable {
 	}
 
 	Set<Role> getAuthorities() {
-		UsuarioRole.findAllByUsuario(this)*.role
+            UsuarioRole.findAllByUsuario(this)*.role
 	}
 
 	def beforeInsert() {
@@ -50,6 +50,8 @@ class Usuario implements Serializable {
 	}
 
 	static mapping = {
+             id generator: 'sequence', column: 'id_usuario', params:[sequence:'sec_id_usuario']
 		password column: '`password`'
+                
 	}
 }

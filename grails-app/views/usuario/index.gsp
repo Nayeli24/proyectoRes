@@ -1,5 +1,6 @@
 
 <%@ page import="pruebaSeguridad.Usuario" %>
+<%@ page import="pruebaSeguridad.UsuarioRole"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -27,15 +28,17 @@
 						<g:sortableColumn property="username" title="${message(code: 'usuario.username.label', default: 'Username')}" />
 					
 						<g:sortableColumn property="password" title="${message(code: 'usuario.password.label', default: 'Password')}" />
+                                                <g:sortableColumn property="enabled" title="${message(code: 'usuario.enabled.label', default: 'Enabled')}" />
+                                                <g:sortableColumn property="role" title="${message(code: 'usuario.role.label', default: 'Role')}" />
 					
-						<g:sortableColumn property="accountExpired" title="${message(code: 'usuario.accountExpired.label', default: 'Account Expired')}" />
+						<!--<g:sortableColumn property="accountExpired" title="${message(code: 'usuario.accountExpired.label', default: 'Account Expired')}" />
 					
 						<g:sortableColumn property="accountLocked" title="${message(code: 'usuario.accountLocked.label', default: 'Account Locked')}" />
 					
-						<g:sortableColumn property="enabled" title="${message(code: 'usuario.enabled.label', default: 'Enabled')}" />
+						
 					
 						<g:sortableColumn property="passwordExpired" title="${message(code: 'usuario.passwordExpired.label', default: 'Password Expired')}" />
-					
+                                                -->
 					</tr>
 				</thead>
 				<tbody>
@@ -45,14 +48,16 @@
 						<td><g:link action="show" id="${usuarioInstance.id}">${fieldValue(bean: usuarioInstance, field: "username")}</g:link></td>
 					
 						<td>${fieldValue(bean: usuarioInstance, field: "password")}</td>
+                                                <td><g:formatBoolean boolean="${usuarioInstance.enabled}" /></td>
 					
-						<td><g:formatBoolean boolean="${usuarioInstance.accountExpired}" /></td>
+						<!--<td><g:formatBoolean boolean="${usuarioInstance.accountExpired}" /></td>
 					
 						<td><g:formatBoolean boolean="${usuarioInstance.accountLocked}" /></td>
 					
-						<td><g:formatBoolean boolean="${usuarioInstance.enabled}" /></td>
-					
 						<td><g:formatBoolean boolean="${usuarioInstance.passwordExpired}" /></td>
+-->                                           
+                                                <td><g:include id="${usuarioInstance.id}"  /></td>
+                                                
 					
 					</tr>
 				</g:each>

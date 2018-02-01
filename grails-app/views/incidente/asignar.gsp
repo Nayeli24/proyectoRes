@@ -27,10 +27,10 @@
 				<fieldset class="form">
                                     <div class="fieldcontain ">
                                         <label for="asignadoA">
-                                            <g:message code="asignadoA" default="Asignado A" />
+                                            <g:message code="asignadoA" default="AsignadoA" />
 		
                                         </label>
-                                            <g:select id="asignadoA" name="asignadoA" from="${detalle.usuarios}"   optionKey="id"  value="${detalle.usuarios?.id}" noSelection="['':'Selecciona un Usuario']" multiple="true" />
+                                            <g:select id="asignadoA" name="asignadoA" from="${detalle.usuarios}"   optionKey="id"  value="${detalle.usuarios?.id}" noSelection="['':'Selecciona un Usuario']"  />
                                     </div>
 
                                     <div class="fieldcontain ">
@@ -38,8 +38,7 @@
                                             <g:message code="incidente" default="Folio Incidente" />
                                 	</label>
                                             <g:select id="incidente" name="incidente" from="${detalle.incidentes}" optionKey="id"  value="${detalle.incidentes?.id}" noSelection="['':'Selecciona un Incidente']" />
-                                         
-                                              
+
                                     </div>
 					
 				</fieldset>

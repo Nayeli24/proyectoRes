@@ -20,6 +20,7 @@ class IncidenteService {
                 incidente.id = it.id
                 incidente.folio = it.folio
                 incidente.fechaRegistro = it.fechaRegistro
+                incidente.estatus=it.estatus
                 datos << incidente
             }
             return datos
@@ -29,6 +30,7 @@ class IncidenteService {
                 def incidente = [:]
                 incidente.id = it.id
                 incidente.folio = it.folio
+                incidente.estatus=it.estatus
                 incidente.descripcion = it.descripcion
                 incidente.fechaAsignacion = it.fechaAsignacion
                 incidente.registradoPor = it.registradoPor
@@ -61,12 +63,17 @@ class IncidenteService {
     
     
     def ultimoRegistro(){
-        def query=("select id_ticket from Incidente  order by id_ticket desc limit 1 ")
+        def query=("select id_incidente from Incidente  order by id_incidente desc limit 1 ")
         def sql = new Sql(dataSource)
         def resultado = sql.rows(query)
-        def idt = resultado.id_ticket
+        def idt = resultado.id_incidente
         return idt
     }
+    
+    
+    
+    
+    
     
     
 }

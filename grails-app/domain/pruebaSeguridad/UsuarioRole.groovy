@@ -56,7 +56,8 @@ class UsuarioRole implements Serializable {
 		instance.save(flush: flush, insert: true)
 		instance
 	}
-
+        
+       
 	static boolean remove(Usuario u, Role r, boolean flush = false) {
 		if (u == null || r == null) return false
 
