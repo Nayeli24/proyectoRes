@@ -11,7 +11,7 @@ class Incidente {
     Date fechaAsignacion // = new Date()
     
     static constraints = {
-        descripcion blank: false
+        descripcion blank: false 
         estatus (nullable: true)
         folio blank: false
         registradoPor (nullable: true)

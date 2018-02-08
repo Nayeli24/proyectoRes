@@ -56,7 +56,7 @@
 					
 						<td><g:formatBoolean boolean="${usuarioInstance.passwordExpired}" /></td>
 -->                                           
-                                                <td><g:include id="${usuarioInstance.id}"  /></td>
+                                                <td> ${usuario}</td>
                                                 
 					
 					</tr>

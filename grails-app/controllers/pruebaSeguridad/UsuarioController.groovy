@@ -13,17 +13,10 @@ class UsuarioController {
     def index(Integer max) {
        
         params.max = Math.min(max ?: 10, 100)
-     
-        respond Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()] 
-        
-        //        incidente.asignadoA = Usuario.get(params.asignadoA as long )
-        //        incidente.estatus = Estatus.get(2 as int)
-        //        incidente.fechaAsignacion = new Date()
-        //        println "incidente"+incidente
-        //        incidente.save flush:true
-        def usuario=usuarioService.usuarioId(Usuario.list(params.username))
+        def usuario=usuarioService.usuarioId()
         println "fbbvbbvvvbnvbnvbn.....Controller"+ usuario
-       
+        render (view:"usuariosList", model: [usuarios: usuario])
+
     }
 
     def show(Usuario usuarioInstance) {
@@ -119,7 +112,7 @@ class UsuarioController {
     @Transactional
     def delete(Usuario usuarioInstance) {
         println "paramssssssssss 101::::::::::$params"
-        //Recuperar id del flujo con la relacion id_incidente
+        //Recuperar id_usuarioRole del con la relacion id_usuario
         def res= UsuarioRole.findByUsuario(Usuario.get(params.id))
         println res
 

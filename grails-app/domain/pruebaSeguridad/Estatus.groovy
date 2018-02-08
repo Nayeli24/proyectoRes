@@ -8,7 +8,7 @@ class Estatus implements Serializable{
         id generator: 'sequence', column: 'id_estatus', params:[sequence:'sec_id_estatus']
     }
     static constraints = {
-        tipoEstatus blank: false
+        tipoEstatus blank: false, size: 1..15
     }
     
     String toString () {

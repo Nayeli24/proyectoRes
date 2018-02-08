@@ -7,22 +7,24 @@ import groovy.sql.Sql
 
 @Transactional
 class UsuarioService {
-    def usuarioId(def usuario){
-        println usuario.username
-      def datos = []
-        def consulta = Usuario.executeQuery("SELECT u FROM Usuario u Where id_usuario = :user ",[user: Usuario.findByUsername(usuario.username)])
-        println consulta
-        consulta.each{
-            def user =[:]
-            user.id = it.id
-            println "user service::::::::"+user
-            def  rol=UsuarioRole.findByUsuario(Usuario.get(user.id))
-            def rol2=rol.role.authority
-            println "2rol:::::::::::::"+rol2
-            datos << rol2
-            println "datosssssssssssssssssssssssssssssssssssss"+datos
+    
+    def usuarioId(){
+        println"========================================================================="
+        def usuario = Usuario.findAll();
+        def userList = []
+        usuario.each {
+            def respuesta2 = [:]
+            respuesta2.id = it.id
+            respuesta2.username = it.username
+            respuesta2.password=it.password
+            respuesta2.enabled=it.enabled
+            respuesta2.authorities = it.authorities.authority
+            userList << respuesta2
         }
-        return datos 
+        println userList 
+        return userList
+
        
+    }
 }
-}
+
