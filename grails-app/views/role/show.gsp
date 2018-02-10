@@ -32,6 +32,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${roleInstance?.descripcion}">
+				<li class="fieldcontain">
+					<span id="descripcion-label" class="property-label"><g:message code="role.descripcion.label" default="Descripcion" /></span>
+					
+						<span class="property-value" aria-labelledby="descripcion-label"><g:fieldValue bean="${roleInstance}" field="descripcion"/></span>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form url="[resource:roleInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">

@@ -1,6 +1,7 @@
 
 <%@ page import="pruebaSeguridad.Usuario" %>
 <%@ page import="pruebaSeguridad.UsuarioRole"%>
+<%@ page import="pruebaSeguridad.Incidente"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,7 +13,7 @@
         <a href="#list-usuario" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
         <div class="nav" role="navigation">
             <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+                <li><a class="home" href="${createLink(uri: '/incidente/index')}"><g:message code="Regresar"/></a></li>
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
                 </ul>
             </div>
@@ -29,7 +30,7 @@
 
                         <g:sortableColumn property="password" title="${message(code: 'usuario.password.label', default: 'Password')}" />
                         <g:sortableColumn property="enabled" title="${message(code: 'usuario.enabled.label', default: 'Enabled')}" />
-                        <g:sortableColumn property="role" title="${message(code: 'usuario.role.label', default: 'Role')}" />
+                        <g:sortableColumn property="role" title="${message(code: 'usuario.role.label', default: 'Tipo usuario')}" />
 
         <!--<g:sortableColumn property="accountExpired" title="${message(code: 'usuario.accountExpired.label', default: 'Account Expired')}" />
 
@@ -46,10 +47,10 @@
                         <g:each name="asignados" in="${usuarios}">	
                             <tr >
                                 <td  class="left tableTitleColor font12 paddingTop12 paddingRight12 paddingBottom5 paddingLeft10 textUpper">
-                                <g:link action="show" id="${it.id}">${it.username}</g:link>
-                                </td>
-                                <td  class="left tableTitleColor font12 paddingTop12 paddingRight12 paddingBottom5 paddingLeft10 textUpper">
-                                    <span class="font14 textlower tableDescriptionColor">${it.password}  </span> 
+                                    <g:link action="show" id="${it.id}">${it.username}</g:link>
+                                    </td>
+                                    <td  class="left tableTitleColor font12 paddingTop12 paddingRight12 paddingBottom5 paddingLeft10 textUpper">
+                                        <span class="font14 textlower tableDescriptionColor">${it.password}  </span> 
                                 </td>
                                 <td  class="left tableTitleColor font12 paddingTop12 paddingRight12 paddingBottom5 paddingLeft10 textUpper">
                                     <span class="font14 textlower tableDescriptionColor">${it.enabled}  </span> 	

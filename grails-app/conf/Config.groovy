@@ -88,7 +88,7 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
-         jasper.dir.reports = '/home/nsanchez/proyectoResidencia/MesaAyuda/web-app/reports'
+        jasper.dir.reports = '/home/nsanchez/proyectoResidencia/MesaAyuda/web-app/reports'
     }
     production {
         grails.logging.jul.usebridge = false
@@ -119,6 +119,10 @@ log4j.main = {
 
 
 
+grails.plugin.springsecurity.auth.loginFormUrl = '/pruebaSeguridad/incidente/index'
+//grails.plugin.springsecurity.failureHandler.defaultFailureUrl = '/'
+
+
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'pruebaSeguridad.Usuario'
@@ -133,10 +137,11 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/css/**':       ['permitAll'],
 	'/**/images/**':    ['permitAll'],
 	'/**/favicon.ico':  ['permitAll'],
-      '/estatus/**':  ['ROLE_ADMIN'],
+     '/estatus/**':  ['ROLE_ADMIN'],
     '/role/**':  ['ROLE_ADMIN'],
+    '/empresa/**':  ['ROLE_ADMIN'],
         '/incidente/**':  ['isFullyAuthenticated()'],
     '/usuario/**':  ['ROLE_ADMIN'],
-        '/jasper/**':    ['permitAll']   
+        '/jasper/**':    ['permitAll']  
 ]
 

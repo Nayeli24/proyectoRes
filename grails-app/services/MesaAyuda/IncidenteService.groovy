@@ -9,8 +9,10 @@ import groovy.sql.Sql
 class IncidenteService {
     def springSecurityService
      def dataSource
+     def usuarioService
     
     def obtenerIncidentes(def tipo , def usuario) {
+       
         def datos = []
         def consulta
         if (tipo == 'SinAsignar'){
@@ -48,7 +50,7 @@ class IncidenteService {
             user.username = it.username
             datos << user
         }
-        return datos 
+        return datos
     }
     
      def guardarFlujo(def usuario , def estatus , def folio){

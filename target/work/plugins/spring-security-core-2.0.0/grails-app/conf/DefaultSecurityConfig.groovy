@@ -155,7 +155,7 @@ security {
 
 	/** logoutFilter */
 	logout {
-		afterLogoutUrl = '/'
+		afterLogoutUrl = '/login/auth'
 		filterProcessesUrl = '/j_spring_security_logout'
 		handlerNames = [] // 'rememberMeServices', 'securityContextLogoutHandler'
 		clearAuthentication = true

@@ -81,6 +81,9 @@
 		</style>
 	</head>
 	<body>
+            <sec:ifNotLoggedIn>
+  <g:link controller="login" action="auth">Login</g:link>
+</sec:ifNotLoggedIn>
 		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div id="status" role="complementary">
 			<h1>Application Status</h1>

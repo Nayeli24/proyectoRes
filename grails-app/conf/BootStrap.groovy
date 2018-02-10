@@ -1,21 +1,26 @@
+
 import pruebaSeguridad.Role
 import pruebaSeguridad.Usuario
 import pruebaSeguridad.UsuarioRole
+import pruebaSeguridad.Empresa
 import pruebaSeguridad.Estatus
 
 class BootStrap {
 
     def init = { servletContext ->
 
-        def userRole = new Role(authority: 'ROLE_DESARROLLADOR').save(flush: true)
-        def clienteRole = new Role(authority: 'ROLE_CLIENTE').save(flush: true)
-        def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
-      
-
-        def testUser = new Usuario(username: 'admin', enabled: true, password: 'admin', email:'email@mail.com', nombre:'Manuel Belgrano', direccion:'San Martin 132', dni: '45456')
+      /* def userRole = new Role(authority: 'ROLE_DESARROLLADOR',descripcion:'Empleado').save(flush: true)
+        def clienteRole = new Role(authority: 'ROLE_CLIENTE',descripcion:'Cliente').save(flush: true)
+        def adminRole = new Role(authority: 'ROLE_ADMIN', descripcion:'Administrador').save(flush: true)    
+        
+        def testEmpresa = new Empresa(nombreEmpresa:'Nuuptech S.A. de C.V.')
+        testEmpresa.save(flush:true)
+        
+        def testUser = new Usuario(nombre:'Manuel', apellidoPat:'Belgrano', apellidoMat:'Garcia', areaDpto:'Direccion General',empresa: testEmpresa, email:'admin@mail.com',username: 'admin', enabled: true, password: 'admin')
         testUser.save(flush: true)                 	
         UsuarioRole.create testUser, adminRole, true
-
+        
+        assert Empresa.count()==1
         assert Usuario.count() == 1
         assert Role.count() == 3
         assert UsuarioRole.count() == 1
@@ -29,5 +34,7 @@ class BootStrap {
         atendidoEstatus.save(flush: true) 
         def cerradoEstatus = new Estatus(tipoEstatus: 'Cerrado')
         cerradoEstatus.save(flush: true) 
+        */
     }
+    
 }

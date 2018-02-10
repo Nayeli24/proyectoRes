@@ -26,6 +26,8 @@
 					
 						<g:sortableColumn property="authority" title="${message(code: 'role.authority.label', default: 'Authority')}" />
 					
+						<g:sortableColumn property="descripcion" title="${message(code: 'role.descripcion.label', default: 'Descripcion')}" />
+					
 					</tr>
 				</thead>
 				<tbody>
@@ -33,6 +35,8 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${roleInstance.id}">${fieldValue(bean: roleInstance, field: "authority")}</g:link></td>
+					
+						<td>${fieldValue(bean: roleInstance, field: "descripcion")}</td>
 					
 					</tr>
 				</g:each>

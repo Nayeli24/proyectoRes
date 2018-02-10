@@ -13,12 +13,16 @@ class UsuarioService {
         def usuario = Usuario.findAll();
         def userList = []
         usuario.each {
+            println "usuario::::::::::::::::::::::."+usuario
             def respuesta2 = [:]
             respuesta2.id = it.id
             respuesta2.username = it.username
             respuesta2.password=it.password
             respuesta2.enabled=it.enabled
-            respuesta2.authorities = it.authorities.authority
+            println "authorities:::::::::::::::...."+usuario.authorities
+          //  respuesta2.authorities = it.authorities.authority
+          respuesta2.authorities = it.authorities.descripcion
+            
             userList << respuesta2
         }
         println userList 

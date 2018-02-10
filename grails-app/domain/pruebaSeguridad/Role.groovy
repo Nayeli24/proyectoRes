@@ -10,6 +10,7 @@ class Role implements Serializable {
 	private static final long serialVersionUID = 1
 
 	String authority
+        String descripcion
 
 	Role(String authority) {
 		this()
@@ -18,6 +19,7 @@ class Role implements Serializable {
 
 	static constraints = {
 		authority blank: false, unique: true
+                descripcion blank: false, unique: true
 	}
 
 	static mapping = {
