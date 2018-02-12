@@ -8,52 +8,62 @@ import groovy.sql.Sql
 @Transactional
 class IncidenteService {
     def springSecurityService
-     def dataSource
-     def usuarioService
+    def dataSource
+    def usuarioService
     
-    def obtenerIncidentes(def tipo , def usuario) {
-       
+    def obtenerIncidentes(def tipo , def role) {
         def datos = []
         def consulta
         if (tipo == 'SinAsignar'){
-            consulta = Incidente.executeQuery("SELECT t FROM Incidente t WHERE t.estatus = :estatus AND t.registradoPor = :user ",[estatus: Estatus.get(1 as long) , user: Usuario.findByUsername(usuario) ])
-            consulta.each{
-                def incidente = [:]
-                incidente.id = it.id
-                incidente.folio = it.folio
-                incidente.fechaRegistro = it.fechaRegistro
-                incidente.estatus=it.estatus
-                datos << incidente
+            def  consultauser= UsuarioRole.executeQuery("select ur from UsuarioRole ur where ur.role= :roleCliente",[roleCliente : Role.findByAuthority('ROLE_CLIENTE')])
+            def usuarioCliente=consultauser.usuario.username
+            for (def usuarioc : usuarioCliente) {
+                consulta = Incidente.executeQuery("SELECT t FROM Incidente t WHERE t.estatus = :estatus AND t.registradoPor = :user ",[estatus: Estatus.get(1 as long) , user: Usuario.findByUsername(usuarioc) ])
+                consulta.each{
+                    def incidente = [:]
+                    incidente.id = it.id
+                    incidente.folio = it.folio
+                    incidente.fechaRegistro = it.fechaRegistro
+                    incidente.estatus=it.estatus
+                    datos << incidente
+                }
             }
             return datos
-        }else if(tipo == "Asignados"){            
-            consulta = Incidente.executeQuery("SELECT t FROM Incidente t WHERE t.estatus = :estatus AND t.asignadoA = :user ",[estatus: Estatus.get(2 as long) , user: Usuario.findByUsername(usuario) ])
-            consulta.each{
-                def incidente = [:]
-                incidente.id = it.id
-                incidente.folio = it.folio
-                incidente.estatus=it.estatus
-                incidente.descripcion = it.descripcion
-                incidente.fechaAsignacion = it.fechaAsignacion
-                incidente.registradoPor = it.registradoPor
-                datos << incidente
+        }else if(tipo == "Asignados"){  
+             def  consultaDesaUser= UsuarioRole.executeQuery("select ur from UsuarioRole ur where ur.role= :roleDesarrollador",[roleDesarrollador : Role.findByAuthority('ROLE_DESARROLLADOR')])
+             def usuarioDesarrollador=consultaDesaUser.usuario.username
+             println "::::::::::35"
+            for (def usuariod : usuarioDesarrollador) {
+                consulta = Incidente.executeQuery("SELECT t FROM Incidente t WHERE t.estatus = :estatus AND t.asignadoA = :user ",[estatus: Estatus.get(2 as long) , user: Usuario.findByUsername(usuariod) ])
+                consulta.each{
+                    def incidente = [:]
+                    incidente.id = it.id
+                    incidente.folio = it.folio
+                    incidente.estatus=it.estatus
+                    incidente.descripcion = it.descripcion
+                    incidente.fechaAsignacion = it.fechaAsignacion
+                    incidente.registradoPor = it.registradoPor
+                    datos << incidente
+                }
             }
             return datos
         }
     }
-    def obtenerUsuarios(def usuario){
+    def obtenerUsuarios(def role){
         def datos = []
-        def consulta = Usuario.executeQuery("SELECT u FROM Usuario u Where u.username <> '$usuario'")
+        def  consulta= UsuarioRole.executeQuery("select ur from UsuarioRole ur where ur.role= :roleDesarrollador",[roleDesarrollador : Role.findByAuthority('ROLE_DESARROLLADOR')])
+       // def consulta = Usuario.executeQuery("SELECT u FROM Usuario u Where u.username <> '$usuario'")
         consulta.each{
             def user =[:]
-            user.id = it.id
-            user.username = it.username
+            user.id=it.usuario.id
+            user.username = it.usuario.username
+            
             datos << user
         }
         return datos
     }
     
-     def guardarFlujo(def usuario , def estatus , def folio){
+    def guardarFlujo(def usuario , def estatus , def folio){
         
         def flujo = new Flujo ()
         flujo.usuarioMovimiento = Usuario.findByUsername(usuario)

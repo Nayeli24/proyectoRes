@@ -136,11 +136,9 @@ class IncidenteController {
     def asignar (){
         flash.error = "No existen incidentes nuevos para realizar la asignación"
         def data = [:]
-        def  clienteRole=Role.findByAuthority('ROLE_CLIENTE')
-        def  userRole=Role.findByAuthority('ROLE_DESARROLLADOR')
-        
-        data.incidentes = incidenteService.obtenerIncidentes("SinAsignar" , springSecurityService.currentUser.username)
-        data.usuarios = incidenteService.obtenerUsuarios( springSecurityService.currentUser.username)
+           
+        data.incidentes = incidenteService.obtenerIncidentes("SinAsignar" , "ROLE_CLIENTE")
+        data.usuarios = incidenteService.obtenerUsuarios("ROLE_DESARROLLADOR")
         println "D A T A :::::::::::::::::::::::::::"+data
         render (view:"asignar", model: [detalle: data])
         
@@ -164,9 +162,9 @@ class IncidenteController {
     }
     
     def listarAsignados(){
-        def incidentes = incidenteService.obtenerIncidentes("Asignados",springSecurityService.currentUser.username)
+        def incidentes = incidenteService.obtenerIncidentes("Asignados","ROLE_DESARROLLADOR")
         println "/////////////////////////////   " + incidentes 
-        render (view:"listarAsignados", model: [asignados: incidentes])
+        render (view:"index", model: [asignados: incidentes])
     }
     
     def detalleRevisar(){
