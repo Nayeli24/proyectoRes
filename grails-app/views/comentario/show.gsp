@@ -27,7 +27,7 @@
 				<li class="fieldcontain">
 					<span id="incidente-label" class="property-label"><g:message code="comentario.incidente.label" default="Incidente" /></span>
 					
-						<span class="property-value" aria-labelledby="incidente-label"><g:link controller="incidente" action="show" id="${comentarioInstance?.incidente?.id}">${comentarioInstance?.incidente?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="incidente-label"><g:link controller="incidente" action="show" id="${comentarioInstance?.incidente?.id}">${comentarioInstance?.incidente?.id}</g:link></span>
 					
 				</li>
 				</g:if>
@@ -45,7 +45,7 @@
 				<li class="fieldcontain">
 					<span id="usuario-label" class="property-label"><g:message code="comentario.usuario.label" default="Usuario" /></span>
 					
-						<span class="property-value" aria-labelledby="usuario-label"><g:link controller="usuario" action="show" id="${comentarioInstance?.usuario?.id}">${comentarioInstance?.usuario?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="usuario-label"><g:link controller="usuario" action="show" id="${comentarioInstance?.usuario?.id}">${comentarioInstance?.usuario?.username}</g:link></span>
 					
 				</li>
 				</g:if>

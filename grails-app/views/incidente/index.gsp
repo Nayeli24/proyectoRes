@@ -23,12 +23,10 @@
                         <li><g:link controller="usuario" action="index">Usuarios registrados</g:link></li>
                     <li><g:link controller="empresa" action="index">Empresas </g:link></li>
                     <li><g:link class="asignar" action="asignar"><g:message code="Asignar incidente" args="" /></g:link></li>
-                    </sec:ifAnyGranted>          
-                    <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
-                        <sec:access url="/incidente/listarAsignados">
-                            <li><g:link controller='incidente' action='listarAsignados'>Incidentes Asignados</g:link></li>
-                        </sec:access>
-                    </sec:ifAnyGranted>  
+                    </sec:ifAnyGranted>
+                    <sec:access expression="hasRole('ROLE_DESARROLLADOR')">
+                        <li><g:link  action="listarRevision"><g:message code="Incidentes en Revisión" args="[entityName]" /></g:link></li>
+                    </sec:access>
                 </ul>
             </div>
             <div id="list-incidente" class="content scaffold-list" role="main">
@@ -38,79 +36,42 @@
             </g:if>
             <table>
                 <thead>
-                <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
+
                     <tr>
                         <g:sortableColumn property="folio" title="${message(code: 'ticket.folio.label', default: 'Folio')}" />
-
-                        <g:sortableColumn property="descripcion" title="${message(code: 'ticket.descripcion.label', default: 'Descripcion')}" />
-
-                        <th><g:message code="ticket.registradoPor.label" default="Registrado Por" /></th>
-
-                            <g:sortableColumn property="fechaAsignacion" title="${message(code: 'ticket.fechaAsignacion.label', default: 'Fecha Asignacion')}" />
-
-                    </tr>
-                </sec:ifAnyGranted>
-                <sec:ifAnyGranted roles='ROLE_CLIENTE'>    
-                    <tr>
-                        <g:sortableColumn property="folio" title="${message(code: 'incidente.folio.label', default: 'Folio')}" />
-                        <th><g:message code="Tema" default="Tema" /></th>
+                        <g:sortableColumn property="tema" title="${message(code: 'ticket.descripcion.label', default: 'Tema')}" />
                         <th><g:message code="incidente.estatus.label" default="Estatus" /></th>
-
-                    <sec:ifAnyGranted roles='ROLE_ADMIN'>
-                        <th><g:message code="incidente.registradoPor.label" default="Registrado Por" /></th>
-                    </sec:ifAnyGranted>  
-
-                    <th><g:message code="incidente.fechaRegistro.label" default="Fecha Registro" /></th>
-
-                    <th><g:message code="incidente.asignadoA.label" default="Asignado A" /></th>
-
+                        <th><g:message code="incidente.fechaRegistro.label" default="Fecha Registro" /></th>
+                <sec:ifAnyGranted roles='ROLE_DESARROLLADOR, ROLE_ADMIN'>
+                    <th><g:message code="ticket.registradoPor.label" default="Registrado Por" /></th>
                         <g:sortableColumn property="fechaAsignacion" title="${message(code: 'incidente.fechaAsignacion.label', default: 'Fecha Asignacion')}" />
-
-                    </tr>
                 </sec:ifAnyGranted>
+                <sec:ifAnyGranted roles='ROLE_ADMIN'>
+                    <th><g:message code="incidente.asignadoA.label" default="Asignado A" /></th>
+                </sec:ifAnyGranted>
+                </tr>
+
                 </thead>
                 <tbody>
-                <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
-                    <g:if test="${asignados}">
-                        <g:each name="asignados" in="${asignados}">	
+
+                    <g:if test="${incidentesVer}">
+                        <g:each name="incidentesVer" in="${incidentesVer}">	
                             <tr >
-                                <td  class="left tableTitleColor font12 paddingTop12 paddingRight12 paddingBottom5 paddingLeft10 textUpper">
-                                    <g:link action="detalleRevisar" id="${it.id}">${it.folio}</g:link>
-
-                                </td>	
-                                <td  class="left tableTitleColor font12 paddingTop12 paddingRight12 paddingBottom5 paddingLeft10 textUpper">
-                                    <span class="font14 textlower tableDescriptionColor">${it.descripcion}  </span>
-                                </td>	
-
-                                <td  class="left tableTitleColor font12 paddingTop12 paddingRight12 paddingBottom5 paddingLeft10 textUpper">
-                                    <span class="font14 textlower tableDescriptionColor">${it.registradoPor?.username}  </span>
-                                </td>	
-                                <td  class="left tableTitleColor font12 paddingTop12 paddingRight12 paddingBottom5 paddingLeft10 textUpper">
-                                    <span class="font14 textlower tableDescriptionColor"><g:formatDate format="dd / MM / yyyy" date="${it.fechaAsignacion}"/></span>
-                                </td>	
-                            </tr>
-                        </g:each>
-                    </g:if>
-                </sec:ifAnyGranted>
-                <sec:ifAnyGranted roles='ROLE_CLIENTE'>
-                    <g:each in="${incidenteInstanceList}" status="i" var="incidenteInstance">
-                        <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                            <td><g:link action="show" id="${incidenteInstance.id}">${fieldValue(bean: incidenteInstance, field: "folio")}</g:link></td>
-                            <td>${fieldValue(bean: incidenteInstance, field: "tema")}</td>
-                            <td>${fieldValue(bean: incidenteInstance, field: "estatus")}</td>
+                                <td><g:link action="show" id="${it.id}">${it.folio}</g:link></td>
+                                <td>${it.tema}</td>
+                                <td>${it.estatus}</td>
+                                <td><g:formatDate format="dd / MM / yyyy" date="${it.fechaRegistro}" /></td>
+                        <sec:ifAnyGranted roles='ROLE_DESARROLLADOR, ROLE_ADMIN'>
+                            <td>${it?.registradoPor?.username}</td>
+                            <td><g:formatDate  date="${it.fechaAsignacion}" /></td>
+                        </sec:ifAnyGranted>
                         <sec:ifAnyGranted roles='ROLE_ADMIN'>
-                            <td>${incidenteInstance?.registradoPor?.username}</td>
-                        </sec:ifAnyGranted>  
-
-                        <td><g:formatDate date="${incidenteInstance.fechaRegistro}" /></td>
-
-                        <td>${incidenteInstance?.asignadoA?.username}</td>
-
-                        <td><g:formatDate date="${incidenteInstance.fechaAsignacion}" /></td>
-
+                            <td>${it?.asignadoA?.username}</td>
+                        </sec:ifAnyGranted>
                         </tr>
                     </g:each>
-                </sec:ifAnyGranted>
+                </g:if>
+
                 </tbody>
             </table>
             <div class="pagination">

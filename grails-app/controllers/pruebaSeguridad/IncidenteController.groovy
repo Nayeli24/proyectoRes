@@ -18,28 +18,26 @@ class IncidenteController {
     def flujoController
    
     def index(Integer max) {
+        params.max = Math.min(max ?: 10,100)
+        def incidentes=[]
+        //  respond Incidente.list(params), model:[incidenteInstanceCount: Incidente.count()]
+        incidentes=incidenteService.verIncidentes(springSecurityService.currentUser.authorities.authority as String,springSecurityService.currentUser.username)
+        println "fbbvbbvvvbnvbnvbn.....Controller"+ incidentes
+        render (view:"index", model: [incidentesVer: incidentes, incidenteInstanceCount: incidentes.size()])
         
-        params.max = Math.min(max ?: 10, 100)
-        respond Incidente.list(params), model:[incidenteInstanceCount: Incidente.count()]
-    }
+    } 
 
     def show(Incidente incidenteInstance) {
         respond incidenteInstance
     }
 
     def create() {
-        
-     
         println "31:::::::::::::$params"
-        
-        
         def resp= incidenteService.ultimoRegistro()
         // def valor =resp.id_ticket as int
         //        def valor=Integer.valueOf(resp)
         params.folio=resp
-        println "Folio$params.folio"
- 
-        
+        println "Folio$params.folio"    
         respond new Incidente(params)
     }
 
@@ -101,19 +99,13 @@ class IncidenteController {
 
     @Transactional
     def delete(Incidente incidenteInstance) {
-        
-        println "paramssssssssss 90::::::::::$params"
-        //Recuperar id del flujo con la relacion id_incidente
         def res= Flujo.findByIncidente(Incidente.get(params.id))
-          
-        println "flujo:::::::::::::::::"+res
+        res.delete flush:true
         if (incidenteInstance == null) {
             notFound()
             return
         }
         
-        res.delete flush:true
-
         incidenteInstance.delete flush:true
 
         request.withFormat {
@@ -137,7 +129,7 @@ class IncidenteController {
         flash.error = "No existen incidentes nuevos para realizar la asignación"
         def data = [:]
            
-        data.incidentes = incidenteService.obtenerIncidentes("SinAsignar" , "ROLE_CLIENTE")
+        data.incidentes = incidenteService.obtenerIncidentes("SinAsignar" , "ROLE_CLIENTE",springSecurityService.currentUser.username)
         data.usuarios = incidenteService.obtenerUsuarios("ROLE_DESARROLLADOR")
         println "D A T A :::::::::::::::::::::::::::"+data
         render (view:"asignar", model: [detalle: data])
@@ -157,21 +149,30 @@ class IncidenteController {
      
     }
     
-    def crearUsuarios(){
-        redirect(controller: "usuario", action: "create")
-    }
-    
-    def listarAsignados(){
-        def incidentes = incidenteService.obtenerIncidentes("Asignados","ROLE_DESARROLLADOR")
-        println "/////////////////////////////   " + incidentes 
-        render (view:"index", model: [asignados: incidentes])
-    }
-    
+   
     def detalleRevisar(){
+        println "::::::::::::::::::162$params"
         def respuesta = Incidente.get(params.id as long )
         render (view:"detalleRevisar", model: [detalle: respuesta])
     }
-   
+        
+     def listarRevision(){
+       def incidentes = incidenteService.listarRevision(springSecurityService.currentUser.authorities.authority as String,springSecurityService.currentUser.username)
+       println "/////////////////////////////   " + incidentes 
+       render (view:"listarRevision", model: [revisados: incidentes])
+    }
+    
+    def revisar(){
+        println "::::::::::::::::::::::::::::|169$params"
+        //def incidente = Incidente.get(params.incidente as long)
+        incidenteInstance.estatus = Estatus.get(3 as int)
+        def respuesta= Incidente.get(params.id as long)
+        def id=respuesta.id
+        println "id incidente::::::::::::::::::"+id
+        incidenteInstance.save flush:true
+        redirect (controller: "comentario", action: "create", params: [id:id])
+    }
+    
     
     def printReport(){
         println params

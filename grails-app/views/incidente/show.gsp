@@ -12,7 +12,9 @@
         <div class="nav" role="navigation">
             <ul>
                 <li><a class="home" href="${createLink(uri: '/incidente/index')}"><g:message code="Regresar"/></a></li>
+                 <sec:ifAnyGranted roles='ROLE_CLIENTE'>
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                 </sec:ifAnyGranted>
                 </ul>
             </div>
             <div id="show-incidente" class="content scaffold-show" role="main">
@@ -96,13 +98,30 @@
             </ol>
             <g:if test="${incidenteInstance?.estatus?.id==1}">
                 <g:form url="[resource:incidenteInstance, action:'delete']" method="DELETE">
-
                     <fieldset class="buttons">
                         <g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                     </fieldset>
-
                 </g:form>
             </g:if>
+            <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
+                <g:form >
+                    <fieldset class="buttons">
+                        <g:if  test="${incidenteInstance?.estatus?.id == 2}">
+                            <g:link class="edit" action="revisar" resource="${incidenteInstance}" id="${incidenteInstance.id}"><g:message code="default.button.revisar.label" default="Revisar" /></g:link>
+
+                        </g:if>    
+                        <g:elseif test="${incidenteInstance?.estatus?.id == 3}">
+                            <g:form controller="incidente" action="atender">
+                                <g:hiddenField name="id"  value="${incidenteInstance.id}"/>
+                                <g:textArea cols="30" rows="4" name="respuesta"  style="width:400px; height: 200px;"/>
+                                <g:actionSubmit  class="edit" value="Atender"/>
+                            </g:form>
+                        </g:elseif>
+                            <!--<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />-->
+                    </fieldset>
+                </g:form>
+            </sec:ifAnyGranted>
+
         </div>
     </body>
 </html>

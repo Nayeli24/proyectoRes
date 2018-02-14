@@ -29,7 +29,8 @@
                             <g:message code="asignadoA" default="AsignadoA" />
 
                         </label>
-                        <g:select id="asignadoA" name="asignadoA" from="${detalle.usuarios}"   optionKey="id"  value="${detalle.usuarios?.id}" noSelection="['':'Selecciona un Usuario']"  />
+
+                        <g:select id="asignadoA" name="asignadoA" from="${detalle.usuarios}"   optionKey="id"  value="${detalle.usuarios?.id}" class="many-to-one" noSelection="['':'Selecciona un Usuario']"  />
                     </div>
 
                     <div class="fieldcontain ">

@@ -7,8 +7,8 @@
 		<g:message code="comentario.incidente.label" default="Incidente" />
 		
 	</label>
-	<g:select id="incidente" name="incidente.id" from="${pruebaSeguridad.Incidente.list()}" optionKey="id" value="${comentarioInstance?.incidente?.id}" class="many-to-one" noSelection="['null': '']"/>
-
+	<g:textField name="incidente" value="${comentarioInstance?.incidente?.id}" readonly="true"/>
+	
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: comentarioInstance, field: 'descripcion', 'error')} required">
@@ -16,16 +16,10 @@
 		<g:message code="comentario.descripcion.label" default="Descripcion" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="descripcion" required="" value="${comentarioInstance?.descripcion}"/>
+             <g:textArea cols="30" rows="4" name="descripcion"  required="Escribe un comentario" value="${comentarioInstance?.descripcion}"  style="width:400px; height: 200px;"/>
+
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: comentarioInstance, field: 'usuario', 'error')} ">
-	<label for="usuario">
-		<g:message code="comentario.usuario.label" default="Usuario" />
-		
-	</label>
-	<g:select id="usuario" name="usuario.id" from="${pruebaSeguridad.Usuario.list()}" optionKey="id" value="${comentarioInstance?.usuario?.id}" class="many-to-one" noSelection="['null': '']"/>
 
-</div>
 

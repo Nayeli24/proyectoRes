@@ -11,7 +11,9 @@
 		<a href="#show-incidente" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><g:link class="asignados" action="listarAsignados"><g:message code="Asigandos" args="" /></g:link></li>
+                              <li><a class="home" href="${createLink(uri: '/incidente/index')}"><g:message code="Página principal"/></a></li> 
+                            <li><a  href="${createLink(uri: '/incidente/listarRevision')}"><g:message code="Incidentes en Revisión"/></a></li>
+                              <li>   <li><g:link controller="comentario" action="index">Comentarios</g:link></li></li>
 			</ul>
 		</div>
 		<div id="show-incidente" class="content scaffold-show" role="main">
@@ -19,18 +21,22 @@
 			<g:if test="${detalle}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
-                        
 			<ol class="property-list incidente">
-                            
                                 <g:if test="${detalle.folio}">
 				<li class="fieldcontain">
 					<span id="descripcion-label" class="property-label"><g:message code="folioIncidente.folio" default="Folio " /></span>
 					
 						<span class="property-value" aria-labelledby="folio-label">${detalle.folio}</span>
-					
 				</li>
 				</g:if>
-                                
+                                <g:if test="${detalle.tema}">
+				<li class="fieldcontain">
+					<span id="descripcion-label" class="property-label"><g:message code="folioIncidente.tema" default="Tema" /></span>
+					
+						<span class="property-value" aria-labelledby="folio-label">${detalle.tema}</span>
+					
+				</li>
+				</g:if>                         
                                 <g:if test="${detalle.descripcion}">
 				<li class="fieldcontain">
 					<span id="descripcion-label" class="property-label"><g:message code="folioIncidente.descripcion" default="Descripción" /></span>
@@ -39,16 +45,14 @@
 					
 				</li>
 				</g:if>
-                                
 				<g:if test="${detalle.fechaAsignacion}">
 				<li class="fieldcontain">
-					<span id="descripcion-label" class="property-label"><g:message code="fechaAsisgnacion" default="Fecha De Asisgnación" /></span>
+					<span id="descripcion-label" class="property-label"><g:message code="fechaAsisgnacion" default="Fecha De Asignación" /></span>
 					
 						<span class="property-value" aria-labelledby="folio-label"><g:formatDate format="dd / MM / yyyy" date="${detalle.fechaAsignacion}"/></span>
 					
 				</li>
 				</g:if>
-			
 				<g:if test="${detalle.registradoPor}">
 				<li class="fieldcontain">
 					<span id="descripcion-label" class="property-label"><g:message code="folioIncidente.registradoPor" default="Usuario Que Registró" /></span>
@@ -57,9 +61,6 @@
 					
 				</li>
 				</g:if>
-			
-                                
-                                
                                 <g:if  test="${detalle.estatus?.id == 4}">
                                     <li class="fieldcontain">
 					<span id="descripcion-label" class="property-label"><g:message code="detalle.respuestaPeticion" default="Solucion Peticion" /></span>
@@ -68,22 +69,16 @@
 					
                                     </li>
                                 </g:if>   
-			
-			
 			</ol>
 			<g:form >
-				<fieldset class="buttons">
-                                    <g:if  test="${detalle.estatus?.id == 2}">
-                                        <g:link class="edit" action="revisar" resource="${incidenteInstance}" id="${detalle.id}"><g:message code="default.button.revisar.label" default="Revisar" /></g:link>
-                                   
-                                    </g:if>    
-                                    <g:elseif test="${detalle.estatus?.id == 3}">
+				<fieldset class="buttons">  
+                                    <g:if test="${detalle.estatus?.id == 3}">
                                             <g:form controller="incidente" action="atender">
                                                 <g:hiddenField name="id"  value="${detalle.id}"/>
                                                 <g:textArea cols="30" rows="4" name="respuesta"  style="width:400px; height: 200px;"/>
                                                 <g:actionSubmit  class="edit" value="Atender"/>
                                             </g:form>
-                                    </g:elseif>
+                                    </g:if>
 					<!--<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />-->
 				</fieldset>
 			</g:form>

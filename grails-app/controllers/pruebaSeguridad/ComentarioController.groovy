@@ -7,6 +7,7 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class ComentarioController {
+      def springSecurityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -20,6 +21,8 @@ class ComentarioController {
     }
 
     def create() {
+        params.incidente=params.id
+        
         respond new Comentario(params)
     }
 
@@ -34,7 +37,10 @@ class ComentarioController {
             respond comentarioInstance.errors, view:'create'
             return
         }
-
+        
+        def us = springSecurityService.currentUser.username
+        println us
+        comentarioInstance.usuario = Usuario.findByUsername(us)
         comentarioInstance.save flush:true
 
         request.withFormat {
