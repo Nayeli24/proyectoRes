@@ -11,10 +11,18 @@
         <a href="#show-incidente" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
         <div class="nav" role="navigation">
             <ul>
-                <li><a class="home" href="${createLink(uri: '/incidente/index')}"><g:message code="Regresar"/></a></li>
-                 <sec:ifAnyGranted roles='ROLE_CLIENTE'>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-                 </sec:ifAnyGranted>
+                <li><a class="home" href="${createLink(uri: '/incidente/index')}"><g:message code="Página principal"/></a></li>
+                <sec:ifAnyGranted roles='ROLE_CLIENTE'>
+                    <g:if test="${incidenteInstance?.estatus?.id == 3}">
+                        <li>   <li><g:link controller="comentario" action="index" id="${incidenteInstance.id}">Comentarios</g:link></li></li>
+                        </g:if>
+                </sec:ifAnyGranted>
+                <sec:access expression="hasRole('ROLE_DESARROLLADOR')">
+                    <li><a  href="${createLink(uri: '/incidente/listarRevision')}"><g:message code="Incidentes en Revisión"/></a></li>
+                    <li>   <li><g:link controller="comentario" action="index" id="${incidenteInstance.id}">Comentarios</g:link></li></li>
+                    <li><g:link class="create" controller="comentario" action="create" id="${incidenteInstance.id}"><g:message code="Nuevo Comentario" args="[entityName]" /></g:link></li>
+                    <li><g:link action="edit" id="${incidenteInstance.id}"><g:message code="Atender" args="[entityName]" /></g:link></li>
+                    </sec:access>
                 </ul>
             </div>
             <div id="show-incidente" class="content scaffold-show" role="main">
@@ -45,7 +53,7 @@
                     <li class="fieldcontain">
                         <span id="estatus-label" class="property-label"><g:message code="incidente.estatus.label" default="Estatus" /></span>
 
-                        <span class="property-value" aria-labelledby="estatus-label"><g:link controller="estatus" action="show" id="${incidenteInstance?.estatus?.id}">${incidenteInstance?.estatus?.encodeAsHTML()}</g:link></span>
+                        <span class="property-value" aria-labelledby="estatus-label">${incidenteInstance?.estatus?.encodeAsHTML()}</span>
 
                     </li>
                 </g:if>
@@ -62,20 +70,20 @@
                 <g:if test="${incidenteInstance?.registradoPor}">
                     <li class="fieldcontain">
                         <span id="registradoPor-label" class="property-label"><g:message code="incidente.registradoPor.label" default="Registrado Por" /></span>
-
+                    <sec:ifAnyGranted roles='ROLE_ADMIN'>
                         <span class="property-value" aria-labelledby="registradoPor-label"><g:link controller="usuario" action="show" id="${incidenteInstance?.registradoPor?.id}">${incidenteInstance?.registradoPor?.username}</g:link></span>
-
+                        </sec:ifAnyGranted >
+                        <span class="property-value" aria-labelledby="asignadoA-label">${incidenteInstance?.registradoPor?.username}</span>
                     </li>
                 </g:if>
-
-                <g:if test="${incidenteInstance?.asignadoA}">
-                    <li class="fieldcontain">
-                        <span id="asignadoA-label" class="property-label"><g:message code="incidente.asignadoA.label" default="Asignado A" /></span>
-
-                        <span class="property-value" aria-labelledby="asignadoA-label"><g:link controller="usuario" action="show" id="${incidenteInstance?.asignadoA?.id}">${incidenteInstance?.asignadoA?.encodeAsHTML()}</g:link></span>
-
-                    </li>
-                </g:if>
+                <sec:ifAnyGranted roles='ROLE_ADMIN'>
+                    <g:if test="${incidenteInstance?.asignadoA}">
+                        <li class="fieldcontain">
+                            <span id="asignadoA-label" class="property-label"><g:message code="incidente.asignadoA.label" default="Asignado A" /></span>
+                            <span class="property-value" aria-labelledby="asignadoA-label"><g:link controller="usuario" action="show" id="${incidenteInstance?.asignadoA?.id}">${incidenteInstance?.asignadoA?.username}</g:link></span>
+                            </li>
+                    </g:if>
+                </sec:ifAnyGranted>
 
                 <g:if test="${incidenteInstance?.fechaAsignacion}">
                     <li class="fieldcontain">
@@ -96,6 +104,23 @@
                 </g:if>
 
             </ol>
+            <g:if test="${incidenteInstance?.estatus?.id==4}">
+                <g:if test="${incidenteInstance?.solucion}">
+                    <li class="fieldcontain">
+                        <span id="descripcion-label" class="property-label"><g:message code="incidente.solucion.label" default="Solución" /></span>
+
+                        <span class="property-value" aria-labelledby="solucion-label"><g:fieldValue bean="${incidenteInstance}" field="solucion"/></span>
+
+                    </li>
+                </g:if>
+                <sec:ifAnyGranted roles='ROLE_CLIENTE'>
+                    <g:form url="[resource:incidenteInstance, action:'cerrarIncidente']">
+                        <fieldset class="buttons">
+                            <g:actionSubmit   value="Cerrar Incidente"/> </fieldset>
+                        </g:form>
+
+                </sec:ifAnyGranted>
+            </g:if>
             <g:if test="${incidenteInstance?.estatus?.id==1}">
                 <g:form url="[resource:incidenteInstance, action:'delete']" method="DELETE">
                     <fieldset class="buttons">
@@ -103,25 +128,16 @@
                     </fieldset>
                 </g:form>
             </g:if>
-            <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
-                <g:form >
-                    <fieldset class="buttons">
-                        <g:if  test="${incidenteInstance?.estatus?.id == 2}">
-                            <g:link class="edit" action="revisar" resource="${incidenteInstance}" id="${incidenteInstance.id}"><g:message code="default.button.revisar.label" default="Revisar" /></g:link>
+            <g:if test="${incidenteInstance?.estatus?.id==5}">
 
-                        </g:if>    
-                        <g:elseif test="${incidenteInstance?.estatus?.id == 3}">
-                            <g:form controller="incidente" action="atender">
-                                <g:hiddenField name="id"  value="${incidenteInstance.id}"/>
-                                <g:textArea cols="30" rows="4" name="respuesta"  style="width:400px; height: 200px;"/>
-                                <g:actionSubmit  class="edit" value="Atender"/>
-                            </g:form>
-                        </g:elseif>
-                            <!--<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />-->
-                    </fieldset>
-                </g:form>
-            </sec:ifAnyGranted>
+                <sec:ifAnyGranted roles='ROLE_ADMIN'>
+                    <g:form url="[resource:incidenteInstance, action:'enviarEmail']">
+                        <fieldset class="buttons">
+                            <g:actionSubmit value="Enviar Email"/> </fieldset>
+                        </g:form>
 
+                </sec:ifAnyGranted>
+            </g:if>
         </div>
     </body>
 </html>

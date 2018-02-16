@@ -47,7 +47,7 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: documentoInstance, field: 'urlArchivo', 'error')} required">
+<!--<div class="fieldcontain ${hasErrors(bean: documentoInstance, field: 'urlArchivo', 'error')} required">
 	<label for="urlArchivo">
 		<g:message code="documento.urlArchivo.label" default="Url Archivo" />
 		<span class="required-indicator">*</span>
@@ -55,4 +55,4 @@
 	<g:field type="url" name="urlArchivo" required="" value="${documentoInstance?.urlArchivo}"/>
 
 </div>
-
+-->

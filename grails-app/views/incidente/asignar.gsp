@@ -14,7 +14,6 @@
                 <li><a class="home" href="${createLink(uri: '/incidente/index')}"><g:message code="Regresar"/></a></li>
             </ul>
         </div>
-    <sec:ifAnyGranted roles='ROLE_ADMIN'>
         <div id="list-incidente" class="content scaffold-list" role="main">
             <h1><g:message code="Asignar Incidentes"  /></h1>
 
@@ -26,7 +25,7 @@
                 <fieldset class="form">
                     <div class="fieldcontain ">
                         <label for="asignadoA">
-                            <g:message code="asignadoA" default="AsignadoA" />
+                            <g:message code="Usuario Asignado" default="Usuario Asignado" />
 
                         </label>
 
@@ -58,6 +57,6 @@
                 </fieldset>
             </g:form>
         </div>
-    </sec:ifAnyGranted>  
+    
 </body>
 </html>

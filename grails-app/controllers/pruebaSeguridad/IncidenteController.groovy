@@ -85,6 +85,12 @@ class IncidenteController {
             respond incidenteInstance.errors, view:'edit'
             return
         }
+        
+        def us = springSecurityService.currentUser.username
+        println us
+        incidenteInstance.estatus = Estatus.get(4 as long)
+        incidenteInstance.save flush:true
+        def inf = incidenteService.guardarFlujo(us,4,incidenteInstance)
 
         incidenteInstance.save flush:true
 
@@ -132,7 +138,8 @@ class IncidenteController {
         data.incidentes = incidenteService.obtenerIncidentes("SinAsignar" , "ROLE_CLIENTE",springSecurityService.currentUser.username)
         data.usuarios = incidenteService.obtenerUsuarios("ROLE_DESARROLLADOR")
         println "D A T A :::::::::::::::::::::::::::"+data
-        render (view:"asignar", model: [detalle: data])
+       
+        render (view:"asignar", model: [detalle: data ])
         
     }
     def asignarIncidente (){
@@ -149,20 +156,36 @@ class IncidenteController {
      
     }
     
-   
-    def detalleRevisar(){
-        println "::::::::::::::::::162$params"
-        def respuesta = Incidente.get(params.id as long )
-        render (view:"detalleRevisar", model: [detalle: respuesta])
-    }
-        
-     def listarRevision(){
-       def incidentes = incidenteService.listarRevision(springSecurityService.currentUser.authorities.authority as String,springSecurityService.currentUser.username)
-       println "/////////////////////////////   " + incidentes 
-       render (view:"listarRevision", model: [revisados: incidentes])
+    
+     def cerrarIncidente (Incidente incidenteInstance){
+      
+        incidenteInstance.estatus = Estatus.get(5 as int)
+     
+        println "incidente"+incidenteInstance
+        incidenteInstance.save flush:true
+        def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,5,incidenteInstance)
+        redirect (action: "index")
+     
     }
     
-    def revisar(){
+    
+    
+   
+    //    def detalleRevisar(){
+    //        println "::::::::::::::::::162$params"
+    //        def respuesta = Incidente.get(params.id as long )
+    //        render (view:"detalleRevisar", model: [detalle: respuesta])
+    //    }
+    
+   
+  
+    def listarRevision(){
+        def incidentes = incidenteService.listarRevision(springSecurityService.currentUser.authorities.authority as String,springSecurityService.currentUser.username)
+        println "/////////////////////////////   " + incidentes 
+        render (view:"listarRevision", model: [revisados: incidentes])
+    }
+    
+    def revisar(Incidente incidenteInstance){
         println "::::::::::::::::::::::::::::|169$params"
         //def incidente = Incidente.get(params.incidente as long)
         incidenteInstance.estatus = Estatus.get(3 as int)
@@ -170,9 +193,13 @@ class IncidenteController {
         def id=respuesta.id
         println "id incidente::::::::::::::::::"+id
         incidenteInstance.save flush:true
+        def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,3,incidenteInstance)
         redirect (controller: "comentario", action: "create", params: [id:id])
     }
     
+    def enviarEmail(){
+        
+    }
     
     def printReport(){
         println params

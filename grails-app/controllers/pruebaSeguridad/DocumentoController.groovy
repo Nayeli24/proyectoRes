@@ -7,6 +7,7 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class DocumentoController {
+   
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -19,12 +20,28 @@ class DocumentoController {
         respond documentoInstance
     }
 
+    def importarArchivos () {
+        println ":::::::;;;24 documento Controller:::$params"
+        def
+        archivo= request.getFile('fileName')
+        def webRootDir = servletContext.getRealPath("/")
+        def userDir = new File(webRootDir, "/cargaArchivos")
+        userDir.mkdirs()
+        println "::::::::::::::::34"+userDir
+        archivo.transferTo( new File( userDir, archivo.originalFilename))
+        String file=userDir.toString()+ File.separator + archivo.originalFilename
+        ArrayList nomArchivo=new ArrayList()
+        nomArchivo.add(archivo.originalFilename)
+        render (view:'/documento/index', model:[nomArchivo:nomArchivo])
+    }
+    
     def create() {
         respond new Documento(params)
     }
 
     @Transactional
     def save(Documento documentoInstance) {
+        println "52::::::::::::::::::::::::$params"
         if (documentoInstance == null) {
             notFound()
             return
@@ -34,7 +51,7 @@ class DocumentoController {
             respond documentoInstance.errors, view:'create'
             return
         }
-
+        
         documentoInstance.save flush:true
 
         request.withFormat {

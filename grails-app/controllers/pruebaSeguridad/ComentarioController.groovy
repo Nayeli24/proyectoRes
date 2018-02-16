@@ -8,12 +8,18 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class ComentarioController {
       def springSecurityService
+      def comentarioService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
+        println "cometario index::::::::::::::::::::$params"
         params.max = Math.min(max ?: 10, 100)
-        respond Comentario.list(params), model:[comentarioInstanceCount: Comentario.count()]
+       // respond Comentario.list(params), model:[comentarioInstanceCount: Comentario.count()]
+        def comentarios=comentarioService.listarComentarios(params.id)
+        def id= params.id
+        println "Comentarios:::::.....Controller"+ comentarios
+        render (view:"index", model: [comentariosVer: comentarios, comentarioInstanceCount: comentarios.size(), id:id])
     }
 
     def show(Comentario comentarioInstance) {

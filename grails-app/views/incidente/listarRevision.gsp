@@ -33,7 +33,7 @@
                         <g:each name="revisados" in="${revisados}">	
                             <tr >
                                 <td  class="left tableTitleColor font12 paddingTop12 paddingRight12 paddingBottom5 paddingLeft10 textUpper">
-                                    <g:link action="detalleRevisar" id="${it.id}">${it.folio}</g:link>
+                                    <g:link action="show" id="${it.id}">${it.folio}</g:link>
 
                                 </td>	
                                 <td  class="left tableTitleColor font12 paddingTop12 paddingRight12 paddingBottom5 paddingLeft10 textUpper">
