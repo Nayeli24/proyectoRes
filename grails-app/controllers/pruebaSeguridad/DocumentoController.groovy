@@ -4,13 +4,14 @@ package pruebaSeguridad
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import java.io.File
 
 @Transactional(readOnly = true)
 class DocumentoController {
    
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+  
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Documento.list(params), model:[documentoInstanceCount: Documento.count()]
@@ -22,8 +23,8 @@ class DocumentoController {
 
     def importarArchivos () {
         println ":::::::;;;24 documento Controller:::$params"
-        def
-        archivo= request.getFile('fileName')
+        def fileNames = request.getFileNames()
+        def archivo= request.getFile(fileNames)
         def webRootDir = servletContext.getRealPath("/")
         def userDir = new File(webRootDir, "/cargaArchivos")
         userDir.mkdirs()
@@ -32,10 +33,13 @@ class DocumentoController {
         String file=userDir.toString()+ File.separator + archivo.originalFilename
         ArrayList nomArchivo=new ArrayList()
         nomArchivo.add(archivo.originalFilename)
-        render (view:'/documento/index', model:[nomArchivo:nomArchivo])
+        render (view:'importarArchivos', model:[nomArchivo:nomArchivo])
     }
     
     def create() {
+        
+          params.incidente=params.id
+       
         respond new Documento(params)
     }
 

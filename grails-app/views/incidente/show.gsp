@@ -21,7 +21,7 @@
                     <li><a  href="${createLink(uri: '/incidente/listarRevision')}"><g:message code="Incidentes en Revisión"/></a></li>
                     <li>   <li><g:link controller="comentario" action="index" id="${incidenteInstance.id}">Comentarios</g:link></li></li>
                     <li><g:link class="create" controller="comentario" action="create" id="${incidenteInstance.id}"><g:message code="Nuevo Comentario" args="[entityName]" /></g:link></li>
-                    <li><g:link action="edit" id="${incidenteInstance.id}"><g:message code="Atender" args="[entityName]" /></g:link></li>
+                    <li><g:link action="atender" id="${incidenteInstance.id}"><g:message code="Atender" args="[entityName]" /></g:link></li>
                     </sec:access>
                 </ul>
             </div>

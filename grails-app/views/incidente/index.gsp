@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+       
+        <r:require modules="bootstrap"/>
         <meta name="layout" content="main">
         <g:set var="entityName" value="${message(code: 'incidente.label', default: 'Incidente')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>

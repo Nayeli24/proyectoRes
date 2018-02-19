@@ -11,6 +11,9 @@
 		<div class="nav" role="navigation">
 			<ul>
 				<li><g:link action="show" id="${incidenteInstance.id}"><g:message code="Regresar" args="" /></g:link></li>
+                                  <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
+                               <li><g:link controller="documento" action="importarArchivos" id="${incidenteInstance.id}" ><g:message code="Documentos" args="" /></g:link></li>   
+                                </sec:ifAnyGranted>
 			</ul>
 		</div>
 		<div id="edit-incidente" class="content scaffold-edit" role="main">

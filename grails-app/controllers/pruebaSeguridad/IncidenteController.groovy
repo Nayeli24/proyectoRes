@@ -157,7 +157,7 @@ class IncidenteController {
     }
     
     
-     def cerrarIncidente (Incidente incidenteInstance){
+    def cerrarIncidente (Incidente incidenteInstance){
       
         incidenteInstance.estatus = Estatus.get(5 as int)
      
@@ -169,7 +169,56 @@ class IncidenteController {
     }
     
     
+    def upload(){
+        println "::::::::::::::::::::173:$params"
+        def archivos = []
+        def mapa 
+        def uploadedFile = request.getFile('nombreArchivo')
+        println "::::::::::177"+uploadedFile
+        InputStream inputStream = uploadedFile.inputStream
+        mapa = [:]
+        mapa.archivo = inputStream
+        mapa.nombreDelArchivo = uploadedFile.originalFilename
+        //mapa.extension = fileLabel.toLowerCase()
+        archivos << mapa
+        println archivos
+        def incidente = Incidente.get(params.id)
+        println incidente
+        
+        def archivo = archivos.getAt(0)
+        println archivo.nombreDelArchivo
+        
+        def documento = new Documento ()
+        documento.incidente = incidente
+        documento.nombre = archivo.nombreDelArchivo
+        documento.fechaSubio = new Date ()
+        documento.urlArchivo = "/var/documentos/" + archivo.nombreDelArchivo
+        if(documento.save(flush:true)){ println "se guardo"
+            def fileOutputStream = new FileOutputStream(documento.urlArchivo)
+            File file = new File(documento.urlArchivo)
+            if (file.exists() || file.createNewFile()) {
+                file.withOutputStream{fos->
+                    fos << archivo.archivo
+                }
+            }   
+        }
+        else{
+            if (documento.hasErrors()) {
+                documento.errors.allErrors.each {
+                    println it
+                }
+            }
+        }
+    }
     
+    
+    def atender(Incidente incidenteInstance){
+        println "::::::::::::::::::::$params"
+        def id=params.id
+    
+      
+        render (view: "atender", params: [id:id])
+    }
    
     //    def detalleRevisar(){
     //        println "::::::::::::::::::162$params"

@@ -2,13 +2,13 @@
 
 
 
-<div class="fieldcontain ${hasErrors(bean: documentoInstance, field: 'incidente', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: comentarioInstance, field: 'incidente', 'error')} ">
 	<label for="incidente">
-		<g:message code="documento.incidente.label" default="Incidente" />
+		<g:message code="comentario.incidente.label" default="Id Incidente" />
 		
 	</label>
-	<g:select id="incidente" name="incidente.id" from="${pruebaSeguridad.Incidente.list()}" optionKey="id" value="${documentoInstance?.incidente?.id}" class="many-to-one" noSelection="['null': '']"/>
-
+	<g:textField name="incidente" value="${documentoInstance?.incidente?.id}" readonly="true"/>
+	
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: documentoInstance, field: 'tipoDoc', 'error')} ">
@@ -54,5 +54,4 @@
 	</label>
 	<g:field type="url" name="urlArchivo" required="" value="${documentoInstance?.urlArchivo}"/>
 
-</div>
--->
+</div>-->
