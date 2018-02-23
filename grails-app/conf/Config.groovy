@@ -119,7 +119,7 @@ log4j.main = {
 
 
 
-grails.plugin.springsecurity.auth.loginFormUrl = '/pruebaSeguridad/incidente/index'
+//grails.plugin.springsecurity.auth.loginFormUrl = '/pruebaSeguridad/incidente/index'
 //grails.plugin.springsecurity.failureHandler.defaultFailureUrl = '/'
 
 
@@ -140,11 +140,14 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
      '/estatus/**':  ['ROLE_ADMIN'],
     '/role/**':  ['ROLE_ADMIN'],
     '/empresa/**':  ['ROLE_ADMIN'],
-        '/incidente/**':  ['isFullyAuthenticated()'],
+        '/incidente/index':  ['isFullyAuthenticated()'],
+      '/incidente/create':  ['ROLE_CLIENTE'],
+    '/incidente/asignar':  ['ROLE_ADMIN'],
     '/usuario/**':  ['ROLE_ADMIN'],
         '/comentario/**':  ['isFullyAuthenticated()'],
         '/jasper/**':    ['permitAll'],
        '/documento/**':    ['isFullyAuthenticated()'],
+    '/**/fonts/**':  ['permitAll'],
     '/tipoDoc/**':    ['ROLE_ADMIN'] 
 ]
 

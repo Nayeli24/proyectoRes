@@ -1,124 +1,74 @@
+<!--author: W3layouts
+author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
 <html>
-<head>
-	<meta name='layout' content='main'/>
-	<title><g:message code="springSecurity.login.title"/></title>
-	<style type='text/css' media='screen'>
-	#login {
-		margin: 15px 0px;
-		padding: 0px;
-		text-align: center;
-	}
+    <head>
+        <title>Bienvenido Mesa de Ayuda</title>
+        <!-- metatags-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="Magnificent login form a Flat Responsive Widget,Login form widgets, Sign up Web 	forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
+        <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+            function hideURLbar(){ window.scrollTo(0,1); } </script>
+            <!-- Meta tag Keywords -->
+        <link href="../css/style.css" rel="stylesheet" type="text/css" media="all"/><!--stylesheet-css-->
+        <link rel="stylesheet" href="../css/font-awesome.css"><!--fontawesome-->
+        <link href="..///fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"><!--online fonts-->
+        <link href="..///fonts.googleapis.com/css?family=Raleway" rel="stylesheet"><!--online fonts-->
+    </head>
+    <body>
+        <div class="w3ls-main">
+            <div class="wthree-heading">
+                <h1>Bienvenido</h1>
+            </div>
+            <div class="wthree-container">
+                <div class="wthree-form">
+                    <div class="agileits-2">
+                        <h2>login</h2>
+                    </div>
+                    <g:if test='${flash.message}'>
+                        <div style="color: #ffffff" class='login_message'>${flash.message}</div>
+                    </g:if>
 
-	#login .inner {
-		width: 340px;
-		padding-bottom: 6px;
-		margin: 60px auto;
-		text-align: left;
-		border: 1px solid #aab;
-		background-color: #f0f0fa;
-		-moz-box-shadow: 2px 2px 2px #eee;
-		-webkit-box-shadow: 2px 2px 2px #eee;
-		-khtml-box-shadow: 2px 2px 2px #eee;
-		box-shadow: 2px 2px 2px #eee;
-	}
+                    <form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
+                        <div class="w3-user">
+                            <span><i class="fa fa-user-o" aria-hidden="true"></i></span>
+                            <input type='text' class='text_' name='j_username' id='username' placeholder="Username"/>
 
-	#login .inner .fheader {
-		padding: 18px 26px 14px 26px;
-		background-color: #f7f7ff;
-		margin: 0px 0 14px 0;
-		color: #2e3741;
-		font-size: 18px;
-		font-weight: bold;
-	}
+                        </div>
+                        <div class="clear"></div>
+                        <div class="w3-psw">
+                            <span><i class="fa fa-key" aria-hidden="true"></i></span>
+                            <input type='password' class='text_' name='j_password' id='password' placeholder="Password" required=""/>
 
-	#login .inner .cssform p {
-		clear: left;
-		margin: 0;
-		padding: 4px 0 3px 0;
-		padding-left: 105px;
-		margin-bottom: 20px;
-		height: 1%;
-	}
+                        </div>
 
-	#login .inner .cssform input[type='text'] {
-		width: 120px;
-	}
-
-	#login .inner .cssform label {
-		font-weight: bold;
-		float: left;
-		text-align: right;
-		margin-left: -105px;
-		width: 110px;
-		padding-top: 3px;
-		padding-right: 10px;
-	}
-
-	#login #remember_me_holder {
-		padding-left: 120px;
-	}
-
-	#login #submit {
-		margin-left: 15px;
-	}
-
-	#login #remember_me_holder label {
-		float: none;
-		margin-left: 0;
-		text-align: left;
-		width: 200px
-	}
-
-	#login .inner .login_message {
-		padding: 6px 25px 20px 25px;
-		color: #c33;
-	}
-
-	#login .inner .text_ {
-		width: 120px;
-	}
-
-	#login .inner .chk {
-		height: 12px;
-	}
-	</style>
-</head>
-
-<body>
-<div id='login'>
-	<div class='inner'>
-		<div class='fheader'><g:message code="springSecurity.login.header"/></div>
-
-		<g:if test='${flash.message}'>
-			<div class='login_message'>${flash.message}</div>
-		</g:if>
-
-		<form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
-			<p>
-				<label for='username'><g:message code="springSecurity.login.username.label"/>:</label>
-				<input type='text' class='text_' name='j_username' id='username'/>
-			</p>
-
-			<p>
-				<label for='password'><g:message code="springSecurity.login.password.label"/>:</label>
-				<input type='password' class='text_' name='j_password' id='password'/>
-			</p>
-
-			<p id="remember_me_holder">
-				<input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/>
-				<label for='remember_me'><g:message code="springSecurity.login.remember.me.label"/></label>
-			</p>
-
-			<p>
-				<input type='submit' id="submit" value='${message(code: "springSecurity.login.button")}'/>
-			</p>
-		</form>
-	</div>
-</div>
-<script type='text/javascript'>
-(function() {
-	document.forms['loginForm'].elements['j_username'].focus();
-})();
-</script>
-</body>
+                        <div class="clear"></div>
+                        <div class="w3l">
+                            <p id="remember_me_holder">
+                                <input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/>
+                                <label style="color: #ffffff" for='remember_me'><g:message code="springSecurity.login.remember.me.label"/></label>
+                            </p>
+                            <p>
+                            </p>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="w3l-submit">
+                            <input type="submit" id="submit" value='${message(code: "springSecurity.login.button")}'/>
+                        </div>
+                        <div class="clear"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="agileits-footer">
+                <p>&copy; Mesa Ayuda. All Rights Reserved </p>
+        </div>
+    </body>
 </html>
+
+
+
