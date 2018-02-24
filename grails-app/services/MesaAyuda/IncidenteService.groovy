@@ -120,11 +120,13 @@ class IncidenteService {
         consulta.each{
             def user =[:]
             user.id=it.usuario.id
+     
             user.username = it.usuario.username
             
             datos << user
         }
-        return datos
+        
+              return datos
     }
     
     def guardarFlujo(def usuario , def estatus , def folio){

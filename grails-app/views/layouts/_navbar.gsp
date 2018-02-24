@@ -44,7 +44,7 @@
                             <ul class="sub">
 
                                 <li><g:link class="" controller="usuario" action="index"><span class="sub-menu-text">Usuarios registrados</span></g:link></li>
-                                <li><g:link class="" controller="usuario" action="create"><span class="sub-menu-text">Crear Usuarios</span></g:link></li>
+                                <li><g:link class="" controller="usuario" action="create"><span class="sub-menu-text">Crear usuario</span></g:link></li>
                               <!--  <li><g:link class="" controller="usuario" action="update"><span class="sub-menu-text">Dar de baja usuario</span></g:link></li>-->
                             </ul>
                         </li>
@@ -60,7 +60,7 @@
                                 </ul>
                             </li>
                             <li>
-                            <g:link class="" action="asignar"> 
+                            <g:link class="" controller="incidente" action="asignar"> 
                                 <i class="fa fa-pencil-square-o fa-fw"></i> <span class="menu-text">Asignar incidente</span>
                                 <span class="selected"></span>
                             </g:link>					

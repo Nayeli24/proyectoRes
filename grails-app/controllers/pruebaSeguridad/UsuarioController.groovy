@@ -47,19 +47,21 @@ class UsuarioController {
         def rolUsuario=params.rolUsuario
         println rolUsuario
         def  clienteRole=Role.findByAuthority('ROLE_CLIENTE')
-        def  userRole=Role.findByAuthority('ROLE_DESARROLLADOR')
+        def  userRole=Role.findByAuthority('ROLE_DESARROLLADOR') 
+        def  adminRole=Role.findByAuthority('ROLE_ADMIN')   
         println rolUsuario
-        if(params.rolUsuario=="cliente"){ 
-            println rolUsuario
-            println clienteRole
+            if(params.rolUsuario=="cliente"){ 
+                println rolUsuario
+                println clienteRole
             UsuarioRole.create (usuarioInstance, clienteRole, true)
           
-        }else if(params.rolUsuario=="empleado"){
-            UsuarioRole.create (usuarioInstance, userRole, true)
+            }else if(params.rolUsuario=="empleado"){
+                UsuarioRole.create (usuarioInstance, userRole, true)
             
-        }
-       
-     
+            }else if(params.rolUsuario=="admin"){
+                UsuarioRole.create (usuarioInstance, userRole, true)
+            
+            }
 
         request.withFormat {
             form multipartForm {
@@ -69,6 +71,7 @@ class UsuarioController {
             '*' { respond usuarioInstance, [status: CREATED] }
         }
     }
+    
 
     def edit(Usuario usuarioInstance) {
         respond usuarioInstance
@@ -99,7 +102,7 @@ class UsuarioController {
         }else if(params.rolUsuario=="empleado"){
             UsuarioRole.create (usuarioInstance, userRole, true)
         }
-
+        
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Usuario.label', default: 'Usuario'), usuarioInstance.id])
