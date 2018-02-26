@@ -78,8 +78,7 @@
                                           
                                                     </fieldset>
                                                     <fieldset class="buttons">
-					<g:submitButton name="create" class="btn btn-success" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-                                        <button id="btn-load" class="btn btn-primary" data-loading-text="Refreshing...">Click to Refresh</button>
+					<g:submitButton name="create" class="btn btn-success" value="Agregar usuario" />
 				</fieldset>
                                                         <!--<div class="col-sm-offset-2 col-sm-10">
                                                             <button type="submit" class="btn btn-success" name="create" >Agregar usuario</button>  

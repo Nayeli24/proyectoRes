@@ -70,17 +70,17 @@
 
                         <li>
                             <g:link class="" action="create"> 
-                                <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">Nuevo incidente</span>
+                                <i class="fa fa-edit fa-fw"></i> <span class="menu-text">Nuevo incidente</span>
                                 <span class="selected"></span>
                             </g:link>					
                         </li>
                     </sec:ifAnyGranted>
-                    <sec:access expression="hasRole('ROLE_DESARROLLADOR')">
+<!--                    <sec:access expression="hasRole('ROLE_DESARROLLADOR')">
                         <g:link class="" action="listarRevision"> 
                             <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">Incidentes en Revisión</span>
                             <span class="selected"></span>
                         </g:link>	
-                    </sec:access>
+                    </sec:access>-->
 
                 </ul>
                 <!-- /SIDEBAR MENU -->

@@ -51,7 +51,7 @@ class IncidenteService {
                 datosIncidente << incidente
             }
         }else if(role == '[ROLE_DESARROLLADOR]'){  
-            def consulta3 = Incidente.executeQuery("SELECT t FROM Incidente t WHERE t.estatus = :estatus AND t.asignadoA = :user ",[estatus: Estatus.get(2 as long) , user: Usuario.findByUsername(usuario) ])
+            def consulta3 = Incidente.executeQuery("SELECT t FROM Incidente t WHERE t.estatus = :estatus OR t.estatus= :estatus2 AND t.asignadoA = :user ",[estatus: Estatus.get(2 as long) , estatus2: Estatus.get(3 as long),user: Usuario.findByUsername(usuario) ])
             consulta3.each{
                 def incidente = [:]
                 incidente.id = it.id
@@ -89,9 +89,6 @@ class IncidenteService {
         }
         return datosIncidente
     }
-    
-    
-    
     def obtenerIncidentes(def tipo , def role, def usuario) {
         def datos = []
         def consulta
@@ -120,13 +117,11 @@ class IncidenteService {
         consulta.each{
             def user =[:]
             user.id=it.usuario.id
-     
-            user.username = it.usuario.username
-            
+            user.nombre = it.usuario.nombre
             datos << user
         }
-        
-              return datos
+        println "datos service"+datos.nombre
+        return datos.nombre
     }
     
     def guardarFlujo(def usuario , def estatus , def folio){
@@ -147,11 +142,4 @@ class IncidenteService {
         def idt = resultado.id_incidente
         return idt
     }
-    
-    
-    
-    
-    
-    
-    
 }

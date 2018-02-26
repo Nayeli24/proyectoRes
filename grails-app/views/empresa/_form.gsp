@@ -1,13 +1,9 @@
 <%@ page import="pruebaSeguridad.Empresa" %>
 
-
-
-<div class="fieldcontain ${hasErrors(bean: empresaInstance, field: 'nombreEmpresa', 'error')} required">
-	<label for="nombreEmpresa">
-		<g:message code="empresa.nombreEmpresa.label" default="Nombre Empresa" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="nombreEmpresa" maxlength="35" required="" value="${empresaInstance?.nombreEmpresa}"/>
-
+<div class="form-group">
+    <label class="col-sm-3 control-label" for="nombreEmpresa"> Nombre de empresa:
+        <span class="required-indicator">*</span></label>
+    <div class="col-sm-9">
+        <input class="form-control" name="username" required="" value="${empresaInstance?.nombreEmpresa}" placeholder="Nombre de empresa" type="text">
+    </div>
 </div>
-
