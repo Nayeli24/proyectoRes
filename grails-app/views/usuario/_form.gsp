@@ -1,5 +1,6 @@
 <%@ page import="pruebaSeguridad.Usuario" %>
 <%@ page import="pruebaSeguridad.UsuarioRole" %>
+<%@ page import="pruebaSeguridad.Role" %>
 
 <div class="form-group">
     <label class="col-sm-3 control-label" for="username"> Username:
@@ -45,8 +46,18 @@
     <label class="col-sm-3 control-label" for="areaDpto"> Área / Departamento:
         <span class="required-indicator">*</span></label>
     <div class="col-sm-9">
-        <input class="form-control" name="areaDpto" required="" value="${usuarioInstance?.areaDpto}" placeholder="Área/Dep" type="text">
+        <select  required="" class="form-control" name="areaDpto" id="areaDpto">
+            <option>Dirección General</option>
+            <option>Administración y Recursos Humanos</option> 
+            <option>Producción</option>
+            <option>Finanzas y Contabilidad</option>
+            <option>Publicidad y Mercadotecnia</option>
+            <option>Sistemas e Informática</option>
+            <option>Otro</option>
+        </select>
+        <input style="display:none;" class="form-control"  id="mostrar"  name="areaDpto" value="${usuarioInstance?.areaDpto}" placeholder="Área/Dep" type="text">
     </div>
+
 </div>
 
 <div class="form-group">
@@ -64,7 +75,7 @@
     </div> 
 </div>
 
-<div class="form-group">
+<!--<div class="form-group">
     <label class="col-sm-3 control-label" > Opciones de cuenta:</label>
     <div class="col-sm-9">
         <label class="checkbox-inline" for="accountExpired">
@@ -81,19 +92,16 @@
         </label>
 
     </div> 
-</div>
+</div>-->
 
 <div class="form-group">
     <label class="col-sm-3 control-label" > Tipo de usuario:</label>
     <div class="col-sm-9">
-        <label class="checkbox-inline">
-             <input type="radio" name="rolUsuario" value="cliente"> Cliente   </label>
-        <label class="checkbox-inline">
-            <input name="rolUsuario"  value="empleado"  type="radio" > Empleado Nuuptech
-        </label>
-        <label class="checkbox-inline" >
-            <input name="rolUsuario"  value="admin" type="radio" > Administrador
-        </label>
+        <select  required="" class="form-control" name="rolUsuario">
+            <option  value="cliente" selected="true">Cliente</option>
+            <option  value="empleado">Empleado Nuuptech</option> 
+            <option  value="admin">Administrador</option>
+        </select>
     </div>
 </div>
 

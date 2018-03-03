@@ -4,13 +4,16 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Detalle de usuario</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
         <meta name="layout" content="main">
-        <g:set var="entityName" value="${message(code: 'usuario.label', default: 'Usuario')}" />
-        <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
         <a href="#show-usuario" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
         <div class="nav" role="navigation">
+          
             <ul>
                 <li><g:link class="list" action="index"><g:message code="Lista de usuarios" args="[entityName]" /></g:link></li>
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>

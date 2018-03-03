@@ -134,27 +134,30 @@ class IncidenteController {
     def asignar (){
         flash.error = "No existen incidentes nuevos para realizar la asignación"
         def data = [:]
-           
-        data.incidentes = incidenteService.obtenerIncidentes("SinAsignar" , "ROLE_CLIENTE",springSecurityService.currentUser.username)
+        data.incidentes=incidenteService.obtenerIncidentes("SinAsignar" , "ROLE_CLIENTE",springSecurityService.currentUser.username)
         data.usuarios = incidenteService.obtenerUsuarios("ROLE_DESARROLLADOR")
-        println "D A T A :::::::::::::::::::::::::::"+data
-       
-        render (view:"asignar", model: [detalle: data ])
-        
+        render (view:"asignar", model: [detalle: data ])  
     }
-    def asignarIncidente (){
+    def asignarIncidente (Incidente incidenteInstance){
+        println ":::::asignar incidente::::::::::::::$params.asignadoA"
+        def usuario=Usuario.findByNombre(params.asignadoA)
+        println "usuario________"+usuario
+        if(params.incidente.size()>1){
+            for(def i in params.incidente){
+                println ":::::::::::::"+i
+              def incident=Incidente.findByTema(i)
+            incident.asignadoA = usuario
+            incident.estatus = Estatus.get(2 as int)
+            incident.fechaAsignacion = new Date()
+            incident.save flush:true
+            def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incident)
+        }
+        }
+    
         
-        def incidente = Incidente.get(params.incidente as long)
-        println "incidente"+incidente
-        incidente.asignadoA = Usuario.get(params.asignadoA as long )
-        incidente.estatus = Estatus.get(2 as int)
-        incidente.fechaAsignacion = new Date()
-        println "incidente"+incidente
-        incidente.save flush:true
-        def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incidente)
         redirect (action: "index")
-     
     }
+    
     
     
     def cerrarIncidente (Incidente incidenteInstance){
@@ -219,21 +222,7 @@ class IncidenteController {
       
         render (view: "atender", params: [id:id])
     }
-   
-    //    def detalleRevisar(){
-    //        println "::::::::::::::::::162$params"
-    //        def respuesta = Incidente.get(params.id as long )
-    //        render (view:"detalleRevisar", model: [detalle: respuesta])
-    //    }
-    
-   
-  
-    def listarRevision(){
-        def incidentes = incidenteService.listarRevision(springSecurityService.currentUser.authorities.authority as String,springSecurityService.currentUser.username)
-        println "/////////////////////////////   " + incidentes 
-        render (view:"listarRevision", model: [revisados: incidentes])
-    }
-    
+       
     def revisar(Incidente incidenteInstance){
         println "::::::::::::::::::::::::::::|169$params"
         //def incidente = Incidente.get(params.incidente as long)

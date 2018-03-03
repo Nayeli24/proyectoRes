@@ -7,6 +7,7 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class UsuarioController {
+    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     def usuarioService
@@ -14,7 +15,6 @@ class UsuarioController {
        
         params.max = Math.min(max ?: 10, 100)
         def usuario=usuarioService.usuarioId()
-        println "fbbvbbvvvbnvbnvbn.....Controller"+ usuario
         render (view:"usuariosList", model: [usuarios: usuario])
 
     }
@@ -31,6 +31,7 @@ class UsuarioController {
 
     @Transactional
     def save(Usuario usuarioInstance) {
+        println params
         if (usuarioInstance == null) {
             notFound()
             return
@@ -40,28 +41,39 @@ class UsuarioController {
             respond usuarioInstance.errors, view:'create'
             return
         }
-        usuarioInstance.save flush:true
-
         
-        println params
+        usuarioInstance.enabled=true;
+        def arreglo=params.areaDpto
+        if(arreglo.size()==2){
+            if(arreglo[0] =="Otro"){
+                usuarioInstance.areaDpto=arreglo[1]
+            }else{
+                usuarioInstance.areaDpto=arreglo[0]
+            }
+        }
+        
+        usuarioInstance.save flush:true
+        
+     
+        
+     
+       
         def rolUsuario=params.rolUsuario
-        println rolUsuario
+    
         def  clienteRole=Role.findByAuthority('ROLE_CLIENTE')
         def  userRole=Role.findByAuthority('ROLE_DESARROLLADOR') 
         def  adminRole=Role.findByAuthority('ROLE_ADMIN')   
-        println rolUsuario
-            if(params.rolUsuario=="cliente"){ 
-                println rolUsuario
-                println clienteRole
+    
+        if(params.rolUsuario=="cliente"){ 
             UsuarioRole.create (usuarioInstance, clienteRole, true)
           
-            }else if(params.rolUsuario=="empleado"){
-                UsuarioRole.create (usuarioInstance, userRole, true)
+        }else if(params.rolUsuario=="empleado"){
+            UsuarioRole.create (usuarioInstance, userRole, true)
             
-            }else if(params.rolUsuario=="admin"){
-                UsuarioRole.create (usuarioInstance, userRole, true)
+        }else if(params.rolUsuario=="admin"){
+            UsuarioRole.create (usuarioInstance, userRole, true)
             
-            }
+        }
 
         request.withFormat {
             form multipartForm {
@@ -75,6 +87,13 @@ class UsuarioController {
 
     def edit(Usuario usuarioInstance) {
         respond usuarioInstance
+    }
+    
+    
+    def usuarioLog() {
+         def usuario=usuarioService.usuarioLog(springSecurityService.currentUser.username)
+         println "recibe controler usuario dfdfsdfdsfdsfdsfdsfdsfdsdf" +usuario
+        render (view:"usuariolog", model: [usuario: usuario])
     }
 
     @Transactional

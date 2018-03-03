@@ -51,7 +51,7 @@ class IncidenteService {
                 datosIncidente << incidente
             }
         }else if(role == '[ROLE_DESARROLLADOR]'){  
-            def consulta3 = Incidente.executeQuery("SELECT t FROM Incidente t WHERE t.estatus = :estatus OR t.estatus= :estatus2 AND t.asignadoA = :user ",[estatus: Estatus.get(2 as long) , estatus2: Estatus.get(3 as long),user: Usuario.findByUsername(usuario) ])
+            def consulta3 = Incidente.executeQuery("SELECT t FROM Incidente t WHERE (t.estatus = :estatus OR t.estatus= :estatus2) AND t.asignadoA = :user ",[estatus: Estatus.get(2 as long) , estatus2: Estatus.get(3 as long),user: Usuario.findByUsername(usuario) ])
             consulta3.each{
                 def incidente = [:]
                 incidente.id = it.id
@@ -70,25 +70,6 @@ class IncidenteService {
     }
     
     
-    def listarRevision(def role, def usuario){
-        println "role revision:::::::::::....."+role
-        def datosIncidente=[]
-        if(role == '[ROLE_DESARROLLADOR]'){  
-            def consulta3 = Incidente.executeQuery("SELECT t FROM Incidente t WHERE t.estatus = :estatus AND t.asignadoA = :user ",[estatus: Estatus.get(3 as long) , user: Usuario.findByUsername(usuario) ])
-            consulta3.each{
-                def incidente = [:]
-                incidente.id = it.id
-                incidente.folio = it.folio
-                incidente.estatus=it.estatus
-                incidente.tema = it.tema
-                incidente.fechaRegistro=it.fechaRegistro
-                incidente.fechaAsignacion = it.fechaAsignacion
-                incidente.registradoPor = it.registradoPor
-                datosIncidente << incidente
-            }
-        }
-        return datosIncidente
-    }
     def obtenerIncidentes(def tipo , def role, def usuario) {
         def datos = []
         def consulta
@@ -103,6 +84,7 @@ class IncidenteService {
                     incidente.folio = it.folio
                     incidente.fechaRegistro = it.fechaRegistro
                     incidente.estatus=it.estatus
+                    incidente.tema=it.tema
                     datos << incidente
                 }
             }
@@ -118,10 +100,11 @@ class IncidenteService {
             def user =[:]
             user.id=it.usuario.id
             user.nombre = it.usuario.nombre
+            user.apellidoPat = it.usuario.apellidoPat
+            user.apellidoMat = it.usuario.apellidoMat
             datos << user
         }
-        println "datos service"+datos.nombre
-        return datos.nombre
+        return datos
     }
     
     def guardarFlujo(def usuario , def estatus , def folio){
