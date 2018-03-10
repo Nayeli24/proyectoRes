@@ -17,6 +17,13 @@
         <input  class="form-control" name="password" required="" value="${usuarioInstance?.password}" placeholder="Password" type="password">
     </div>
 </div>
+<div class="form-group">
+    <label class="col-sm-3 control-label" for="password"> Contraseña:
+        <span class="required-indicator">*</span></label>
+    <div class="col-sm-9">
+        <input  class="form-control" name="password2" required="" value="${usuarioInstance?.password}" placeholder="Password" type="password">
+    </div>
+</div>
 
 <div class="form-group">
     <label class="col-sm-3 control-label" for="Nombre"> Nombre:
@@ -68,9 +75,13 @@
 </div>
 
 <div class="form-group">
+     <div class="alert alert-danger">
+            <g:message code="¡Importante proporcionar el correo electrónico correcto" />
+        </div>
     <label class="col-sm-3 control-label" for="email"> Correo electrónico:
         <span class="required-indicator">*</span></label>
     <div class="col-sm-9">
+       
         <input type="email" class="form-control" name="email" required="" value="${usuarioInstance?.email}" placeholder="ejemplo@gmail.com" >
     </div> 
 </div>
@@ -104,4 +115,4 @@
         </select>
     </div>
 </div>
-
+ 

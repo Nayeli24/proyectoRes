@@ -8,8 +8,10 @@
         <title>Incidentes</title>
 <!--        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">-->
         <meta name="layout" content="main">
+             
     </head>
     <body>
+
 <!-- PAGE -->
         <section id="page">
             <div id="main-content">
@@ -97,10 +99,10 @@
                                                                 <td><g:link action="show" id="${it.id}">${it.folio}</g:link></td>
                                                                 <td>${it.tema}</td>
                                                                 <td class="hidden-xs">${it.estatus}</td>
-                                                                <td class="center"><g:formatDate format="dd / MM / yyyy" date="${it.fechaRegistro}" /></td>
+                                                                <td class="center"><g:formatDate format="dd MMMMM yyyy" date="${it.fechaRegistro}" /></td>
                                                         <sec:ifAnyGranted roles='ROLE_DESARROLLADOR, ROLE_ADMIN'>
                                                             <td class="hidden-xs">${it?.registradoPor?.nombre} ${it?.registradoPor?.apellidoPat} ${it?.registradoPor?.apellidoMat}</td>
-                                                            <td class="center"><g:formatDate  date="${it.fechaAsignacion}" /></td>
+                                                            <td class="center"><g:formatDate format="dd MMMMM yyyy "  date="${it?.fechaAsignacion}" /></td>
                                                         </sec:ifAnyGranted>
                                                         <sec:ifAnyGranted roles='ROLE_ADMIN'>
                                                             <td class="center hidden-xs">${it?.asignadoA?.nombre} ${it?.asignadoA?.apellidoPat} ${it?.asignadoA?.apellidoMat}</td>
@@ -144,5 +146,6 @@
             </div>
         </section>
         <!--/PAGE -->
+       
     </body>
 </html>

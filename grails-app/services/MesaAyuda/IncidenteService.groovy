@@ -20,7 +20,7 @@ class IncidenteService {
          
         if(role == '[ROLE_CLIENTE]'){
             println "role if "+role
-            consulta = Incidente.executeQuery("SELECT t FROM Incidente t WHERE t.registradoPor = :user ",[user: Usuario.findByUsername(usuario) ])
+            consulta = Incidente.executeQuery("SELECT t FROM Incidente t WHERE t.registradoPor = :user order by estatus_id desc ",[user: Usuario.findByUsername(usuario) ])
             println "consulta::::::::::::::::::::::::::::...."+consulta
             consulta.each{
                 def incidente = [:]
@@ -35,7 +35,7 @@ class IncidenteService {
                 datosIncidente << incidente
             }
         }else if(role=='[ROLE_ADMIN]'){
-            def consulta2 = Incidente.executeQuery("SELECT i FROM Incidente i ")
+            def consulta2 = Incidente.executeQuery("SELECT i FROM Incidente i order by estatus_id asc")
             println "consulta2"+consulta2
             consulta2.each{
                 def incidente = [:]
@@ -51,7 +51,7 @@ class IncidenteService {
                 datosIncidente << incidente
             }
         }else if(role == '[ROLE_DESARROLLADOR]'){  
-            def consulta3 = Incidente.executeQuery("SELECT t FROM Incidente t WHERE (t.estatus = :estatus OR t.estatus= :estatus2) AND t.asignadoA = :user ",[estatus: Estatus.get(2 as long) , estatus2: Estatus.get(3 as long),user: Usuario.findByUsername(usuario) ])
+            def consulta3 = Incidente.executeQuery("SELECT t FROM Incidente t WHERE (t.estatus = :estatus OR t.estatus= :estatus2) AND t.asignadoA = :user order by estatus_id desc",[estatus: Estatus.get(2 as long) , estatus2: Estatus.get(3 as long),user: Usuario.findByUsername(usuario) ])
             consulta3.each{
                 def incidente = [:]
                 incidente.id = it.id

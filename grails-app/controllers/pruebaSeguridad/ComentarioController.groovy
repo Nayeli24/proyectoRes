@@ -18,8 +18,9 @@ class ComentarioController {
        // respond Comentario.list(params), model:[comentarioInstanceCount: Comentario.count()]
         def comentarios=comentarioService.listarComentarios(params.id)
         def id= params.id
-        println "Comentarios:::::.....Controller"+ comentarios
-        render (view:"index", model: [comentariosVer: comentarios, comentarioInstanceCount: comentarios.size(), id:id])
+        println "Comentarios:::::.....Controller"+ comentarios.size()
+        
+        render (template:"comentarioList", model: [comentariosVer: comentarios, comentariosCount: comentarios.size(), id:id])
     }
 
     def show(Comentario comentarioInstance) {
@@ -64,7 +65,7 @@ class ComentarioController {
 
     @Transactional
     def update(Comentario comentarioInstance) {
-        if (comentarioInstance == null) {
+            if (comentarioInstance == null) {
             notFound()
             return
         }

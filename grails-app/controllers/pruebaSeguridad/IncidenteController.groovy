@@ -28,7 +28,7 @@ class IncidenteController {
     } 
 
     def show(Incidente incidenteInstance) {
-        respond incidenteInstance
+              respond incidenteInstance
     }
 
     def create() {
@@ -145,13 +145,13 @@ class IncidenteController {
         if(params.incidente.size()>1){
             for(def i in params.incidente){
                 println ":::::::::::::"+i
-              def incident=Incidente.findByTema(i)
-            incident.asignadoA = usuario
-            incident.estatus = Estatus.get(2 as int)
-            incident.fechaAsignacion = new Date()
-            incident.save flush:true
-            def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incident)
-        }
+                def incident=Incidente.findByTema(i)
+                incident.asignadoA = usuario
+                incident.estatus = Estatus.get(2 as int)
+                incident.fechaAsignacion = new Date()
+                incident.save flush:true
+                def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incident)
+            }
         }
     
         
@@ -218,8 +218,6 @@ class IncidenteController {
     def atender(Incidente incidenteInstance){
         println "::::::::::::::::::::$params"
         def id=params.id
-    
-      
         render (view: "atender", params: [id:id])
     }
        
@@ -256,5 +254,31 @@ class IncidenteController {
       
         chain(controller:"jasper",action:"index",model:[data:mapa], params :params)
      
+    }
+    
+    
+    def enviarComentario(){
+        println "comentarios::::::::....$params"
+        
+        def b = Incidente.get( params.id )
+        def us = springSecurityService.currentUser.username
+        def comentario = new Comentario()
+        comentario.incidente = b
+        comentario.descripcion=params.comentario
+        comentario.usuario=Usuario.findByUsername(us)
+        comentario.fechaComentario = new Date()
+        comentario.save flush:true
+        println "incidente:::enviarComentario:::::::::::::..."+b
+        b.estatus = Estatus.get(3 as int)
+        b.save flush:true
+        def gf = incidenteService.guardarFlujo(us,3,b)
+        
+        redirect(controller: "comentario", action: "index", id: params.id)
+        //        render "El incidente con id ${b.id} se envió correctamente."
+    }
+    
+    def welcome(){
+        def message = params.value
+        render "Welcome ${message}"
     }
 }

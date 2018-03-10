@@ -1,3 +1,4 @@
+
 <%@ page import="pruebaSeguridad.Incidente" %>
 <!DOCTYPE html>
 <html>

@@ -19,6 +19,8 @@ class UsuarioService {
             respuesta2.username = it.username
             respuesta2.password=it.password
             respuesta2.empresa=it.empresa
+            respuesta2.accountLocked=it.accountLocked
+            respuesta2.areaDpto=it.areaDpto
             def activa=it.enabled
             println "ACtiva cuenta:::::::::::::::::::::::::::::::::::::::::::::::::"
             println activa

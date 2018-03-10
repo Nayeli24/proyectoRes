@@ -18,10 +18,3 @@
             <g:message code="incidente.seleccionararchivo.label" default="Seleccionar Archivo" />
             <span class="required-indicator">*</span>
         </label>
-
-        <input type="file" id="fileName    " name="nombreArchivo" width="250px">
-        <input type="submit" value="Cargar">
-
-    </div>
-
-</sec:ifAnyGranted>

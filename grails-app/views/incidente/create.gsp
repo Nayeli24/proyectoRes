@@ -52,7 +52,7 @@
                                             <g:render template="form"/>
                                         </fieldset>
                                         <fieldset class="buttons">
-                                            <g:submitButton name="create" class="btn btn-success" value="Crear incidente" />
+                                            <g:submitButton onclick="alert('¡Incidente creado con éxito :)!')" name="create" class="btn btn-success" value="Crear incidente" />
                                         </fieldset>
                                     </g:form>
                                 </div>

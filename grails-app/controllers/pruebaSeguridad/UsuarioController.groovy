@@ -4,8 +4,9 @@ package pruebaSeguridad
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import java.util.StringTokenizer;
 
-@Transactional(readOnly = true)
+@Transactional//(readOnly = true)
 class UsuarioController {
     def springSecurityService
 
@@ -43,6 +44,7 @@ class UsuarioController {
         }
         
         usuarioInstance.enabled=true;
+        usuarioInstance.accountLocked=false;
         def arreglo=params.areaDpto
         if(arreglo.size()==2){
             if(arreglo[0] =="Otro"){
@@ -86,18 +88,20 @@ class UsuarioController {
     
 
     def edit(Usuario usuarioInstance) {
+        println "edit params:::::::::::::::::::::::::::$usuarioInstance"
         respond usuarioInstance
     }
     
     
     def usuarioLog() {
-         def usuario=usuarioService.usuarioLog(springSecurityService.currentUser.username)
-         println "recibe controler usuario dfdfsdfdsfdsfdsfdsfdsfdsdf" +usuario
+        def usuario=usuarioService.usuarioLog(springSecurityService.currentUser.username)
+        println "recibe controler usuario dfdfsdfdsfdsfdsfdsfdsfdsdf" +usuario
         render (view:"usuariolog", model: [usuario: usuario])
     }
 
     @Transactional
     def update(Usuario usuarioInstance) {
+        println "update deeee------------------------------------------$params"
         if (usuarioInstance == null) {
             notFound()
             return
@@ -107,7 +111,20 @@ class UsuarioController {
             respond usuarioInstance.errors, view:'edit'
             return
         }
-
+        String arreglo = params.areaDpto;
+        String[] str;
+        if(arreglo.size()>=2){
+            if(arreglo[0] =="Otro"){
+                usuarioInstance.areaDpto=arreglo[1]
+            }else{
+               
+                str = arreglo.split(',');
+                println str[0]
+                for( String values : str )
+                println(values.getAt(1));
+            }
+        }
+    
         usuarioInstance.save flush:true
         def rolUsuario=UsuarioRole.findByUsuario(Usuario.get(params.id))
         println rolUsuario
@@ -130,6 +147,7 @@ class UsuarioController {
             '*'{ respond usuarioInstance, [status: OK] }
         }
     }
+    
 
     @Transactional
     def delete(Usuario usuarioInstance) {
@@ -165,3 +183,4 @@ class UsuarioController {
         }
     }
 }
+

@@ -65,7 +65,7 @@
                                                 </g:eachError>
                                         </ul>
                                     </g:hasErrors>
-                                    <g:form id="formCrearUsuario" method="post" class="form-horizontal" role="form" url="[resource:usuarioInstance, action:'save']">
+                                    <g:form name="f1" id="formCrearUsuario" method="post" class="form-horizontal" role="form" url="[resource:usuarioInstance, action:'save']">
                                         <fieldset class="form">
                                             <g:render template="form"/>
 
@@ -81,9 +81,26 @@
                                             }
                                             });
                                             });
+
+                                            
+                                        </script>
+                                        <script>
+                                            function comprobarClave(){
+                                            password = document.f1.password.value
+                                            password2 = document.f1.password2.value
+                                            if (password == password2){
+                                            alert("")
+                                            }else{
+                                            alert("Las contraseñas no coinciden")
+                                            } 
+                                            }
+                                            function limpia(elemento)
+                                            {
+                                            elemento.value = "";
+                                            } 
                                         </script>
                                         <fieldset class="buttons">
-                                            <g:submitButton name="create" class="btn btn-success" value="Agregar usuario" />
+                                            <g:submitButton name="create" onclick="comprobarClave()" class="btn btn-success" value="Agregar usuario" />
                                             <button id="btn-load" class="btn btn-primary" >Click to Refresh</button>
 
                                         </fieldset>

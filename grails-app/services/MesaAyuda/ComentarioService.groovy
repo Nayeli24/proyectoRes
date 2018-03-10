@@ -7,11 +7,12 @@ import groovy.sql.Sql
 
 @Transactional
 class ComentarioService {
-
+  def dataSource
     def listarComentarios(def incidente) {
+      
         def consulta
         def datosComentario=[] 
-        consulta = Comentario.executeQuery("SELECT c FROM Comentario c WHERE c.incidente = :inc ",[inc: Incidente.findById(incidente) ])
+       consulta = Comentario.executeQuery("SELECT c FROM Comentario c WHERE c.incidente = :inc order by id_comentario desc",[inc: Incidente.findById(incidente)],[offset:0, max:5])
         println "consulta::::::::::::::::::::::::::::...."+consulta
         consulta.each{
             def comentario = [:]
