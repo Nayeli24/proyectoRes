@@ -71,6 +71,7 @@ grails.project.dependency.resolution = {
         compile ':cookie-session:2.0.16'
         compile "org.grails.plugins:jasper:1.11.0"
         compile ":jasper-response:1.0.1"
+        compile ":mail:1.0.7"
         
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"

@@ -43,6 +43,14 @@ grails.controllers.defaultScope = 'singleton'
 
 // GSP settings
 grails {
+    mail {
+        host = "smtp.gmail.com"
+        port = 587
+        username = "neli1124.sc@gmail.com"
+        password = "170424neli"
+        props = ["mail.smtp.auth":"true", "mail.smtp.starttls.enable":"true"
+                 ]
+    }
     views {
         gsp {
             encoding = 'UTF-8'
@@ -149,6 +157,12 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
       '/incidente/save':  ['ROLE_CLIENTE'],
     '/incidente/welcome':  ['ROLE_DESARROLLADOR','ROLE_CLIENTE'],
     '/incidente/enviarComentario':  ['ROLE_DESARROLLADOR','ROLE_CLIENTE'],
+    '/incidente/enviarEmail':  ['ROLE_ADMIN'],
+      '/incidente/atender':  ['ROLE_DESARROLLADOR'],
+      '/incidente/upload':  ['ROLE_DESARROLLADOR'],
+     '/incidente/welcome':  ['permitAll'],
+    '/incidente/cerrarIncidente':  ['ROLE_CLIENTE'],
+ 
     '/usuario/**':  ['ROLE_ADMIN'],
     '/comentario/index':  ['ROLE_DESARROLLADOR','ROLE_CLIENTE'],
     '/jasper/**':    ['permitAll'],

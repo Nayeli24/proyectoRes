@@ -3,6 +3,9 @@ package pruebaSeguridad
 
 
 import static org.springframework.http.HttpStatus.*
+import static org.springframework.web.multipart.MultipartFile.*
+import static org.springframework.web.multipart.commons.CommonsMultipartFile.*
+import static org.springframework.web.multipart.MultipartHttpServletRequest.*
 import grails.transaction.Transactional
 import org.codehaus.groovy.grails.plugins.jasper.JasperExportFormat
 import org.codehaus.groovy.grails.plugins.jasper.JasperReportDef
@@ -11,7 +14,7 @@ import org.codehaus.groovy.grails.plugins.jasper.JasperReportDef
 class IncidenteController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-    
+    def MailService
     def springSecurityService
     def incidenteService
     static final  int i=0
@@ -28,7 +31,7 @@ class IncidenteController {
     } 
 
     def show(Incidente incidenteInstance) {
-              respond incidenteInstance
+        respond incidenteInstance
     }
 
     def create() {
@@ -171,54 +174,80 @@ class IncidenteController {
      
     }
     
+    def descarga() {
+        def zipFile = new File('/tmp/file.zip')
+        header("X-File-Name", zipFile.name)
+        response.contentType = 'application/octet-stream'
+        zipFile.withInputStream { response.outputStream << it }
+        //zipFile.delete()
+    }
     
-    def upload(){
+    def upload(Incidente incidenteInstance){ 
         println "::::::::::::::::::::173:$params"
         def archivos = []
         def mapa 
-        def uploadedFile = request.getFile('nombreArchivo')
-        println "::::::::::177"+uploadedFile
-        InputStream inputStream = uploadedFile.inputStream
-        mapa = [:]
-        mapa.archivo = inputStream
-        mapa.nombreDelArchivo = uploadedFile.originalFilename
-        //mapa.extension = fileLabel.toLowerCase()
-        archivos << mapa
+       
         println archivos
-        def incidente = Incidente.get(params.id)
-        println incidente
+        def id=params.id
+        //        def incidente=Incidente.get(params.id as long)
+        //        println "incidente               "+incidente
+        def solucion=params.solucion
+        incidenteInstance.solucion=solucion
+        incidenteInstance.save flush:true
+        //        respuesta.solucion=params.solucion
+        println ":::::::::::::::::"+solucion
         
-        def archivo = archivos.getAt(0)
-        println archivo.nombreDelArchivo
         
-        def documento = new Documento ()
-        documento.incidente = incidente
-        documento.nombre = archivo.nombreDelArchivo
-        documento.fechaSubio = new Date ()
-        documento.urlArchivo = "/var/documentos/" + archivo.nombreDelArchivo
-        if(documento.save(flush:true)){ println "se guardo"
-            def fileOutputStream = new FileOutputStream(documento.urlArchivo)
-            File file = new File(documento.urlArchivo)
-            if (file.exists() || file.createNewFile()) {
-                file.withOutputStream{fos->
-                    fos << archivo.archivo
+
+        def uploadedFile = request.getFiles('file')
+        println "::::::::::177"+uploadedFile
+        uploadedFile.each{
+            println "::::::::::::::"+it
+            InputStream inputStream = it.inputStream
+            mapa = [:]
+            mapa.archivo = inputStream
+            mapa.nombreDelArchivo = it.originalFilename
+            //mapa.extension = fileLabel.toLowerCase()
+            archivos << mapa
+      
+            def archivo = archivos.getAt(0)
+            println archivo.nombreDelArchivo
+                
+            def documento = new Documento ()
+            documento.incidente = Incidente.get(id as long)
+            documento.nombre = archivo.nombreDelArchivo
+            documento.fechaSubio = new Date ()
+            documento.urlArchivo = "/var/documentos/" + archivo.nombreDelArchivo
+            if(documento.save(flush:true)){ println "se guardo"
+                def fileOutputStream = new FileOutputStream(documento.urlArchivo)
+                File file = new File(documento.urlArchivo)
+                if (file.exists() || file.createNewFile()) {
+                    file.withOutputStream{fos->
+                        fos << archivo.archivo
+                    }
+                }   
+            }
+            else{
+                if (documento.hasErrors()) {
+                    documento.errors.allErrors.each {
+                        println it
+                    }
                 }
-            }   
-        }
-        else{
-            if (documento.hasErrors()) {
-                documento.errors.allErrors.each {
-                    println it
-                }
+           
             }
         }
+        redirect (controller: "incidente", action: "show", id:params.id)
     }
     
     
     def atender(Incidente incidenteInstance){
+        incidenteInstance.estatus = Estatus.get(4 as int)
+        incidenteInstance.save flush:true
         println "::::::::::::::::::::$params"
         def id=params.id
-        render (view: "atender", params: [id:id])
+        return ["id":id]
+        def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,4,incidenteInstance)
+        render (view: "atender")
     }
        
     def revisar(Incidente incidenteInstance){
@@ -234,7 +263,17 @@ class IncidenteController {
     }
     
     def enviarEmail(){
-        
+        println "mail$params"
+        def incidente=Incidente.get(params.id as long)
+        def email=incidente.registradoPor.email
+        MailService.sendMail {
+            to email
+            //  to "jonathan.g.o.itt@gmail.com"
+            from "neli1124.sc@gmail.com"
+            subject "Aquí va el asunto"
+            html "Este es un correo de <b>ejemplo</b>"
+            render "Correo enviado con éxito"
+        }
     }
     
     def printReport(){
@@ -278,7 +317,36 @@ class IncidenteController {
     }
     
     def welcome(){
-        def message = params.value
-        render "Welcome ${message}"
+        println "_:::::::::::::::::::::::311$params"
+        render (view:"welcome") 
     }
+
+    
+    //    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    //    @ResponseBody
+    //    public ResponseEntity<?> uploadFile(
+    //        @RequestParam("uploadfile") MultipartFile uploadfile) {
+    //  
+    //        try {
+    //            // Get the filename and build the local file path (be sure that the 
+    //            // application have write permissions on such directory)
+    //            String filename = uploadfile.getOriginalFilename();
+    //            String directory = "/var/netgloo_blog/uploads";
+    //            String filepath = Paths.get(directory, filename).toString();
+    //    
+    //            // Save the file locally
+    //            BufferedOutputStream stream =
+    //            new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+    //            stream.write(uploadfile.getBytes());
+    //            stream.close();
+    //        }
+    //        catch (Exception e) {
+    //            System.out.println(e.getMessage());
+    //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    //        }
+    //  
+    //        return new ResponseEntity<>(HttpStatus.OK);
+    //    } // method uploadFile
+    //    
+    
 }

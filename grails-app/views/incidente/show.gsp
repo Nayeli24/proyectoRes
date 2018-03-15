@@ -39,7 +39,7 @@
                                 <div class="box-title">
                                     <h3 class="form-title">Detalle de incidente</h3>
                                 </div>                                                    
-                                      <g:if test="${incidenteInstance?.folio}">
+                                <g:if test="${incidenteInstance?.folio}">
                                     <div class="form-group">
                                         <br>
                                         <label class="control-label col-md-3">Folio:</label>
@@ -88,28 +88,35 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3">Fecha de asignación:</label>
                                         <g:formatDate format="dd MMMMM yyyy hh:mm aa"  date="${incidenteInstance?.fechaAsignacion}" />                                                
-                                    </div><br><br>
+                                    </div>
                                 </g:if>
-                            </div>
-
-                            <div>
-                               
                                 <g:if test="${incidenteInstance?.estatus?.id==4}">
                                     <g:if test="${incidenteInstance?.solucion}">
-                                        <li class="fieldcontain">
-                                            <span id="descripcion-label" class="row"><g:message code="incidente.solucion.label" default="Solución" /></span>
+                                        <label class="control-label col-md-3">Solución:</label>
+                                        <g:fieldValue bean="${incidenteInstance}" field="solucion"/>
 
-                                            <span class="property-value" aria-labelledby="solucion-label"><g:fieldValue bean="${incidenteInstance}" field="solucion"/></span>
-
-                                        </li>
                                     </g:if>
                                     <sec:ifAnyGranted roles='ROLE_CLIENTE'>
                                         <g:form url="[resource:incidenteInstance, action:'cerrarIncidente']">
                                             <fieldset class="buttons">
-                                                <g:actionSubmit   value="Cerrar Incidente"/> </fieldset>
+                                                <g:actionSubmit  class="btn btn-success"  value="Cerrar Incidente"/> </fieldset>
                                             </g:form>
 
                                     </sec:ifAnyGranted>
+                                </g:if>
+                                        <br>
+                            </div>
+
+                            <div>
+                                <button>Descagar</button>
+
+                                <g:if test="${incidenteInstance?.estatus?.id==4}">
+                                    <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="documento" action="index"  update ="[success:'message',failure:'error']"> Documentos </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+
+                                    <div id="message"></div>
+                                    <div id="error"></div>
+                                    <br>
+
                                 </g:if>
                                 <g:if test="${incidenteInstance?.estatus?.id==1}">
                                     <g:form url="[resource:incidenteInstance, action:'delete']" method="DELETE">
@@ -120,66 +127,59 @@
                                         </fieldset>
                                     </g:form>
                                 </g:if>
-                                <g:if test="${incidenteInstance?.estatus?.id==5}">
 
-                                    <sec:ifAnyGranted roles='ROLE_ADMIN'>
-                                        <g:form url="[resource:incidenteInstance, action:'enviarEmail']">
-                                            <fieldset class="buttons">
-                                                <g:actionSubmit value="Enviar Email"/> </fieldset>
-                                            </g:form>
-                                    </sec:ifAnyGranted>
-                                </g:if>
+
+                                <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
+                                    <g:if test="${incidenteInstance?.estatus?.id==2 || incidenteInstance?.estatus?.id==3}">
+                                        <g:formRemote name="formComentario" url="[controller:'incidente',action:'enviarComentario']" update="[success:'message',failure:'error']">
+                                            <input type="hidden" name="id" value="${incidenteInstance.id}"/>
+                                            <textarea   class="form-control"  onclick="javascript: limpia(this);"  name="comentario" required="" rows="5" cols="20"  placeholder="Escribe un comentario..."></textarea>
+                                            <br><input  onclick="alert('¡Comentario enviado con éxito :)!')" type="submit" class="btn btn-success" value="Enviar Comentario" />
+                                        </g:formRemote>
+                                        <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Ver comentarios </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                    </g:if>
+                                    <g:if test="${incidenteInstance?.estatus?.id==3}">
+                                        <i class="fa fa-check fa-fw"></i><g:remoteLink controller="incidente" action="atender" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Dar solución a incidente con folio ${incidenteInstance.folio} </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                    </g:if>
+                                    <div id="message"></div>
+                                    <div id="error"></div>
+                                    <br>
+                                </sec:ifAnyGranted>
+                                <sec:ifAnyGranted roles='ROLE_CLIENTE'>
+                                    <g:if  test="${incidenteInstance?.estatus?.id==2}">
+                                        <div class="alert alert-danger">
+                                            <g:message code="El usuario está revisando el incidente" />
+                                        </div>
+                                    </g:if> 
+
+                                    <g:if test="${incidenteInstance?.estatus?.id==3}">
+                                        <g:formRemote name="formComentario" url="[controller:'incidente',action:'enviarComentario']" update="[success:'message',failure:'error']">
+                                            <input type="hidden" name="id" value="${incidenteInstance.id}"/>
+                                            <textarea class="form-control" onclick="javascript: limpia(this);"  name="comentario" required="" rows="5" cols="20"  placeholder="Escribe un comentario..."></textarea>
+                                            <br><input onclick="alert('¡Comentario enviado con éxito :)!')" type="submit" class="btn btn-success" value="Enviar Comentario" />
+                                        </g:formRemote>
+                                        <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Ver comentarios </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                    </g:if>
+                                    <div id="message"></div>
+                                    <div id="error"></div>
+                                    <br>
+
+                                </sec:ifAnyGranted>
+                                <script>
+                                    function limpia(elemento)
+                                    {
+                                    elemento.value = "";
+                                    } 
+
+
+                                </script>
                             </div>
-
-                            <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
-                                <g:if test="${incidenteInstance?.estatus?.id==2 || incidenteInstance?.estatus?.id==3}">
-                                    <g:formRemote name="formComentario" url="[controller:'incidente',action:'enviarComentario']" update="[success:'message',failure:'error']">
-                                        <input type="hidden" name="id" value="${incidenteInstance.id}"/>
-                                        <textarea class="form-control"  onclick="javascript: limpia(this);"  name="comentario" required="" rows="5" cols="20"  placeholder="Escribe un comentario..."></textarea>
-                                        <br><input onclick="alert('¡Comentario enviado con éxito :)!')" type="submit" class="btn btn-success" value="Enviar Comentario" />
-                                    </g:formRemote>
-                                    <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Ver comentarios </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
-                                        <div id="message"></div>
-                                        <div id="error"></div>
-                                        <br>
-                                       
-                                </g:if>
-                            </sec:ifAnyGranted>
-                            <sec:ifAnyGranted roles='ROLE_CLIENTE'>
-                                 <g:if  test="${incidenteInstance?.estatus?.id==2}">
-                                    <div class="alert alert-danger">
-                                        <g:message code="El usuario está revisando el incidente" />
-                                    </div>
-                                </g:if> 
-
-                                <g:if test="${incidenteInstance?.estatus?.id==3}">
-                                    <g:formRemote name="formComentario" url="[controller:'incidente',action:'enviarComentario']" update="[success:'message',failure:'error']">
-                                        <input type="hidden" name="id" value="${incidenteInstance.id}"/>
-                                        <textarea class="form-control"  onclick="javascript: limpia(this);"  name="comentario" required="" rows="5" cols="20"  placeholder="Escribe un comentario..."></textarea>
-                                        <br><input onclick="alert('¡Comentario enviado con éxito :)!')" type="submit" class="btn btn-success" value="Enviar Comentario" />
-                                    </g:formRemote>
-                                    <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Ver comentarios </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
-                                        <div id="message"></div>
-                                        <div id="error"></div>
-                                        <br>
-                                       
-                                </g:if>
-                            </sec:ifAnyGranted>
-                             <script>
-                                        function limpia(elemento)
-                                        {
-                                        elemento.value = "";
-                                        } 
-
-                                     
-                                    </script>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--PAGE-->
+        </section>
+        <!--PAGE-->
 
-</body>
+    </body>
 </html>

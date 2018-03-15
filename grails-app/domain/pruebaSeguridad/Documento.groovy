@@ -3,7 +3,7 @@ package pruebaSeguridad
 class Documento {
 
   Incidente incidente
-    TipoDoc tipoDoc
+  
     String nombre
   
     Date fechaSubio = new Date()
@@ -14,7 +14,7 @@ class Documento {
     }
     static constraints = {
         incidente (nullable: true)
-        tipoDoc (nullable: true)
+     
         nombre blank: false
   
         fechaSubio (nullable: true)

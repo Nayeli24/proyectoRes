@@ -8,7 +8,7 @@
         <title>Incidentes</title>
 <!--        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">-->
         <meta name="layout" content="main">
-             
+
     </head>
     <body>
 
@@ -87,6 +87,7 @@
                                                 </sec:ifAnyGranted>
                                                 <sec:ifAnyGranted roles='ROLE_ADMIN'>
                                                     <th class="hidden-xs">Asignado a</th>
+                                                    <th class="hidden-xs">Enviar correo</th>
                                                 </sec:ifAnyGranted>
 
                                                 </tr>
@@ -106,6 +107,13 @@
                                                         </sec:ifAnyGranted>
                                                         <sec:ifAnyGranted roles='ROLE_ADMIN'>
                                                             <td class="center hidden-xs">${it?.asignadoA?.nombre} ${it?.asignadoA?.apellidoPat} ${it?.asignadoA?.apellidoMat}</td>
+                                                            <g:if test="${it?.estatus?.tipoEstatus=='Cerrado'}"> 
+                                                                <td class="center hidden-xs"><g:remoteLink controller="incidente" action="enviarEmail" id="${it.id}" update ="[success:'message',failure:'error']"> <i class="fa fa-envelope fa-fw"></i> </g:remoteLink></td>
+                                                      
+                                                            </g:if>
+                                                                <g:else>
+                                                                <td>Sin finalizar</td>
+                                                            </g:else>
                                                         </sec:ifAnyGranted>
                                                         </tr>
                                                     </g:each>
@@ -124,11 +132,14 @@
                                                 </sec:ifAnyGranted>
                                                 <sec:ifAnyGranted roles='ROLE_ADMIN'>
                                                     <th class="hidden-xs">Asignado a</th>
+                                                    <th class="hidden-xs">Enviar correo</th>
                                                 </sec:ifAnyGranted>
 
                                                 </tr>
                                                 </tfoot>
                                             </table>
+                                            <div id="message"></div>
+                                            <div id="error"></div>
                                         </div>
                                     </div>
                                     <!-- /BOX -->
@@ -146,6 +157,6 @@
             </div>
         </section>
         <!--/PAGE -->
-       
+
     </body>
 </html>

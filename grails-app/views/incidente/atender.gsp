@@ -6,19 +6,21 @@
 <%@ page import="pruebaSeguridad.Incidente" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Subir Archivos</title>
-    </head>
-    <body>
-        <form method="post"  action="http://localhost:8080/MesaAyuda/incidente/upload" enctype="multipart/form-data">
-            <input type="hidden" id="${id}" name="idIncidente" value="${id}"  >
-            <fieldset>Solución <br> <textarea name="solucion" required="" value="${incidenteInstance?.solucion}" rows="20" cols="40"></textarea></fieldset>
-            <fieldset>Seleccionar archivo  <input type="file" id="fileName" name="nombreArchivo" width="250px">
-            </fieldset>
-            <fieldset> <input type="submit" name="submit" value="Enviar datos"></fieldset>
-            </form>
+<br>
+        <div class="box border inverse">
+            <div class="box-title">
+                <h4><i class="fa fa-comment-o"></i>Solución</h4>
 
-    </body>
-        </html>
+            </div>
+            <div class="box-body">
+               
+                <form method="post"  action="http://localhost:8080/MesaAyuda/incidente/upload" enctype="multipart/form-data">
+                    <input type="hidden" id="${id}" name="id" value="${id}"  >
+                    <fieldset><textarea name="solucion" required="" value="${incidenteInstance?.solucion}"  required="" rows="5" cols="20"  placeholder="Escribe solución..."></textarea></fieldset>
+                    <br>Seleccionar archivo  <input type="file" id="fileName"  name="nombreArchivo" width="250px" multiple>
+                    <fieldset> <input type="submit" name="submit" value="Enviar datos"></fieldset>
+                </form>
+
+            </div>
+        </div>
+

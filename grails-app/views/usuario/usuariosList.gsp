@@ -80,6 +80,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Username</th>
+                                                        <th>Nombre completo</th>
                                                         <th>Cuenta activa</th>
                                                         <th class="hidden-xs">Tipo de usuario</th>
                                                         <th>Empresa</th>
@@ -91,6 +92,7 @@
                                                         <g:each name="usuarios" in="${usuarios}">	
                                                             <tr class="gradeX" >
                                                                 <td><g:link action="show" id="${it.id}">${it.username}</g:link></td>
+                                                                <td> ${it.nombre} ${it.apellidoPat} ${it.apellidoMat}</td>
                                                                 <td>${it.enabled}</td>
                                                                 <td><g:join in="${it.authorities}"/></td>	
                                                                 <td>${it.empresa}</td>

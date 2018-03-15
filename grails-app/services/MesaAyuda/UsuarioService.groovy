@@ -17,6 +17,10 @@ class UsuarioService {
             def respuesta2 = [:]
             respuesta2.id = it.id
             respuesta2.username = it.username
+            respuesta2.nombre = it.nombre
+            respuesta2.apellidoPat = it.apellidoPat
+            respuesta2.apellidoMat= it.apellidoMat
+            
             respuesta2.password=it.password
             respuesta2.empresa=it.empresa
             respuesta2.accountLocked=it.accountLocked

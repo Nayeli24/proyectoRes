@@ -42,6 +42,7 @@ class IncidenteService {
                 incidente.id = it.id
                 incidente.folio = it.folio
                 incidente.estatus=it.estatus
+                println "estatus:::::::::::::::::::::::::::::::::::::::::::::"+incidente.estatus
                 incidente.tema = it.tema
                 incidente.fechaRegistro = it.fechaRegistro
                 incidente.registradoPor=it.registradoPor
