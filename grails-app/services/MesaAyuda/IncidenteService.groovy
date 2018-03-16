@@ -126,4 +126,16 @@ class IncidenteService {
         def idt = resultado.id_incidente
         return idt
     }
+    
+    
+     def incidente(id){
+        def query=(" select * from Incidente where id_incidente='$id' ")
+        def sql = new Sql(dataSource)
+        def resultado = sql.rows(query)
+        def idt = resultado
+        println "incidente service"+idt
+        return idt
+    }
 }
+
+

@@ -10,9 +10,13 @@
 <html>
     <head>
         <meta name="layout" content="main"/>
-
+        <script src="./path/to/dropzone.js"></script>
         <title>Simple Ajax</title>
 
+        
+      <g:external dir="js/dropzone" file="dropzone.min.js" />     
+<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
     </head>
     <body>
         <div class="row">
@@ -20,7 +24,7 @@
                     <!-- BOX -->
                 <div class="box border blue">
                     <div class="box-title">
-                        <h4><i class="fa fa-cloud-download"></i>Cloud Upldsmfskldjfklsjkjfdskjfksdjr</h4>
+                        <h4><i class="fa fa-cloud-download"></i>Carga de archivos</h4>
 
                     </div>
                     <div class="box-body">
@@ -57,24 +61,15 @@
             contentType: false,
             cache: false,
             success: function () {
-            alert("Ya subio")
+            alert("Carga de archivos completa");
             },
             error: function () {
-            // Handle upload error
-            // ...
+            alert("Fallo al cargar archivos");
             }
             });
             } // function uploadFile
         </script>
-        <g:external dir="js/dropzone" file="dropzone.min.js" />
-
-
-        <script>
-            jQuery(document).ready(function() {		
-            App.setPage("dropzone_file_upload");  //Set current page
-            App.init(); //Initialise plugins and elements
-            });
-        </script>
+    
     </body>
 
 </html>

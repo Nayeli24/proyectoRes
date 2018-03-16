@@ -186,38 +186,42 @@ class IncidenteController {
         println "::::::::::::::::::::173:$params"
         def archivos = []
         def mapa 
-       
-        println archivos
+        int i=0
         def id=params.id
+        def inc=incidenteService.incidente(id)
         //        def incidente=Incidente.get(params.id as long)
         //        println "incidente               "+incidente
         def solucion=params.solucion
+        incidenteInstance.estatus = Estatus.get(4 as int)
         incidenteInstance.solucion=solucion
         incidenteInstance.save flush:true
         //        respuesta.solucion=params.solucion
         println ":::::::::::::::::"+solucion
-        
-        
-
+      
+    
+ 
         def uploadedFile = request.getFiles('file')
         println "::::::::::177"+uploadedFile
-        uploadedFile.each{
-            println "::::::::::::::"+it
-            InputStream inputStream = it.inputStream
+        for (def values: uploadedFile){
+            println "::::::::::::::"+values
+            InputStream inputStream = values.inputStream
             mapa = [:]
             mapa.archivo = inputStream
-            mapa.nombreDelArchivo = it.originalFilename
+            mapa.nombreDelArchivo =values.originalFilename
             //mapa.extension = fileLabel.toLowerCase()
             archivos << mapa
-      
-            def archivo = archivos.getAt(0)
+          
+            def archivo = archivos.getAt(i)
             println archivo.nombreDelArchivo
                 
             def documento = new Documento ()
-            documento.incidente = Incidente.get(id as long)
-            documento.nombre = archivo.nombreDelArchivo
+            documento.incidente = Incidente.get(inc.id_incidente)
+            
+            def nombre="Doc_Incidente_"+params.id+"_"+(archivo.nombreDelArchivo).toString()
+            println "nombre archivo:::::::::::::::::"+nombre
+            documento.nombre = nombre
             documento.fechaSubio = new Date ()
-            documento.urlArchivo = "/var/documentos/" + archivo.nombreDelArchivo
+            documento.urlArchivo = "/var/documentos/" + nombre
             if(documento.save(flush:true)){ println "se guardo"
                 def fileOutputStream = new FileOutputStream(documento.urlArchivo)
                 File file = new File(documento.urlArchivo)
@@ -235,18 +239,17 @@ class IncidenteController {
                 }
            
             }
+            i=i+1
         }
+        def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,4,incidenteInstance)
         redirect (controller: "incidente", action: "show", id:params.id)
     }
     
     
-    def atender(Incidente incidenteInstance){
-        incidenteInstance.estatus = Estatus.get(4 as int)
-        incidenteInstance.save flush:true
+    def atender(){
         println "::::::::::::::::::::$params"
         def id=params.id
         return ["id":id]
-        def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,4,incidenteInstance)
         render (view: "atender")
     }
        
