@@ -24,7 +24,6 @@ class Documento {
     
     String toString () {
         "${nombre}" 
-        "${size}"  
         "${urlArchivo}"  
     }
 }

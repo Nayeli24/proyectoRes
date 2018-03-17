@@ -160,6 +160,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/incidente/enviarEmail':  ['ROLE_ADMIN'],
       '/incidente/atender':  ['ROLE_DESARROLLADOR'],
       '/incidente/upload':  ['ROLE_DESARROLLADOR'],
+     '/incidente/descarga':  ['isFullyAuthenticated()'],
      '/incidente/welcome':  ['permitAll'],
     '/incidente/cerrarIncidente':  ['ROLE_CLIENTE'],
  

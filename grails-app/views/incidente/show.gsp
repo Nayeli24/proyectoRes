@@ -24,6 +24,7 @@
                     <div class="row">
                         <div id="content" class="col-lg-12">
                                 <!-- PAGE HEADER-->
+
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="page-header">
@@ -90,32 +91,32 @@
                                         <g:formatDate format="dd MMMMM yyyy hh:mm aa"  date="${incidenteInstance?.fechaAsignacion}" />                                                
                                     </div>
                                 </g:if>
-                                <g:if test="${incidenteInstance?.estatus?.id==4}">
-                                    <g:if test="${incidenteInstance?.solucion}">
-                                        <label class="control-label col-md-3">Solución:</label>
-                                        <g:fieldValue bean="${incidenteInstance}" field="solucion"/>
+                                <g:if test="${incidenteInstance?.solucion}">
+                                    <label class="control-label col-md-3">Solución:</label>
+                                    <g:fieldValue bean="${incidenteInstance}" field="solucion"/>
 
-                                    </g:if>
+                                </g:if>
+                                <g:if test="${incidenteInstance?.estatus?.id==4}">
+
                                     <sec:ifAnyGranted roles='ROLE_CLIENTE'>
                                         <g:form url="[resource:incidenteInstance, action:'cerrarIncidente']">
                                             <fieldset class="buttons">
-                                                <g:actionSubmit  class="btn btn-success"  value="Cerrar Incidente"/> </fieldset>
+                                                <g:actionSubmit  class="btn btn-success"  value="Finalizar Incidente"/> </fieldset>
                                             </g:form>
 
                                     </sec:ifAnyGranted>
                                 </g:if>
-                                        <br>
+                                <br>
                             </div>
 
                             <div>
                                 <button>Descagar</button>
 
                                 <g:if test="${incidenteInstance?.estatus?.id==4}">
-                                    <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="documento" action="index"  update ="[success:'message',failure:'error']"> Documentos </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
-
-                                    <div id="message"></div>
-                                    <div id="error"></div>
-                                    <br>
+                                    <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Documentos </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                        <div id="message"></div>
+                                        <div id="error"></div>
+                                        <br>
 
                                 </g:if>
                                 <g:if test="${incidenteInstance?.estatus?.id==1}">
@@ -158,10 +159,13 @@
                                             <textarea class="form-control" onclick="javascript: limpia(this);"  name="comentario" required="" rows="5" cols="20"  placeholder="Escribe un comentario..."></textarea>
                                             <br><input onclick="alert('¡Comentario enviado con éxito :)!')" type="submit" class="btn btn-success" value="Enviar Comentario" />
                                         </g:formRemote>
-                                        <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Ver comentarios </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                        <div id="message"></div>
+                                        <div id="error"></div>
+                                        <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message2',failure:'error2']"> Ver comentarios </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                            <div id="message2"></div>
+                                            <div id="error2"></div>
                                     </g:if>
-                                    <div id="message"></div>
-                                    <div id="error"></div>
+
                                     <br>
 
                                 </sec:ifAnyGranted>
@@ -182,4 +186,5 @@
         <!--PAGE-->
 
     </body>
+  
 </html>

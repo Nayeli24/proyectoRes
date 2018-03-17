@@ -175,11 +175,14 @@ class IncidenteController {
     }
     
     def descarga() {
-        def zipFile = new File('/tmp/file.zip')
-        header("X-File-Name", zipFile.name)
-        response.contentType = 'application/octet-stream'
-        zipFile.withInputStream { response.outputStream << it }
-        //zipFile.delete()
+        println "::::::::::::.$params"
+        def documento= Documento.get(params.id as long)
+        println "::::::::::::::documento"+documento.urlArchivo
+        def file = new File(documento.urlArchivo)    
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-disposition", "filename=${file.getName()}")
+        response.getOutputStream() << new ByteArrayInputStream(file.getBytes())
+ 
     }
     
     def upload(Incidente incidenteInstance){ 
@@ -189,13 +192,10 @@ class IncidenteController {
         int i=0
         def id=params.id
         def inc=incidenteService.incidente(id)
-        //        def incidente=Incidente.get(params.id as long)
-        //        println "incidente               "+incidente
         def solucion=params.solucion
         incidenteInstance.estatus = Estatus.get(4 as int)
         incidenteInstance.solucion=solucion
         incidenteInstance.save flush:true
-        //        respuesta.solucion=params.solucion
         println ":::::::::::::::::"+solucion
       
     
@@ -217,7 +217,7 @@ class IncidenteController {
             def documento = new Documento ()
             documento.incidente = Incidente.get(inc.id_incidente)
             
-            def nombre="Doc_Incidente_"+params.id+"_"+(archivo.nombreDelArchivo).toString()
+            def nombre="Achivo_Incidente_"+params.id+"_"+(archivo.nombreDelArchivo).toString()
             println "nombre archivo:::::::::::::::::"+nombre
             documento.nombre = nombre
             documento.fechaSubio = new Date ()
@@ -242,7 +242,7 @@ class IncidenteController {
             i=i+1
         }
         def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,4,incidenteInstance)
-        redirect (controller: "incidente", action: "show", id:params.id)
+        render (view: "index")
     }
     
     

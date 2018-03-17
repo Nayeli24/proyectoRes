@@ -8,13 +8,19 @@ import java.io.File
 
 @Transactional(readOnly = true)
 class DocumentoController {
-   
+   def documentoService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
   
     def index(Integer max) {
+      println "documento index::::::::::::::::::::$params"
         params.max = Math.min(max ?: 10, 100)
-        respond Documento.list(params), model:[documentoInstanceCount: Documento.count()]
+       // respond Comentario.list(params), model:[comentarioInstanceCount: Comentario.count()]
+        def documentos=documentoService.listarDocumentos(params.id)
+        def id= params.id
+ 
+        
+        render (template:"docList", model: [documentosVer: documentos, documentosCount: documentos.size(), id:id])
     }
 
     def show(Documento documentoInstance) {

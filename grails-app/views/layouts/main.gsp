@@ -38,11 +38,11 @@
     <g:layoutHead/>
 </head>
 <body>
-    
+
 <!-- <g:render template="/layouts/header" />
 <!-- SIDEBAR
 <g:render template="/layouts/navbar" />
-   <!-- /SIDEBAR -->
+<!-- /SIDEBAR -->
     <g:layoutBody/>
 <!--<asset:javascript src="application.js"/>-->
   <!-- JAVASCRIPTS -->
@@ -62,23 +62,25 @@
     <g:external dir="js/jQuery-slimScroll-1.3.0" file="slimScrollHorizontal.min.js" />
 <!-- BLOCK UI -->
     <g:external dir="js/jQuery-BlockUI" file="jquery.blockUI.min.js" />
-   <!-- DATA TABLES -->
+     <!-- DROPZONE -->
+    <g:external dir="js/dropzone" file="dropzone.min.js"/>
+<!-- DATA TABLES -->
     <g:external dir="js/datatables/media/js" file="jquery.dataTables.min.js" />
     <g:external dir="js/datatables/media/assets/js" file="datatables.min.js" />
     <g:external dir="js/datatables/extras/TableTools/media/js" file="TableTools.min.js" />
     <g:external dir="js/datatables/extras/TableTools/media/js" file="ZeroClipboard.min.js" />
     <!-- COOKIE -->
     <g:external dir="js/jQuery-Cookie" file="jquery.cookie.min.js" />
-    
-       <!-- CUSTOM SCRIPT -->
-        <script src="http://localhost:8080/MesaAyuda/js/script.js"></script>
-        <script>
-            jQuery(document).ready(function() {		
-            App.setPage("dynamic_table");  //Set current page
-            App.init(); //Initialise plugins and elements
-            });
-        </script>
-            <!-- /JAVASCRIPTS -->
+
+   <!-- CUSTOM SCRIPT -->
+    <script src="http://localhost:8080/MesaAyuda/js/script.js"></script>
+    <script>
+        jQuery(document).ready(function() {		
+        App.setPage("dynamic_table");  //Set current page
+        App.init(); //Initialise plugins and elements
+        });
+    </script>
+        <!-- /JAVASCRIPTS -->
 </body>
 </html>
 
