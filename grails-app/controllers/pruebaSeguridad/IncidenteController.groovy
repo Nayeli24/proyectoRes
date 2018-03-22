@@ -196,6 +196,7 @@ class IncidenteController {
         def solucion=params.solucion
         inc.estatus = Estatus.get(4 as int)
         inc.solucion=solucion
+        inc.fechaAtencion=new Date()
         inc.save flush:true
         println ":::::::::::::::::"+solucion
       
@@ -269,13 +270,18 @@ class IncidenteController {
     def enviarEmail(){
         println "mail$params"
         def incidente=Incidente.get(params.id as long)
+        println "Incidente:::::::"+incidente
         def email=incidente.registradoPor.email
         MailService.sendMail {
             //to email
+            multipart true
             to "lazarobobadillal@gmail.com"
             from "neli1124.sc@gmail.com"
-            subject "Aquí va el asunto"
-            html "Este es un correo de <b>ejemplo</b>"
+            subject "Detalle de incidente cerrado"
+            html "<h1>incidente con folio $incidente.folio </h1>"
+           // attachBytes "Some-File-Name.xml", "text/xml", contentOrder.getBytes("UTF-8")
+    //To get started quickly, try the following
+   // attachBytes './web-app/reports/ticket_1.jasper', new File('./web-app/reports/ticket_1.jasper').readBytes()
             render "Correo enviado con éxito"
         }
     }
@@ -283,13 +289,17 @@ class IncidenteController {
     def printReport(){
         println params
         def mapa = []
-        def datos= Incidente.get(params.idIncidente as long)
+        def datos= Incidente.get(params.id as long)
         def respuesta = [:]
         respuesta.folio=datos.folio
         respuesta.estatus=datos.estatus
+        respuesta.tema=datos.tema
+        respuesta.fechaAtencion=datos.fechaAtencion
         respuesta.descripcion= datos.descripcion
         respuesta.fechaRegistro=datos.fechaRegistro
         respuesta.registradoPor=datos.registradoPor.username
+        respuesta.asignadoA=datos.asignadoA.username
+        respuesta.solucion=datos.solucion
         mapa<<respuesta
         println mapa
         params._format="PDF"
@@ -320,37 +330,5 @@ class IncidenteController {
         //        render "El incidente con id ${b.id} se envió correctamente."
     }
     
-    def welcome(){
-        println "_:::::::::::::::::::::::311$params"
-        render (view:"welcome") 
-    }
-
-    
-    //    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    //    @ResponseBody
-    //    public ResponseEntity<?> uploadFile(
-    //        @RequestParam("uploadfile") MultipartFile uploadfile) {
-    //  
-    //        try {
-    //            // Get the filename and build the local file path (be sure that the 
-    //            // application have write permissions on such directory)
-    //            String filename = uploadfile.getOriginalFilename();
-    //            String directory = "/var/netgloo_blog/uploads";
-    //            String filepath = Paths.get(directory, filename).toString();
-    //    
-    //            // Save the file locally
-    //            BufferedOutputStream stream =
-    //            new BufferedOutputStream(new FileOutputStream(new File(filepath)));
-    //            stream.write(uploadfile.getBytes());
-    //            stream.close();
-    //        }
-    //        catch (Exception e) {
-    //            System.out.println(e.getMessage());
-    //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    //        }
-    //  
-    //        return new ResponseEntity<>(HttpStatus.OK);
-    //    } // method uploadFile
-    //    
     
 }

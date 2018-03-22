@@ -5,6 +5,7 @@ class Incidente {
     String descripcion
     String tema
     Date fechaRegistro = new Date()
+     Date fechaAtencion
     String folio
     Estatus estatus 
     Usuario registradoPor
@@ -20,6 +21,7 @@ class Incidente {
         registradoPor (nullable: true)
         asignadoA  (nullable: true)
         fechaAsignacion  (nullable: true)
+        fechaAtencion  (nullable: true)
         estatus defaultValue: 'Nuevo'
         solucion (nullable:true)
     }

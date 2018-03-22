@@ -6,7 +6,6 @@
 <%@ page import="pruebaSeguridad.Incidente" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
     <div >
         <label for="Solución">
             <g:message code="incidente.solucion.label" default="Solución" />

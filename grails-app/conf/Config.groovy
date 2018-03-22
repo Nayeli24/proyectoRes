@@ -96,7 +96,7 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
-        jasper.dir.reports = '/home/nsanchez/proyectoResidencia/MesaAyuda/web-app/reports'
+        jasper.dir.reports = '/home/larzate/MesaAyuda/web-app/reports'
     }
     production {
         grails.logging.jul.usebridge = false
@@ -163,6 +163,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
      '/incidente/descarga':  ['isFullyAuthenticated()'],
      '/incidente/welcome':  ['permitAll'],
     '/incidente/cerrarIncidente':  ['ROLE_CLIENTE'],
+    '/incidente/printReport':  ['ROLE_CLIENTE'],
  
     '/usuario/**':  ['ROLE_ADMIN'],
     '/comentario/index':  ['ROLE_DESARROLLADOR','ROLE_CLIENTE'],

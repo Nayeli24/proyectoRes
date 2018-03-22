@@ -99,11 +99,19 @@
                                 <g:if test="${incidenteInstance?.estatus?.id==4}">
 
                                     <sec:ifAnyGranted roles='ROLE_CLIENTE'>
+                                        <g:remoteLink controller="incidente" action="cerrarIncidente" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Ver comentarios </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
                                         <g:form url="[resource:incidenteInstance, action:'cerrarIncidente']">
                                             <fieldset class="buttons">
                                                 <g:actionSubmit  class="btn btn-success"  value="Finalizar Incidente"/> </fieldset>
                                             </g:form>
-
+                                            <g:jasperForm 
+                                                controller="incidente"
+                                                action="printReport"
+                                                jasper="ticket_1" 
+                                                name="ticket_1">
+                                            <input type="hidden" name="id" value='${incidenteInstance?.id}'/> 
+                                            <g:jasperButton format="pdf" jasper="ticket_1" text="IMPRIME"  />
+                                        </g:jasperForm>
                                     </sec:ifAnyGranted>
                                 </g:if>
                                 <br>
@@ -120,7 +128,6 @@
                                 <g:if test="${incidenteInstance?.estatus?.id==1}">
                                     <g:form url="[resource:incidenteInstance, action:'delete']" method="DELETE">
                                         <fieldset class="buttons">
-
                                             <g:actionSubmit class="btn btn-success" action="delete" value="Eliminar incidente" onclick="return confirm('Estás seguro de eliminar incidente?');" />
                                             <div id="borra"></div>
                                         </fieldset>
