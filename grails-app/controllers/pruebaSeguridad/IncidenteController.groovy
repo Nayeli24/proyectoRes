@@ -164,13 +164,13 @@ class IncidenteController {
     
     
     def cerrarIncidente (Incidente incidenteInstance){
-      
+        println "::::::::::::cerrar:::::::$params"
         incidenteInstance.estatus = Estatus.get(5 as int)
      
         println "incidente"+incidenteInstance
         incidenteInstance.save flush:true
         def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,5,incidenteInstance)
-        redirect (action: "index")
+        redirect (controller:"incidente", action: "index")
      
     }
     
@@ -191,11 +191,12 @@ class IncidenteController {
         def mapa 
         int i=0
         def id=params.id
-        def inc=incidenteService.incidente(id)
+        def inc=Incidente.get(id as long)
+        println "incidente::::::::::...........uṕload"+inc
         def solucion=params.solucion
-        incidenteInstance.estatus = Estatus.get(4 as int)
-        incidenteInstance.solucion=solucion
-        incidenteInstance.save flush:true
+        inc.estatus = Estatus.get(4 as int)
+        inc.solucion=solucion
+        inc.save flush:true
         println ":::::::::::::::::"+solucion
       
     
@@ -215,7 +216,7 @@ class IncidenteController {
             println archivo.nombreDelArchivo
                 
             def documento = new Documento ()
-            documento.incidente = Incidente.get(inc.id_incidente)
+            documento.incidente = Incidente.get(id as long)
             
             def nombre="Achivo_Incidente_"+params.id+"_"+(archivo.nombreDelArchivo).toString()
             println "nombre archivo:::::::::::::::::"+nombre
@@ -242,7 +243,7 @@ class IncidenteController {
             i=i+1
         }
         def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,4,incidenteInstance)
-        render (view: "index")
+          redirect (controller: "incidente", action: "index")
     }
     
     
@@ -270,8 +271,8 @@ class IncidenteController {
         def incidente=Incidente.get(params.id as long)
         def email=incidente.registradoPor.email
         MailService.sendMail {
-            to email
-            //  to "jonathan.g.o.itt@gmail.com"
+            //to email
+            to "lazarobobadillal@gmail.com"
             from "neli1124.sc@gmail.com"
             subject "Aquí va el asunto"
             html "Este es un correo de <b>ejemplo</b>"

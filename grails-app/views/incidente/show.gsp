@@ -110,8 +110,6 @@
                             </div>
 
                             <div>
-                                <button>Descagar</button>
-
                                 <g:if test="${incidenteInstance?.estatus?.id==4}">
                                     <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Documentos </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
                                         <div id="message"></div>
@@ -186,5 +184,5 @@
         <!--PAGE-->
 
     </body>
-  
+
 </html>
