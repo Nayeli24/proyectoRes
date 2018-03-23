@@ -273,12 +273,16 @@ class IncidenteController {
         println "Incidente:::::::"+incidente
         def email=incidente.registradoPor.email
         MailService.sendMail {
-            //to email
+            to email
             multipart true
-            to "lazarobobadillal@gmail.com"
-            from "neli1124.sc@gmail.com"
+           from "neli1124.sc@gmail.com"
             subject "Detalle de incidente cerrado"
-            html "<h1>incidente con folio $incidente.folio </h1>"
+            html "<h1>incidente con folio $incidente.folio </h1>\n\
+                <div><label><em><strong>Tema:</strong></label><p>$incidente.tema</p></em></div>\n\
+                <div><label><em><strong>Fecha de registro:</strong></label><p>$incidente.fechaRegistro</p></em></div>\n\
+                <div><label><em><strong>Lo atendió:</strong></label><p>$incidente.asignadoA</p></em></div>\n\
+                <div><label><em><strong>Fecha de atención:</strong></label><p>$incidente.fechaAtencion</p></em></div>\n\
+               <div><label><em><strong>Solución:</strong></label><p>$incidente.solucion</p></em></div>"
            // attachBytes "Some-File-Name.xml", "text/xml", contentOrder.getBytes("UTF-8")
     //To get started quickly, try the following
    // attachBytes './web-app/reports/ticket_1.jasper', new File('./web-app/reports/ticket_1.jasper').readBytes()

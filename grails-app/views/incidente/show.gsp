@@ -96,6 +96,11 @@
                                     <g:fieldValue bean="${incidenteInstance}" field="solucion"/>
 
                                 </g:if>
+                                <g:if test="${incidenteInstance?.fechaAtencion}">
+                                    <label class="control-label col-md-3">Fecha que se atendió:</label>
+                                    <g:fieldValue bean="${incidenteInstance}" field="fechaAtencion"/>
+
+                                </g:if>
                                 <g:if test="${incidenteInstance?.estatus?.id==4}">
 
                                     <sec:ifAnyGranted roles='ROLE_CLIENTE'>
@@ -110,7 +115,7 @@
                                                 jasper="ticket_1" 
                                                 name="ticket_1">
                                             <input type="hidden" name="id" value='${incidenteInstance?.id}'/> 
-                                            <g:jasperButton format="pdf" jasper="ticket_1" text="IMPRIME"  />
+                                              <i class="fa fa-clipboard fa-fw"><g:jasperButton format="pdf" jasper="ticket_1" text="Generar reporte"  /></i>
                                         </g:jasperForm>
                                     </sec:ifAnyGranted>
                                 </g:if>

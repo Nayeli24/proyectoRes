@@ -108,10 +108,16 @@
                                                         <sec:ifAnyGranted roles='ROLE_ADMIN'>
                                                             <td class="center hidden-xs">${it?.asignadoA?.nombre} ${it?.asignadoA?.apellidoPat} ${it?.asignadoA?.apellidoMat}</td>
                                                             <g:if test="${it?.estatus?.tipoEstatus=='Cerrado'}"> 
-                                                                <td class="center hidden-xs"><g:remoteLink controller="incidente" action="enviarEmail" id="${it.id}" update ="[success:'message',failure:'error']"> <i class="fa fa-envelope fa-fw"></i> </g:remoteLink></td>
-                                                      
+                                                                   <td><g:link controller="incidente" action="enviarEmail" id="${it.id}">Enviar </g:link></td>
+                                                                    <script>
+                                                                    function checkEmail() {
+                                                                    document.getElementById("td").innerHTML = "Muchas gracias!";
+                                                                     document.getElementById("td").style.visibility="hidden";
+                                                                    }
+                                                                
+                                                                </script>
                                                             </g:if>
-                                                                <g:else>
+                                                            <g:else>
                                                                 <td>Sin finalizar</td>
                                                             </g:else>
                                                         </sec:ifAnyGranted>
