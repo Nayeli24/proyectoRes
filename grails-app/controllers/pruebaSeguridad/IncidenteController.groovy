@@ -141,35 +141,33 @@ class IncidenteController {
         data.usuarios = incidenteService.obtenerUsuarios("ROLE_DESARROLLADOR")
         render (view:"asignar", model: [detalle: data ])  
     }
-    def asignarIncidente (Incidente incidenteInstance){
-        println ":::::asignar incidente::::::::::::::$params.asignadoA"
+    def asignarIncidente (){
+        println ":::::asignar incidente::::::::::::::$params"
         def usuario=Usuario.findByNombre(params.asignadoA)
-        println "usuario________"+usuario
-        if(params.incidente.size()>1){
-            for(def i in params.incidente){
-                println ":::::::::::::"+i
-                def incident=Incidente.findByTema(i)
-                incident.asignadoA = usuario
+        println "usuario________"+usuario.nombre
+        def lista=[]
+        lista=params.incidente
+        for( i in lista){
+            println ":::::::::::::"+i
+
+            lista.each{
+                def incident=Incidente.findByTema(it)
+                println "incidente:::::::::::"+incident
+                incident.asignadoA =Usuario.findByNombre(params.asignadoA)
                 incident.estatus = Estatus.get(2 as int)
                 incident.fechaAsignacion = new Date()
                 incident.save flush:true
                 def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incident)
             }
         }
-    
-        
         redirect (action: "index")
     }
     
     
     
-    def cerrarIncidente (Incidente incidenteInstance){
+    def cerrarIncidente (){
         println "::::::::::::cerrar:::::::$params"
-        incidenteInstance.estatus = Estatus.get(5 as int)
-     
-        println "incidente"+incidenteInstance
-        incidenteInstance.save flush:true
-        def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,5,incidenteInstance)
+        
         redirect (controller:"incidente", action: "index")
      
     }
@@ -184,24 +182,24 @@ class IncidenteController {
         response.getOutputStream() << new ByteArrayInputStream(file.getBytes())
  
     }
-    
-    def upload(Incidente incidenteInstance){ 
+   
+    def upload(){ 
         println "::::::::::::::::::::173:$params"
         def archivos = []
         def mapa 
         int i=0
         def id=params.id
-        def inc=Incidente.get(id as long)
-        println "incidente::::::::::...........uṕload"+inc
-        def solucion=params.solucion
-        inc.estatus = Estatus.get(4 as int)
-        inc.solucion=solucion
-        inc.fechaAtencion=new Date()
-        inc.save flush:true
-        println ":::::::::::::::::"+solucion
-      
-    
- 
+        def incidente=incidenteService.cambiarEstatus(4,id)
+        incidente.solucion=params.solucion
+        
+//        def inc=Incidente.get(params.id as long)
+//        println "incidente::::::::::...........uṕload"+inc
+//        def solucion=params.solucion
+//        inc.estatus = Estatus.get(4 as int)
+//        inc.solucion=solucion
+//        inc.fechaAtencion=new Date()
+//        inc.save flush:true
+//        println ":::::::::::::::::"+solucion
         def uploadedFile = request.getFiles('file')
         println "::::::::::177"+uploadedFile
         for (def values: uploadedFile){
@@ -217,7 +215,7 @@ class IncidenteController {
             println archivo.nombreDelArchivo
                 
             def documento = new Documento ()
-            documento.incidente = Incidente.get(id as long)
+            documento.incidente = inc
             
             def nombre="Achivo_Incidente_"+params.id+"_"+(archivo.nombreDelArchivo).toString()
             println "nombre archivo:::::::::::::::::"+nombre
@@ -243,8 +241,8 @@ class IncidenteController {
             }
             i=i+1
         }
-        def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,4,incidenteInstance)
-          redirect (controller: "incidente", action: "index")
+        def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,4,params.id)
+        redirect (controller: "incidente", action: "index")
     }
     
     
@@ -275,7 +273,7 @@ class IncidenteController {
         MailService.sendMail {
             to email
             multipart true
-           from "neli1124.sc@gmail.com"
+            from "neli1124.sc@gmail.com"
             subject "Detalle de incidente cerrado"
             html "<h1>incidente con folio $incidente.folio </h1>\n\
                 <div><label><em><strong>Tema:</strong></label><p>$incidente.tema</p></em></div>\n\
@@ -283,10 +281,11 @@ class IncidenteController {
                 <div><label><em><strong>Lo atendió:</strong></label><p>$incidente.asignadoA</p></em></div>\n\
                 <div><label><em><strong>Fecha de atención:</strong></label><p>$incidente.fechaAtencion</p></em></div>\n\
                <div><label><em><strong>Solución:</strong></label><p>$incidente.solucion</p></em></div>"
-           // attachBytes "Some-File-Name.xml", "text/xml", contentOrder.getBytes("UTF-8")
-    //To get started quickly, try the following
-   // attachBytes './web-app/reports/ticket_1.jasper', new File('./web-app/reports/ticket_1.jasper').readBytes()
-            render "Correo enviado con éxito"
+            // attachBytes "Some-File-Name.xml", "text/xml", contentOrder.getBytes("UTF-8")
+            //To get started quickly, try the following
+            // attachBytes './web-app/reports/ticket_1.jasper', new File('./web-app/reports/ticket_1.jasper').readBytes()
+            flash.message = "some message"
+            redirect(controller: "incidente", action: "index")
         }
     }
     

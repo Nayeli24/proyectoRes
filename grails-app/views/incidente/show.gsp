@@ -145,7 +145,7 @@
                                         <g:formRemote name="formComentario" url="[controller:'incidente',action:'enviarComentario']" update="[success:'message',failure:'error']">
                                             <input type="hidden" name="id" value="${incidenteInstance.id}"/>
                                             <textarea   class="form-control"  onclick="javascript: limpia(this);"  name="comentario" required="" rows="5" cols="20"  placeholder="Escribe un comentario..."></textarea>
-                                            <br><input  onclick="alert('¡Comentario enviado con éxito :)!')" type="submit" class="btn btn-success" value="Enviar Comentario" />
+                                            <br><input  type="submit" class="btn btn-success" value="Enviar Comentario" />
                                         </g:formRemote>
                                         <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Ver comentarios </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
                                     </g:if>

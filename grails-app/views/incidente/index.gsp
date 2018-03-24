@@ -108,13 +108,21 @@
                                                         <sec:ifAnyGranted roles='ROLE_ADMIN'>
                                                             <td class="center hidden-xs">${it?.asignadoA?.nombre} ${it?.asignadoA?.apellidoPat} ${it?.asignadoA?.apellidoMat}</td>
                                                             <g:if test="${it?.estatus?.tipoEstatus=='Cerrado'}"> 
-                                                                   <td><g:link controller="incidente" action="enviarEmail" id="${it.id}">Enviar </g:link></td>
-                                                                    <script>
+                                                                <g:if test="${flash.message}">
+                                                                    <div class="message" role="status">${flash.message}</div>
+                                                                </g:if>
+                                                                <td id="td"><g:link controller="incidente" action="enviarEmail" id="${it.id}"> 
+
+                                                                        <input type="button" value="Enviar correo"  onclick ="checkEmail()" class="button"/> 
+
+                                                                    </g:link></td>
+                    <!-- <td><g:link controller="incidente" action="enviarEmail" id="${it.id}">Enviar </g:link></td>-->
+                                                                <script>
                                                                     function checkEmail() {
-                                                                    document.getElementById("td").innerHTML = "Muchas gracias!";
-                                                                     document.getElementById("td").style.visibility="hidden";
+                                                                    document.getElementById("td").value = "Muchas gracias!";
+
                                                                     }
-                                                                
+
                                                                 </script>
                                                             </g:if>
                                                             <g:else>
