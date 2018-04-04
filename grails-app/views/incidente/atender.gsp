@@ -21,7 +21,7 @@
                     </div>
                     <div class="box-body">
 
-                        <form method="POST" class="dropzone"  id="my-awesome-dropzone">
+                        <form  class="dropzone"  id="my-awesome-dropzone" enctype="multipart/form-data">
                             <input type="hidden" id="${id}" name="id" value="${id}"  >
                             <fieldset><textarea name="solucion" required="" value="${incidenteInstance?.solucion}"  required="" rows="5" cols="20"  placeholder="Escribe solución..."></textarea></fieldset>
 
@@ -53,7 +53,7 @@
             url: "http://localhost:8080/MesaAyuda/incidente/upload",
             type: "POST",
             data: new FormData($("#my-awesome-dropzone")[0]),
-            enctype: 'multipart/form-data',
+         
             processData: false,
             contentType: false,
             cache: false,

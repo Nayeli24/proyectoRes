@@ -2,42 +2,56 @@
 <%@ page import="pruebaSeguridad.Empresa" %>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'empresa.label', default: 'Empresa')}" />
-		<title><g:message code="default.show.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#show-empresa" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><g:link class="list" action="index"><g:message code="Lista de Empresas" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
-		<div id="show-empresa" class="content scaffold-show" role="main">
-			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<ol class="property-list empresa">
-			
-				<g:if test="${empresaInstance?.nombreEmpresa}">
-				<li class="fieldcontain">
-					<span id="nombreEmpresa-label" class="property-label"><g:message code="empresa.nombreEmpresa.label" default="Nombre Empresa" /></span>
-					
-						<span class="property-value" aria-labelledby="nombreEmpresa-label"><g:fieldValue bean="${empresaInstance}" field="nombreEmpresa"/></span>
-					
-				</li>
-				</g:if>
-			
-			</ol>
-			<!--<g:form url="[resource:empresaInstance, action:'delete']" method="DELETE">
-				<fieldset class="buttons">
-					<g:link class="edit" action="edit" resource="${empresaInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
-			</g:form>-->
-		</div>
-	</body>
-</html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Empresa registrada</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+        <meta name="layout" content="main">
+        <g:javascript library="prototype" />
+    </head>
+    <body>
+
+<!-- PAGE -->
+        <section id="page">
+
+            <div id="main-content">
+         <!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
+                <div class="container">
+                    <div class="row">
+                        <div id="content" class="col-lg-12">
+                                <!-- PAGE HEADER-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="page-header">
+                                        <!-- BREADCRUMBS -->
+
+      <!-- /BREADCRUMBS -->
+                                        <div class="clearfix">
+                                            <h3 class="content-title pull-left">Empresa registrada</h3>
+                                        </div>
+                                        <div class="description">Nombre de empresa</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /PAGE HEADER -->
+
+                          
+
+                            <g:if test="${empresaInstance?.nombreEmpresa}">
+                                <div class="form-group">
+
+                                    <g:fieldValue bean="${empresaInstance}" field="nombreEmpresa"/>
+                                </div>
+                            </g:if>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--PAGE-->

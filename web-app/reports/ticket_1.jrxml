@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6a58a1e3-0f75-4dd8-9409-fc70e6578d26">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="279"/>
 	<subDataset name="dataset1" uuid="9b948a1e-98ac-48a5-8f40-f948cc2089dd"/>
 	<field name="folio" class="java.lang.String"/>
 	<field name="descripcion" class="java.lang.String"/>
@@ -27,9 +27,9 @@
 		</band>
 	</title>
 	<detail>
-		<band height="205" splitType="Stretch">
+		<band height="672" splitType="Stretch">
 			<textField>
-				<reportElement x="259" y="77" width="100" height="20" uuid="14623d53-06d0-4c56-8d6c-3f93f0449e8e"/>
+				<reportElement x="259" y="226" width="265" height="20" uuid="14623d53-06d0-4c56-8d6c-3f93f0449e8e"/>
 				<textFieldExpression><![CDATA[$F{fechaRegistro}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -37,7 +37,7 @@
 				<textFieldExpression><![CDATA[$F{folio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="259" y="57" width="100" height="20" uuid="04f8ddbb-ce7a-433d-9767-e0850f0f8438"/>
+				<reportElement x="259" y="104" width="265" height="107" uuid="04f8ddbb-ce7a-433d-9767-e0850f0f8438"/>
 				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -45,59 +45,53 @@
 				<text><![CDATA[Folio:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="36" y="57" width="100" height="20" uuid="41850ce2-7765-4eea-87aa-cbf39f91b7ff"/>
-				<text><![CDATA[Descripcion]]></text>
+				<reportElement x="36" y="104" width="100" height="20" uuid="41850ce2-7765-4eea-87aa-cbf39f91b7ff"/>
+				<text><![CDATA[Descripción:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="36" y="77" width="100" height="20" uuid="1a47f977-b06b-4803-8eec-83a57e2435a0"/>
-				<text><![CDATA[Fecha  de registro]]></text>
+				<reportElement x="36" y="226" width="100" height="20" uuid="1a47f977-b06b-4803-8eec-83a57e2435a0"/>
+				<text><![CDATA[Fecha  de registro:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="36" y="97" width="111" height="20" uuid="8d4c6ff6-68b9-41fe-8df6-72a39dae853c"/>
-				<text><![CDATA[Usuario que registro]]></text>
+				<reportElement x="36" y="271" width="111" height="20" uuid="8d4c6ff6-68b9-41fe-8df6-72a39dae853c"/>
+				<text><![CDATA[Usuario que registro:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="259" y="97" width="100" height="20" uuid="94cd5c5a-7713-4815-88d9-4cb2a31b5dc0"/>
+				<reportElement x="259" y="271" width="265" height="20" uuid="94cd5c5a-7713-4815-88d9-4cb2a31b5dc0"/>
 				<textFieldExpression><![CDATA[$F{registradoPor}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="36" y="37" width="100" height="20" uuid="f88dff2d-0a75-42c6-b0b8-0f8ebf41a52c"/>
-				<text><![CDATA[tema]]></text>
+				<reportElement x="36" y="50" width="100" height="20" uuid="f88dff2d-0a75-42c6-b0b8-0f8ebf41a52c"/>
+				<text><![CDATA[Tema:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="259" y="40" width="100" height="20" uuid="f5338d6b-e298-41c1-b038-26f7ba60156b"/>
+				<reportElement x="259" y="50" width="100" height="20" uuid="f5338d6b-e298-41c1-b038-26f7ba60156b"/>
 				<textFieldExpression><![CDATA[$F{tema}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="36" y="117" width="100" height="20" uuid="8e3695f0-6505-44c6-bdcc-7356e85348ca"/>
-				<text><![CDATA[asignadoA]]></text>
+				<reportElement x="36" y="320" width="129" height="25" uuid="8e3695f0-6505-44c6-bdcc-7356e85348ca"/>
+				<text><![CDATA[Asignado al usuario:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="259" y="117" width="100" height="20" uuid="b84db4c7-a2c5-48d7-9130-6cb13ccfc7a0"/>
+				<reportElement x="259" y="320" width="265" height="20" uuid="b84db4c7-a2c5-48d7-9130-6cb13ccfc7a0"/>
 				<textFieldExpression><![CDATA[$F{asignadoA}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="36" y="137" width="100" height="20" uuid="f0363835-70bb-4786-8eb9-c1857d2ca04e"/>
-				<text><![CDATA[fechaAtencion]]></text>
+				<reportElement x="36" y="385" width="100" height="20" uuid="f0363835-70bb-4786-8eb9-c1857d2ca04e"/>
+				<text><![CDATA[Fecha de atención:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="259" y="137" width="100" height="20" uuid="792bd8f4-6ea1-4216-80c1-cd07901bcc7a"/>
+				<reportElement x="259" y="385" width="265" height="20" uuid="792bd8f4-6ea1-4216-80c1-cd07901bcc7a"/>
 				<textFieldExpression><![CDATA[$F{fechaAtencion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="36" y="157" width="100" height="20" uuid="aca5c2a0-4193-4bd0-bfca-2cc4d72eb8a9"/>
-				<text><![CDATA[solucion]]></text>
+				<reportElement x="36" y="441" width="100" height="20" uuid="aca5c2a0-4193-4bd0-bfca-2cc4d72eb8a9"/>
+				<text><![CDATA[Solución :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="262" y="152" width="100" height="20" uuid="052e91b4-ad55-496a-914d-d2d6f88d057d"/>
+				<reportElement x="259" y="441" width="265" height="153" uuid="052e91b4-ad55-496a-914d-d2d6f88d057d"/>
 				<textFieldExpression><![CDATA[$F{solucion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

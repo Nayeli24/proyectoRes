@@ -63,6 +63,7 @@
                                                     <tr>
                                                         <th>No.</th>
                                                         <th>Nombre de empresa</th>
+                                                        <th>Activa</th>
                                                     </tr>
                                                 </thead>
 
@@ -71,7 +72,8 @@
                                                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                                                             <td>${empresaInstance.id}</td>
                                                             <td>${fieldValue(bean: empresaInstance, field: "nombreEmpresa")}</td>
-
+                                                            <td>  <g:checkBox name="accountLocked" value="${empresaInstance?.enabled}" />
+                                                            </td>
                                                         </tr>
                                                     </g:each>
                                                 </tbody>

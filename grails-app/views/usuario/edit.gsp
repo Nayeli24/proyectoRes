@@ -74,7 +74,7 @@
                                         <label class="col-sm-3 control-label" for="username"> Contraseña:
                                         </label>
                                         <div class="col-sm-9">
-                                            <input name="c1" class="form-control" value="${usuarioInstance?.password}" onclick="javascript: limpia(this);" required=""  placeholder="Contraseña" type="password">
+                                            <input name="password" class="form-control" required="" value="${usuarioInstance?.password}" onclick="javascript: limpia(this);" onchange="validaClave()" required=""  placeholder="Contraseña" type="password">
                                         </div>
                                         <br>
                                     </div>
@@ -83,18 +83,20 @@
                                         <label class="col-sm-3 control-label" for="password"> Repetir contraseña:
                                         </label>
                                         <div class="col-sm-9">
-                                            <input  name="c2" class="form-control"  value="${usuarioInstance?.password}"   onclick="javascript: limpia(this);" name="password" required="" value="" placeholder="Repetir contraseña" type="password">
+                                            <input  name="password2" class="form-control" required="" value="${usuarioInstance?.password}"   onclick="javascript: limpia(this);"  onchange="comprobarClave()" name="password" required="" value="" placeholder="Confirmar contraseña" type="password">
                                         </div>
                                         <br>
                                     </div>
                                     <br>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label" for="areaDpto">Nueva Área / Departamento:
+                                        <label class="col-sm-3 control-label" for="areaDpto">Área / Departamento:
                                         </label>
                                         <div class="col-sm-9">
-                                            <select  class="form-control" name="areaDpto" id="areaDpto" value="${usuarioInstance?.areaDpto}">
-                                                <option  selected disabled hidden>Seleccione un área</option>
-                                                <option>Dirección General</option>
+                                            <input   class="form-control"  value="${usuarioInstance?.areaDpto}"  id="areaDpto" required="" name="areaDpto" placeholder="Área/Dep" type="text">
+                                            <br>
+                                            <select  class="form-control" name="areaDpto2" id="areaDpto2" value="${usuarioInstance?.areaDpto}" onchange="mostrar()" >
+                                                <option  selected disabled hidden>Cambiar área</option>
+                                                <option> Dirección General</option>
                                                 <option>Administración y Recursos Humanos</option> 
                                                 <option>Producción</option>
                                                 <option>Finanzas y Contabilidad</option>
@@ -102,7 +104,9 @@
                                                 <option>Sistemas e Informática</option>
                                                 <option>Otro</option>
                                             </select>
-                                            <input style="display:none;"  class="form-control" value="${usuarioInstance.areaDpto}"  id="mostrar"  name="areaDpto" value="" placeholder="Área/Dep" type="text">
+
+
+                                            <br>
                                         </div>
                                         <br>
 
@@ -114,26 +118,28 @@
                                         <label class="col-sm-3 control-label" for="email"> Correo electrónico:
                                         </label>
                                         <div class="col-sm-9">
-                                            <input type="email" class="form-control" onclick="javascript: limpia(this);" name="email"  placeholder="ejemplo@gmail.com" value="${usuarioInstance.email}">
+                                            <input type="email" class="form-control" required=""  onclick="javascript: limpia(this);" name="email"  placeholder="ejemplo@gmail.com" value="${usuarioInstance.email}">
                                         </div> 
                                     </div>
-
                                     <br>
                                     <br>
-
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" > Opciones de cuenta:</label>
                                         <div class="col-sm-9">
-                                            <label class="checkbox-inline" for="accountLocked">
-                                                <input name="accountLocked" value="${usuarioInstance?.accountLocked}" type="checkbox" > Cuenta bloqueada</label>
-                                                <g:if test="${usuarioInstance?.enabled}">
-                                                <label class="checkbox-inline" for="enabled">
-                                                    <input name="enabled" value="${usuarioInstance?.enabled}" type="checkbox" checked> Cuenta habilitada</label>
-                                                </g:if>
+                                            <label for="accountLocked">
+                                                <g:message code="usuario.accountLocked.label" default="Account Locked" />
+
+                                            </label>
+                                            <g:checkBox name="accountLocked" value="${usuarioInstance?.accountLocked}" />
+                                            <label for="enabled">
+                                                <g:message code="usuario.enabled.label" default="Enabled" />
+
+                                            </label>
+                                            <g:checkBox name="enabled" value="${usuarioInstance?.enabled}" />
                                         </div> 
                                         <br>
                                     </div>
-
+                                    <br>
                                     <br>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" >Agregar tipo de usuario:</label>
@@ -145,28 +151,127 @@
                                                 <option  value="admin">Administrador</option>
                                             </select>
                                         </div>
-                                        <br>
+                                        <br><br>
                                     </div>
 
                                     <fieldset class="buttons">
      <!--    <input id="boton" type="button" value="Actualizar" onClick="comprobarClave()" action="update" > 
--->                                 <g:actionSubmit onClick="comprobarClave()" class="btn btn-success" value="${message(code: 'default.button.update.label', default: 'Update')}" action="update" />
+-->                                 <g:actionSubmit class="btn btn-success" value="${message(code: 'default.button.update.label', default: 'Update')}" action="update" />
                                     </fieldset>
                                 </g:form>
-                                <script>
+                                <script type="text/javascript">
                                     function comprobarClave(){
-                                    c1 = document.f1.c1.value
-                                    c2 = document.f1.c2.value
-                                    if (c1 == c2){
-                                    <g:remoteFunction action="update" />
+                                    password = document.f1.password.value
+                                    password2 = document.f1.password2.value
+                                    if (password == password2){    
                                     }else{
                                     alert("Las contraseñas no coinciden")
+                                    document.f1.password.value="";
+                                    document.f1.password2.value="";
                                     } 
                                     }
+
+
+                                    function validaClave(){
+                                    password=document.f1.password.value
+                                    var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;                                        
+                                    if(regex.test(password)){
+
+                                    }
+                                    else{
+                                    alert("La contraseña debe cumplir con:\n*Longitud mínimo 8 carácteres\n*Al menos una letra mayúscula\n*Al menos una letra minúscula\n*Al menos un dígito\n*No espacios en blanco\n*Al menos 1 carácter especial")
+                                    document.f1.password.value="";
+                                    document.f1.password2.value="";
+                                    }
+                                    }
+
                                     function limpia(elemento)
                                     {
                                     elemento.value = "";
                                     } 
+
+
+                                    function mostrar(){
+                                    var op=document.getElementById("areaDpto2");
+                                    var tt=document.getElementById("areaDpto");
+                                    if (op.selectedIndex==0)tt.value="";
+                                    if (op.selectedIndex==1)tt.value="Dirección General";
+                                    if (op.selectedIndex==2)tt.value="Administración y Recursos Humanos";
+                                    if (op.selectedIndex==3)tt.value="Producción";
+                                    if (op.selectedIndex==4)tt.value="Finanzas y Contabilidad";
+                                    if (op.selectedIndex==5)tt.value="Publicidad y Mercadotecnia";
+                                    if (op.selectedIndex==6)tt.value="Sistemas e Informática";
+                                    if (op.selectedIndex==7){
+                                    tt.value="";
+                                    document.getElementById("mostrar").style.display = 'block';
+                                    tt.value=document.f1.mostrar.value;}
+                                    }
+
+
+                                    function usernameCrear(){
+
+                                    var clave;
+                                    var nombre = document.f1.nombre.value
+                                    var subCadena = nombre.substring(0,1);
+                                    var apellidoMat=document.f1.apellidoMat.value
+                                    var subCadena2 = apellidoMat.substring(0,1);
+                                    var apellidoPat=document.f1.apellidoPat.value
+                                    var combo = document.getElementById("rolUsuario");
+                                    var selected = combo.options[combo.selectedIndex].text;
+                                    if(selected== "Cliente") {  var contador=0; 
+                                    var tipoUser="E"
+                                    if(contador<=9){
+                                    clave="000"+contador
+                                    }else if(contador <= 99){
+                                    clave="00"+contador
+                                    }else if(contador <= 999){
+                                    clave="0"+contador
+                                    }
+                                    else{
+                                    clave=contador
+                                    }  
+                                    contador++
+
+                                    }else{
+                                    var contador2=0;
+
+                                    var tipoUser="I"
+                                    document.f1.empresa.value=1;
+                                    if(contador2<=9){
+                                    clave="000"+contador2
+                                    }else if(contador2<= 99){
+                                    clave="00"+contador2
+                                    }else if(contador2 <= 999){
+                                    clave="0"+contador2
+                                    }
+                                    else{
+                                    clave=contador2
+                                    }  
+                                    contador2++;
+
+                                    }
+                                    var empresa= document.f1.empresa.value
+                                    if(empresa <= 9){
+                                    var noEmpresa="0"+empresa
+                                    }else{
+                                    var noEmpresa=empresa
+                                    }
+                                    document.f1.username.value=tipoUser+noEmpresa+subCadena.toUpperCase()+apellidoPat.toUpperCase()+subCadena2.toUpperCase()+clave;
+
+                                    }
+
+
+                                    function incrementar()
+                                    {
+                                    var contador=0;
+                                    contador++;
+                                    return contador
+                                    }
+
+                                    function vNom(solicitar){
+                                    var txt = solicitar.value;
+                                    solicitar.value = (txt.substring(0,1).toUpperCase() + txt.substring(1,txt.length)).trim();
+                                    }
                                 </script>
                                 <br>
                             </div>

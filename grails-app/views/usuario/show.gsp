@@ -90,18 +90,18 @@
                                         <g:fieldValue bean="${usuarioInstance}" field="email"/>
                                     </div>
                                 </g:if>
-                                <g:if test="${usuarioInstance?.enabled}">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3">Cuenta Activa:</label>
-                                        <g:formatBoolean boolean="${usuarioInstance?.enabled}"  true="Sí" false="No"  />
-                                    </div>
-                                </g:if>
-                                <g:if test="${usuarioInstance?.accountLocked}">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3">Cuenta Bloqueada:</label>
-                                        <g:formatBoolean boolean="${usuarioInstance?.accountLocked}"  true="Sí" false="No"  />
-                                    </div><br>
-                                </g:if>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Cuenta Activa:</label>
+                                    <g:formatBoolean boolean="${usuarioInstance?.enabled}"  true="Sí" false="No"  />
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Cuenta Bloqueada:</label>
+                                    <g:formatBoolean boolean="${usuarioInstance?.accountLocked}"  true="Sí" false="No"  />
+                                </div><br>
+
                             </div>
                         </div>
                     </div>

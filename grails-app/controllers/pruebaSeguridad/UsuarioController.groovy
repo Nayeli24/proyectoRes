@@ -54,11 +54,7 @@ class UsuarioController {
             }
         }
         
-        usuarioInstance.save flush:true
-        
-     
-        
-     
+        usuarioInstance.save()
        
         def rolUsuario=params.rolUsuario
     
@@ -88,8 +84,7 @@ class UsuarioController {
     
 
     def edit(Usuario usuarioInstance) {
-        println "edit params:::::::::::::::::::::::::::$usuarioInstance"
-        respond usuarioInstance
+          respond usuarioInstance
     }
     
     
@@ -111,26 +106,11 @@ class UsuarioController {
             respond usuarioInstance.errors, view:'edit'
             return
         }
-        String arreglo = params.areaDpto;
-        String[] str;
-        if(arreglo.size()>=2){
-            if(arreglo[0] =="Otro"){
-                usuarioInstance.areaDpto=arreglo[1]
-            }else{
-               
-                str = arreglo.split(',');
-                println str[0]
-                for( String values : str )
-                println(values.getAt(1));
-            }
-        }
-    
-        usuarioInstance.save flush:true
-        def rolUsuario=UsuarioRole.findByUsuario(Usuario.get(params.id))
-        println rolUsuario
+        usuarioInstance.areaDpto=params.areaDpto
+        usuarioInstance.save()
+        def rolUsuario=UsuarioRole.findByUsuario(Usuario.get(params.id))    
         def  clienteRole=Role.findByAuthority('ROLE_CLIENTE')
         def  userRole=Role.findByAuthority('ROLE_DESARROLLADOR')
-        println rolUsuario
         if(params.rolUsuario=="cliente"){ 
             println rolUsuario
             println clienteRole

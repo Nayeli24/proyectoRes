@@ -92,43 +92,43 @@
                                     </div>
                                 </g:if>
                                 <g:if test="${incidenteInstance?.solucion}">
-                                    <label class="control-label col-md-3">Solución:</label>
-                                    <g:fieldValue bean="${incidenteInstance}" field="solucion"/>
-
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Solución:</label>
+                                        <g:fieldValue bean="${incidenteInstance}" field="solucion"/>
+                                    </div>
                                 </g:if>
                                 <g:if test="${incidenteInstance?.fechaAtencion}">
-                                    <label class="control-label col-md-3">Fecha que se atendió:</label>
-                                    <g:fieldValue bean="${incidenteInstance}" field="fechaAtencion"/>
-
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Fecha que se atendió:</label>
+                                        <g:formatDate format="dd MMMMM yyyy hh:mm aa"  date="${incidenteInstance?.fechaAtencion}" />  
+                                    </div>
                                 </g:if>
                                 <g:if test="${incidenteInstance?.estatus?.id==4}">
 
-                                    <sec:ifAnyGranted roles='ROLE_CLIENTE'>
-                                        <g:remoteLink controller="incidente" action="cerrarIncidente" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Ver comentarios </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
-                                        <g:form url="[resource:incidenteInstance, action:'cerrarIncidente']">
-                                            <fieldset class="buttons">
-                                                <g:actionSubmit  class="btn btn-success"  value="Finalizar Incidente"/> </fieldset>
-                                            </g:form>
-                                            <g:jasperForm 
-                                                controller="incidente"
-                                                action="printReport"
-                                                jasper="ticket_1" 
-                                                name="ticket_1">
-                                            <input type="hidden" name="id" value='${incidenteInstance?.id}'/> 
-                                              <i class="fa fa-clipboard fa-fw"><g:jasperButton format="pdf" jasper="ticket_1" text="Generar reporte"  /></i>
-                                        </g:jasperForm>
-                                    </sec:ifAnyGranted>
-                                </g:if>
+                                    <sec:ifAnyGranted roles='ROLE_CLIENTE'> <div class="form-group">
+                                            <g:link controller="incidente" action="cerrarIncidente" id="${incidenteInstance.id}" >  <g:actionSubmit   class="btn btn-success"  value="Finalizar Incidente"/></g:link>
+                                            </div></sec:ifAnyGranted>
+                                    </g:if>
                                 <br>
                             </div>
 
                             <div>
+                                <sec:ifAnyGranted roles='ROLE_CLIENTE'>
+                                    <g:if test="${incidenteInstance?.estatus?.id>=4}">
+                                        <g:jasperForm 
+                                            controller="incidente"
+                                            action="printReport"
+                                            jasper="ticket_1" 
+                                            name="ticket_1">
+                                            <input type="hidden" name="id" value='${incidenteInstance?.id}'/> 
+                                            <i class="fa fa-clipboard fa-fw"></i><g:jasperButton format="pdf" jasper="ticket_1" text="Generar reporte"  />
+                                        </g:jasperForm>
+                                    </g:if>
+                                </sec:ifAnyGranted>
                                 <g:if test="${incidenteInstance?.estatus?.id==4}">
                                     <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Documentos </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
                                         <div id="message"></div>
                                         <div id="error"></div>
-                                        <br>
-
                                 </g:if>
                                 <g:if test="${incidenteInstance?.estatus?.id==1}">
                                     <g:form url="[resource:incidenteInstance, action:'delete']" method="DELETE">

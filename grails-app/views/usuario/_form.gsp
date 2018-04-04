@@ -21,7 +21,7 @@
     <label class="col-sm-3 control-label" for="password"> Contraseña:
         <span class="required-indicator">*</span></label>
     <div class="col-sm-9">
-        <input  class="form-control" name="password2" required="" value="${usuarioInstance?.password}" placeholder="Password" type="password">
+        <input  class="form-control" name="password2" required="" value="${usuarioInstance?.password}" placeholder="Password" type="password" onchange="comprobarClave()">
     </div>
 </div>
 
@@ -66,7 +66,6 @@
     </div>
 
 </div>
-
 <div class="form-group">
     <label class="col-sm-3 control-label" for="empresa"> Empresa:</label>
     <div class="col-sm-9">

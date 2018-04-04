@@ -9,25 +9,21 @@ import groovy.sql.Sql
 class UsuarioService {
     
     def usuarioId(){
-        println"========================================================================="
         def usuario = Usuario.findAll();
         def userList = []
         usuario.each {
-            println "usuario::::::::::::::::::::::."+usuario
             def respuesta2 = [:]
             respuesta2.id = it.id
             respuesta2.username = it.username
             respuesta2.nombre = it.nombre
             respuesta2.apellidoPat = it.apellidoPat
             respuesta2.apellidoMat= it.apellidoMat
-            
             respuesta2.password=it.password
             respuesta2.empresa=it.empresa
             respuesta2.accountLocked=it.accountLocked
             respuesta2.areaDpto=it.areaDpto
             def activa=it.enabled
-            println "ACtiva cuenta:::::::::::::::::::::::::::::::::::::::::::::::::"
-            println activa
+          
             if(activa==true){
                 respuesta2.enabled="Sí"
             }else{
@@ -36,7 +32,7 @@ class UsuarioService {
             respuesta2.authorities = it.authorities.descripcion
             
             userList << respuesta2
-        }
+               }
         println userList.enabled 
         return userList      
     }

@@ -4,6 +4,7 @@ class Empresa {
 
        
     String nombreEmpresa
+    boolean enabled=true
     
     static mapping = {
         id generator: 'sequence', column: 'id_empresa', params:[sequence:'sec_id_empresa']

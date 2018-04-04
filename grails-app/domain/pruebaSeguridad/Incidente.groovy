@@ -12,6 +12,8 @@ class Incidente {
     Usuario asignadoA
     Date fechaAsignacion // = new Date()
     String solucion
+    Date fechaCerrado   
+    boolean envíoCorreo=false
     
     static constraints = {
         descripcion blank: false 

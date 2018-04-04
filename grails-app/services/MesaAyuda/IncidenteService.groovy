@@ -109,7 +109,7 @@ class IncidenteService {
     }
     
     def guardarFlujo(def usuario , def estatus , def folio){
-        
+        println "folio:::::::$folio"
         def flujo = new Flujo ()
         flujo.usuarioMovimiento = Usuario.findByUsername(usuario)
         flujo.incidente = folio
@@ -137,34 +137,19 @@ class IncidenteService {
         return idt
     }
     
+
     def cambiarEstatus(def estatus, def idIncidente){
         println "::::::::::INcidente:::::$idIncidente"
         println "::::::::::::::::::::::Estatus:::::::$estatus"
-        def query=(" select * from Incidente where id_incidente='$idIncidente' ")
-        def sql = new Sql(dataSource)
-        def resultado = sql.rows(query)
-        def incidente = resultado
-        println "incidente service"+incidente
-        if(estatus==2){
-            incidente.asignadoA =Usuario.findByNombre(params.asignadoA)
-            incidente.estatus = Estatus.get(2 as int)
-            incidente.fechaAsignacion = new Date()
-            def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incidente)
-        }else if(estatus==3){
-            incidente.estatus = Estatus.get(3 as int)
-            def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,3,incidente)
-        }else if(estatus==4){
-          
-            incidente.estatus = Estatus.get(4 as int)
-            incidente.fechaAtencion=new Date()
-            def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,4,incidente)
-        }else(estatus==5){
-            incidente.estatus = Estatus.get(5 as int)
-            def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,5,incidente)
-        }
-        incidente.save flush:true
-        return incidente
-    }
+        def  consulta= Incidente.get(idIncidente as long)       
+        println ":::::::::::::::::::::::::::::...servicecaadfgfbb"+consulta
+        consulta.estatus = Estatus.get(estatus)  
+        consulta.save()
+        def gf = guardarFlujo(springSecurityService.currentUser.username,estatus,consulta)
+    
+        return consulta
+        
+}
 }
 
 

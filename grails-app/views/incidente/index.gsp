@@ -108,15 +108,17 @@
                                                         <sec:ifAnyGranted roles='ROLE_ADMIN'>
                                                             <td class="center hidden-xs">${it?.asignadoA?.nombre} ${it?.asignadoA?.apellidoPat} ${it?.asignadoA?.apellidoMat}</td>
                                                             <g:if test="${it?.estatus?.tipoEstatus=='Cerrado'}"> 
-                                                                <g:if test="${flash.message}">
-                                                                    <div class="message" role="status">${flash.message}</div>
-                                                                </g:if>
-                                                                <td id="td"><g:link controller="incidente" action="enviarEmail" id="${it.id}"> 
 
-                                                                        <input type="button" value="Enviar correo"  onclick ="checkEmail()" class="button"/> 
+                                                                <td id="td">
+                                                                    <g:if test="${flash.message}">
+                                                                        <div class="message" role="status">${flash.message}</div>
+                                                                    </g:if>
+                                                                    <g:else><g:link controller="incidente" action="enviarEmail" id="${it.id}"> 
 
-                                                                    </g:link></td>
-                    <!-- <td><g:link controller="incidente" action="enviarEmail" id="${it.id}">Enviar </g:link></td>-->
+                                                                            <input type="button" value="Enviar correo"  onclick ="checkEmail()" class="button"/> 
+
+                                                                        </g:link></g:else></td>
+                        <!-- <td><g:link controller="incidente" action="enviarEmail" id="${it.id}">Enviar </g:link></td>-->
                                                                 <script>
                                                                     function checkEmail() {
                                                                     document.getElementById("td").value = "Muchas gracias!";
