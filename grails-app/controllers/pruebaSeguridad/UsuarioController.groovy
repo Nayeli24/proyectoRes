@@ -25,9 +25,9 @@ class UsuarioController {
                
     }
 
-    def create() {
+    def create() {      
         respond new Usuario(params)
-        
+                   
     }
 
     @Transactional
@@ -53,7 +53,7 @@ class UsuarioController {
                 usuarioInstance.areaDpto=arreglo[0]
             }
         }
-        
+               
         usuarioInstance.save()
        
         def rolUsuario=params.rolUsuario
@@ -84,7 +84,7 @@ class UsuarioController {
     
 
     def edit(Usuario usuarioInstance) {
-          respond usuarioInstance
+        respond usuarioInstance
     }
     
     

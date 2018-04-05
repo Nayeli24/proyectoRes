@@ -9,11 +9,14 @@ import grails.transaction.Transactional
 class EmpresaController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+    def empresaService
     def index(Integer max) {
+        println "::::::::$params"
         params.max = Math.min(max ?: 10, 100)
         respond Empresa.list(params), model:[empresaInstanceCount: Empresa.count()]
     }
+    
+     
 
     def show(Empresa empresaInstance) {
         respond empresaInstance
@@ -49,7 +52,7 @@ class EmpresaController {
     def edit(Empresa empresaInstance) {
         respond empresaInstance
     }
-
+      
     @Transactional
     def update(Empresa empresaInstance) {
         if (empresaInstance == null) {

@@ -123,8 +123,8 @@
                                             <label class="col-sm-3 control-label" for="empresa"> Empresa:</label>
                                             <span class="required-indicator">*</span></label>
                                             <div class="col-sm-9">
-                                             
-                                                <g:select id="empresa" name="empresa.id" from="${pruebaSeguridad.Empresa.list()}" optionKey="id" value="${usuarioInstance?.empresa?.id}" class="form-control" noSelection="['null': 'Selecciona una empresa']" onchange="usernameCrear()" required="" />
+
+                                                <g:select id="empresa" name="empresa.id" from="${pruebaSeguridad.Empresa.list()}" optionKey="id" value="${usuarioInstance?.empresa?.id}" class="form-control" onchange="usernameCrear()" required="" />
                                                
                                             </div>
                                         </div>
@@ -162,18 +162,10 @@
                                                 <input  class="form-control" name="password2" required="" value="${usuarioInstance?.password}" placeholder="Confirmación de contraseña" type="password" onchange="comprobarClave()">
                                             </div>
                                         </div>
-
-
                                         <fieldset class="buttons">
                                             <g:submitButton name="create" onclick="comprobarClave()" class="btn btn-success" value="Agregar usuario" />
                                             <button id="btn-load" class="btn btn-primary" >Click to Refresh</button>
-
                                         </fieldset>
-                                                                <!--<div class="col-sm-offset-2 col-sm-10">
-                                                                    <button type="submit" class="btn btn-success" name="create" >Agregar usuario</button>  
-                                                                    <button id="btn-load" class="btn btn-primary" data-loading-text="Refreshing...">Click to Refresh</button>
-                                                                </div>
-                                                            </fieldset>-->
                                     </g:form>
 
                                     <script type="text/javascript">
@@ -219,7 +211,7 @@
 
 
                                         function usernameCrear(){
-                                       
+
                                         var clave;
                                         var nombre = document.f1.nombre.value
                                         var subCadena = nombre.substring(0,1);
@@ -241,7 +233,7 @@
                                         clave=contador
                                         }  
                                         contador++
-                                  
+
                                         }else{
                                         var contador2=0;
 
@@ -258,7 +250,7 @@
                                         clave=contador2
                                         }  
                                         contador2++;
-                                     
+
                                         }
                                         var empresa= document.f1.empresa.value
                                         if(empresa <= 9){

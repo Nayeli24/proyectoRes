@@ -32,7 +32,7 @@ class UsuarioService {
             respuesta2.authorities = it.authorities.descripcion
             
             userList << respuesta2
-               }
+        }
         println userList.enabled 
         return userList      
     }
@@ -56,6 +56,21 @@ class UsuarioService {
             datos << user
         }
         return datos      
+    }
+    
+    def obtenerEmpresas(){
+        def empresa = Empresa.findAll();
+        def empresaList = []
+        empresa.each {
+            if(it.enabled==true){
+                def respuesta2 = [:]
+                respuesta2.id=it.id
+                respuesta2.nombreEmpresa=it.nombreEmpresa
+                empresaList << respuesta2
+            }       
+        }
+        println empresaList
+        return empresaList      
     }
 }
 

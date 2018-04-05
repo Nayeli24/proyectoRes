@@ -54,7 +54,6 @@
                                     </ul>
                                 </g:hasErrors>
                                 <g:form url="[resource:usuarioInstance, action:'update']" method="PUT" name="f1">
-                                    <g:hiddenField name="version" value="${usuarioInstance?.version}" />
 
                                     <g:if test="${usuarioInstance?.username}">
                                         <div class="form-group">

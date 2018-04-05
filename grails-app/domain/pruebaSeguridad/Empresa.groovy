@@ -1,5 +1,5 @@
 package pruebaSeguridad
-
+ 
 class Empresa {
 
        
@@ -11,6 +11,9 @@ class Empresa {
     }
     static constraints = {
         nombreEmpresa blank: false, size: 1..35
+    }
+    static hibernateFilters = {
+        enabledFilter(condition:'enabled=1', default:true)
     }
     
     String toString () {

@@ -70,9 +70,9 @@
                                                 <tbody>
                                                     <g:each in="${empresaInstanceList}" status="i" var="empresaInstance">
                                                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                                                            <td>${empresaInstance.id}</td>
+                                                            <td><g:remoteLink controller="empresa" action="edit" id="${empresaInstance.id}" update ="[success:'message',failure:'error']">${empresaInstance.id}</g:remoteLink></td>
                                                             <td>${fieldValue(bean: empresaInstance, field: "nombreEmpresa")}</td>
-                                                            <td>  <g:checkBox name="accountLocked" value="${empresaInstance?.enabled}" />
+                                                            <td> <g:formatBoolean boolean="${empresaInstance?.enabled}"  true="Sí" false="No"  />
                                                             </td>
                                                         </tr>
                                                     </g:each>
@@ -81,12 +81,15 @@
                                                     <tr>
                                                         <th>No.</th>
                                                         <th>Nombre de empresa</th>
+                                                        <th>Activa</th>
                                                     </tr>
                                                 </tfoot>
                                             </table>
                                         </div>
                                     </div>
-                                    <!-- /BOX -->
+                                    <div id="error"></div>
+                                    <div id="message"></div>
+                               <!-- /BOX -->
                                 </div>
                             </div>
 <!-- /EXPORT TABLES -->

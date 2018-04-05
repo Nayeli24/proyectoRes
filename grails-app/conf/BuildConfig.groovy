@@ -72,13 +72,13 @@ grails.project.dependency.resolution = {
         compile "org.grails.plugins:jasper:1.11.0"
         compile ":jasper-response:1.0.1"
         compile ":mail:1.0.7"
-        
+        compile "org.grails.plugins:hibernate-filter:0.3.2"
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
         //compile ":less-asset-pipeline:1.10.0"
         //compile ":coffee-asset-pipeline:1.8.0"
         //compile ":handlebars-asset-pipeline:1.3.0.3"
         
-         runtime ':twitter-bootstrap:3.3.5'
+        runtime ':twitter-bootstrap:3.3.5'
     }
 }
