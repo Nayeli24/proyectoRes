@@ -4,8 +4,10 @@ class Incidente {
 
     String descripcion
     String tema
-    Date fechaRegistro = new Date()
-     Date fechaAtencion
+    def date = new Date()
+    def formatDate=date.format("dd/MMMMM/yyyy")
+    Date fechaRegistro = new Date().parse("dd/MMMMM/yyyy", formatDate)
+    Date fechaAtencion
     String folio
     Estatus estatus 
     Usuario registradoPor
@@ -13,7 +15,7 @@ class Incidente {
     Date fechaAsignacion // = new Date()
     String solucion
     Date fechaCerrado   
-    boolean envíoCorreo=false
+    boolean envioCorreo=false
     
     static constraints = {
         descripcion blank: false 
@@ -24,6 +26,7 @@ class Incidente {
         asignadoA  (nullable: true)
         fechaAsignacion  (nullable: true)
         fechaAtencion  (nullable: true)
+        fechaCerrado  (nullable: true)
         estatus defaultValue: 'Nuevo'
         solucion (nullable:true)
     }

@@ -12,6 +12,7 @@
 	<field name="tema" class="java.lang.String"/>
 	<field name="fechaAtencion" class="java.util.Date"/>
 	<field name="solucion" class="java.lang.String"/>
+	<field name="fechaCerrado" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -85,11 +86,11 @@
 				<textFieldExpression><![CDATA[$F{fechaAtencion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="36" y="441" width="100" height="20" uuid="aca5c2a0-4193-4bd0-bfca-2cc4d72eb8a9"/>
+				<reportElement x="36" y="438" width="100" height="20" uuid="aca5c2a0-4193-4bd0-bfca-2cc4d72eb8a9"/>
 				<text><![CDATA[Solución :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="259" y="441" width="265" height="153" uuid="052e91b4-ad55-496a-914d-d2d6f88d057d"/>
+				<reportElement x="259" y="438" width="265" height="153" uuid="052e91b4-ad55-496a-914d-d2d6f88d057d"/>
 				<textFieldExpression><![CDATA[$F{solucion}]]></textFieldExpression>
 			</textField>
 		</band>

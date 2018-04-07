@@ -37,7 +37,7 @@
                                 <tr >
                                     <td>${it.id}</td>
                                     <td  class="hidden-xs"><g:link controller="incidente" action="descarga" id="${it.id}"> ${it.nombre} </g:link></td>
-                                    <td><g:formatDate format="EEEEE, dd-MMMMM-yyyy hh:mm aa" date="${it.fechaSubio}"/></td>
+                                   <td><g:formatDate format="dd / MMMMM / yyyy hh:mm aa" date="${it.fechaSubio}"/></td>
                                 </tr>
                             </g:each>
                         </g:if>

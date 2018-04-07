@@ -1,3 +1,4 @@
+
 package pruebaSeguridad
 
 
@@ -25,6 +26,12 @@ class ComentarioController {
 
     def show(Comentario comentarioInstance) {
         respond comentarioInstance
+    }
+     def contarComentarios(){
+         def comentarios=comentarioService.listarComentarios(params.id)
+        def id= params.id
+        println "Comentarios:::::.....Controller"+ comentarios.size()
+        render comentarios.size()
     }
 
     def create() {

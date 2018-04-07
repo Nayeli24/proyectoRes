@@ -35,9 +35,9 @@
                         <g:if test="${comentariosVer}">
                             <g:each name="comentariosVer" in="${comentariosVer}">	
                                 <tr >
-                                    <td>${it?.usuario?.nombre}</td>
+                                    <td> ${it?.usuario?.nombre} ${it?.usuario?.apellidoPat} ${it?.usuario?.apellidoMat}</td>
                                     <td  class="hidden-xs">${it.descripcion}</td>
-                                    <td><g:formatDate format="EEEEE, dd-MMMMM-yyyy hh:mm aa" date="${it.fechaComentario}"/></td>
+                                    <td><g:formatDate format="dd / MMMMM / yyyy hh:mm aa" date="${it.fechaComentario}"/></td>
                                     </tr>
                             </g:each>
                         </g:if>

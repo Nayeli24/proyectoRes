@@ -28,10 +28,32 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="page-header">
+                                      <!-- BREADCRUMBS -->
+                                        <ul class="breadcrumb">
+                                            <li>
+                                            <sec:ifAnyGranted roles='ROLE_CLIENTE'>
+
+                                                <g:if test="${incidenteInstance?.estatus?.id==5}">
+                                                    <g:jasperForm 
+                                                        controller="incidente"
+                                                        action="printReport"
+                                                        jasper="ticket_1" 
+                                                    name="Incidente_${incidenteInstance.folio}">
+                                                        <input type="hidden" name="id" value='${incidenteInstance?.id}'/> 
+                                                        <i class="fa fa-clipboard fa-fw"></i><g:jasperButton format="pdf" jasper="ticket_1" text="Generar reporte"  /><br>
+                                                    </g:jasperForm>
+                                                </g:if>
+                                            </sec:ifAnyGranted>  
+                                            </li>
+
+                                        </ul>
+                                        <!-- /BREADCRUMBS -->
+
                                         <div class="clearfix">
                                             <h3 class="content-title pull-left">Detalle de incidente</h3>
                                         </div>
-                                        <div class="description">Caracteristicas de incidente </div>
+                                        <div class="description">Características de incidente </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +110,7 @@
                                 <g:if test="${incidenteInstance?.fechaAsignacion}">
                                     <div class="form-group">
                                         <label class="control-label col-md-3">Fecha de asignación:</label>
-                                        <g:formatDate format="dd MMMMM yyyy hh:mm aa"  date="${incidenteInstance?.fechaAsignacion}" />                                                
+                                        <g:formatDate format="dd MMMMM yyyy"  date="${incidenteInstance?.fechaAsignacion}" />                                                
                                     </div>
                                 </g:if>
                                 <g:if test="${incidenteInstance?.solucion}">
@@ -100,46 +122,21 @@
                                 <g:if test="${incidenteInstance?.fechaAtencion}">
                                     <div class="form-group">
                                         <label class="control-label col-md-3">Fecha que se atendió:</label>
-                                        <g:formatDate format="dd MMMMM yyyy hh:mm aa"  date="${incidenteInstance?.fechaAtencion}" />  
+                                        <g:formatDate format="dd MMMMM yyyy"  date="${incidenteInstance?.fechaAtencion}" />  
                                     </div>
                                 </g:if>
                                 <g:if test="${incidenteInstance?.estatus?.id==4}">
-
-                                    <sec:ifAnyGranted roles='ROLE_CLIENTE'> <div class="form-group">
-                                            <g:link controller="incidente" action="cerrarIncidente" id="${incidenteInstance.id}" >  <g:actionSubmit   class="btn btn-success"  value="Finalizar Incidente"/></g:link>
-                                            </div></sec:ifAnyGranted>
-                                    </g:if>
+                                    <sec:ifAnyGranted roles='ROLE_CLIENTE'> 
+                                        <div class="form-group" align="center">
+                                            <fieldset >
+                                                <g:link  controller="incidente" action="cerrarIncidente" id="${incidenteInstance.id}" ><g:actionSubmit   class="btn btn-success"  value="Finalizar Incidente"/></g:link>
+                                                </fieldset>
+                                            </div>
+                                        </sec:ifAnyGranted>
+                                </g:if>
                                 <br>
                             </div>
-
                             <div>
-                                <sec:ifAnyGranted roles='ROLE_CLIENTE'>
-                                    <g:if test="${incidenteInstance?.estatus?.id>=4}">
-                                        <g:jasperForm 
-                                            controller="incidente"
-                                            action="printReport"
-                                            jasper="ticket_1" 
-                                            name="ticket_1">
-                                            <input type="hidden" name="id" value='${incidenteInstance?.id}'/> 
-                                            <i class="fa fa-clipboard fa-fw"></i><g:jasperButton format="pdf" jasper="ticket_1" text="Generar reporte"  />
-                                        </g:jasperForm>
-                                    </g:if>
-                                </sec:ifAnyGranted>
-                                <g:if test="${incidenteInstance?.estatus?.id==4}">
-                                    <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Documentos </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
-                                        <div id="message"></div>
-                                        <div id="error"></div>
-                                </g:if>
-                                <g:if test="${incidenteInstance?.estatus?.id==1}">
-                                    <g:form url="[resource:incidenteInstance, action:'delete']" method="DELETE">
-                                        <fieldset class="buttons">
-                                            <g:actionSubmit class="btn btn-success" action="delete" value="Eliminar incidente" onclick="return confirm('Estás seguro de eliminar incidente?');" />
-                                            <div id="borra"></div>
-                                        </fieldset>
-                                    </g:form>
-                                </g:if>
-
-
                                 <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
                                     <g:if test="${incidenteInstance?.estatus?.id==2 || incidenteInstance?.estatus?.id==3}">
                                         <g:formRemote name="formComentario" url="[controller:'incidente',action:'enviarComentario']" update="[success:'message',failure:'error']">
@@ -147,7 +144,7 @@
                                             <textarea   class="form-control"  onclick="javascript: limpia(this);"  name="comentario" required="" rows="5" cols="20"  placeholder="Escribe un comentario..."></textarea>
                                             <br><input  type="submit" class="btn btn-success" value="Enviar Comentario" />
                                         </g:formRemote>
-                                        <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Ver comentarios </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                        <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Ver comentarios (<g:include controller="comentario" action="contarComentarios" id="${incidenteInstance.id}" />)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
                                     </g:if>
                                     <g:if test="${incidenteInstance?.estatus?.id==3}">
                                         <i class="fa fa-check fa-fw"></i><g:remoteLink controller="incidente" action="atender" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Dar solución a incidente con folio ${incidenteInstance.folio} </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
@@ -157,26 +154,38 @@
                                     <br>
                                 </sec:ifAnyGranted>
                                 <sec:ifAnyGranted roles='ROLE_CLIENTE'>
+                                    <g:if test="${incidenteInstance?.estatus?.id==1}">
+                                        <g:form url="[resource:incidenteInstance, action:'delete']" method="DELETE">
+                                            <fieldset class="buttons">
+                                                <g:actionSubmit class="btn btn-success" action="delete" value="Eliminar incidente" onclick="return confirm('Estás seguro de eliminar incidente?');" />
+                                                <div id="borra"></div>
+                                            </fieldset>
+                                        </g:form>
+                                    </g:if>
                                     <g:if  test="${incidenteInstance?.estatus?.id==2}">
                                         <div class="alert alert-danger">
                                             <g:message code="El usuario está revisando el incidente" />
                                         </div>
                                     </g:if> 
 
+
                                     <g:if test="${incidenteInstance?.estatus?.id==3}">
                                         <g:formRemote name="formComentario" url="[controller:'incidente',action:'enviarComentario']" update="[success:'message',failure:'error']">
                                             <input type="hidden" name="id" value="${incidenteInstance.id}"/>
                                             <textarea class="form-control" onclick="javascript: limpia(this);"  name="comentario" required="" rows="5" cols="20"  placeholder="Escribe un comentario..."></textarea>
-                                            <br><input onclick="alert('¡Comentario enviado con éxito :)!')" type="submit" class="btn btn-success" value="Enviar Comentario" />
+                                            <br><input type="submit" class="btn btn-success" value="Enviar Comentario" />
                                         </g:formRemote>
                                         <div id="message"></div>
                                         <div id="error"></div>
-                                        <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message2',failure:'error2']"> Ver comentarios </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                        <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message2',failure:'error2']"> Ver comentarios (${Comentario.count()})</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
                                             <div id="message2"></div>
                                             <div id="error2"></div>
                                     </g:if>
-
-                                    <br>
+                                    <g:if test="${incidenteInstance?.estatus?.id==4}">
+                                        <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Documentos </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                            <div id="message"></div>
+                                            <div id="error"></div>
+                                    </g:if>
 
                                 </sec:ifAnyGranted>
                                 <script>

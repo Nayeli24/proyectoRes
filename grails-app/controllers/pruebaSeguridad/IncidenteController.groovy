@@ -1,6 +1,8 @@
 package pruebaSeguridad
 
 
+import java.text.SimpleDateFormat
+import java.text.DateFormat
 
 import static org.springframework.http.HttpStatus.*
 import static org.springframework.web.multipart.MultipartFile.*
@@ -17,6 +19,7 @@ class IncidenteController {
     def MailService
     def springSecurityService
     def incidenteService
+    def comentarioService
     static final  int i=0
     def flujoController
     def fechaCerrado
@@ -32,8 +35,9 @@ class IncidenteController {
     } 
 
     def show(Incidente incidenteInstance) {
-        respond incidenteInstance
-    }
+         
+  
+        respond incidenteInstance   }
 
     def create() {
         println "31:::::::::::::$params"
@@ -156,7 +160,9 @@ class IncidenteController {
                 println "incidente:::::::::::"+incident
                 incident.asignadoA =Usuario.findByNombre(params.asignadoA)
                 incident.estatus = Estatus.get(2 as int)
-                incident.fechaAsignacion = new Date()
+                def date = new Date()
+                def formatDate=date.format("dd/MMMMM/yyyy")
+	        incident.fechaAsignacion = new Date().parse("dd/MMMMM/yyyy", formatDate)            
                 incident.save()
                 def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incident)
             }
@@ -170,10 +176,13 @@ class IncidenteController {
         println "::::::::::::cerrar:::::::$params"
         def id=params.id
         def incidente=Incidente.get(params.id as long)
-        incidente.fechaCerrado=new Date()
-        def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,estatus,consulta)
-        println "incidente:......::::..."+incidente
-      }
+        def date = new Date()
+        def formatDate=date.format("dd/MMMMM/yyyy")
+        incidente.fechaCerrado= new Date().parse("dd/MMMMM/yyyy", formatDate)
+        incidente.estatus=Estatus.get(5 as int)
+        def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,5,incidente)
+        redirect (controller:"incidente", action:"index")
+    }
     
     def descarga() {
         println "::::::::::::.$params"
@@ -193,7 +202,9 @@ class IncidenteController {
         int i=0
         def id=params.id
         def incidente=incidenteService.cambiarEstatus(4,id)
-        incidente.fechaAtencion=new Date()
+        def date = new Date()
+        def formatDate=date.format("dd/MMMMM/yyyy")
+        incidente.fechaAtencion = new Date().parse("dd/MMMMM/yyyy", formatDate)
         incidente.solucion=params.solucion
         def uploadedFile = request.getFiles('file')
         println "::::::::::177"+uploadedFile
@@ -247,9 +258,7 @@ class IncidenteController {
         return ["id":id]
         render (view: "atender")
     }
-       
-   
-    
+  
     def enviarEmail(){
         println "::::::::::$params"
         def incidente=Incidente.get(params.id as long)
@@ -268,10 +277,11 @@ class IncidenteController {
                 <div><label><em><strong>Fecha de atención:</strong></label><p>$incidente.fechaAtencion</p></em></div>\n\
                <div><label><em><strong>Solución:</strong></label><p>$incidente.solucion</p></em></div>\n\
                 <div><label><em><strong>Se finalizó el incidente:</strong></label><p>$incidente.fechaCerrado</p></em></div>"
-            flash.message = "some message"
+            flash.message = "Correo enviado con éxito"
+            incidente.envioCorreo=true
             chain(controller:"incidente", action:"index")
         }
-        incidente.envioCorreo=true
+        
     }
     
     def printReport(){
@@ -285,10 +295,11 @@ class IncidenteController {
         respuesta.fechaAtencion=datos.fechaAtencion
         respuesta.descripcion= datos.descripcion
         respuesta.fechaRegistro=datos.fechaRegistro
-        respuesta.registradoPor=Usuario.findByUsername(datos.registradoPor.username)
-        respuesta.asignadoA=Usuario.findByUsername(datos.asignadoA.username)
+        def usuario=Usuario.findByUsername(datos.registradoPor.username)
+        respuesta.registradoPor= usuario.nombre+" "+usuario.apellidoPat+" "+usuario.apellidoMat
+        def usuarioAsi=Usuario.findByUsername(datos.asignadoA.username)
+        respuesta.asignadoA=usuarioAsi.nombre+" "+usuarioAsi.apellidoPat+" "+usuarioAsi.apellidoMat
         respuesta.solucion=datos.solucion
-        respuesta.fechaCerrado=datos.fechaCerrado
         mapa<<respuesta
         println mapa
         params._format="PDF"
@@ -312,10 +323,7 @@ class IncidenteController {
         comentario.fechaComentario = new Date()
         comentario.save()
         println "incidente:::enviarComentario:::::::::::::..."+b
-    
-        
-        redirect(controller: "comentario", action: "index", id: params.id)
-        //        render "El incidente con id ${b.id} se envió correctamente."
+        render "Comentario enviado con éxito"
     }
     
     

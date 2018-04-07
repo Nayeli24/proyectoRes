@@ -87,7 +87,7 @@
                                                 </sec:ifAnyGranted>
                                                 <sec:ifAnyGranted roles='ROLE_ADMIN'>
                                                     <th class="hidden-xs">Asignado a</th>
-                                                    <th class="hidden-xs">Enviar correo</th>
+                                                    <th class="hidden-xs">Envío de correo</th>
                                                 </sec:ifAnyGranted>
 
                                                 </tr>
@@ -113,19 +113,14 @@
                                                                     <g:if test="${flash.message}">
                                                                         <div class="message" role="status">${flash.message}</div>
                                                                     </g:if>
-                                                                    <g:else><g:link controller="incidente" action="enviarEmail" id="${it.id}"> 
+                                                                    <g:elseif test="${it.envioCorreo==true}">
+                                                                        <div class="message" role="status"><i class="fa fa-thumbs-o-up"> Hecho</i></div>
+                                                                    </g:elseif>
+                                                                    <g:else><g:link controller="incidente" action="enviarEmail" id="${it.id}">   <i class="fa fa-envelope"></i>
+                                                                        </g:link></g:else>
+                                                                    </td>
+                             <!-- <td><g:link controller="incidente" action="enviarEmail" id="${it.id}">Enviar </g:link></td>-->
 
-                                                                            <input type="button" value="Enviar correo"  onclick ="checkEmail()" class="button"/> 
-
-                                                                        </g:link></g:else></td>
-                        <!-- <td><g:link controller="incidente" action="enviarEmail" id="${it.id}">Enviar </g:link></td>-->
-                                                                <script>
-                                                                    function checkEmail() {
-                                                                    document.getElementById("td").value = "Muchas gracias!";
-
-                                                                    }
-
-                                                                </script>
                                                             </g:if>
                                                             <g:else>
                                                                 <td>Sin finalizar</td>
@@ -148,7 +143,7 @@
                                                 </sec:ifAnyGranted>
                                                 <sec:ifAnyGranted roles='ROLE_ADMIN'>
                                                     <th class="hidden-xs">Asignado a</th>
-                                                    <th class="hidden-xs">Enviar correo</th>
+                                                    <th class="hidden-xs">Envío de correo</th>
                                                 </sec:ifAnyGranted>
 
                                                 </tr>

@@ -137,7 +137,7 @@
                                                 <span class="required-indicator">*</span></label>
                                             <div class="col-sm-9">
 
-                                                <input type="email" class="form-control" name="email" required="" value="${usuarioInstance?.email}" placeholder="ejemplo@gmail.com" >
+                                                <input type="email" class="form-control" name="email" required="" value="${usuarioInstance?.email}" placeholder="ejemplo@gmail.com"  onkeyup="vNom(this)">
                                             </div> 
                                         </div>
                                         <div class="form-group">

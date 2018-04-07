@@ -32,6 +32,8 @@ class IncidenteService {
                 incidente.asignadoA=it.asignadoA
                 incidente.fechaAsignacion=it.fechaAsignacion
                 incidente.registradoPor = it.registradoPor
+                incidente.fechaCerrado=it.fechaCerrado
+                incidente.envioCorreo=it.envioCorreo
                 datosIncidente << incidente
             }
         }else if(role=='[ROLE_ADMIN]'){
@@ -49,6 +51,8 @@ class IncidenteService {
                 incidente.asignadoA=it.asignadoA
                 incidente.fechaAsignacion=it.fechaAsignacion
                 incidente.registradoPor = it.registradoPor
+                incidente.fechaCerrado=it.fechaCerrado
+                incidente.envioCorreo=it.envioCorreo
                 datosIncidente << incidente
             }
         }else if(role == '[ROLE_DESARROLLADOR]'){  
@@ -62,6 +66,8 @@ class IncidenteService {
                 incidente.fechaRegistro=it.fechaRegistro
                 incidente.fechaAsignacion = it.fechaAsignacion
                 incidente.registradoPor = it.registradoPor
+                incidente.fechaCerrado=it.fechaCerrado
+                incidente.envioCorreo=it.envioCorreo
                 datosIncidente << incidente
             }
         }
@@ -149,7 +155,7 @@ class IncidenteService {
     
         return consulta
         
-}
+    }
 }
 
 
