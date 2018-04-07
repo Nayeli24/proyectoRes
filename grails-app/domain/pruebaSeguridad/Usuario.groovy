@@ -65,7 +65,7 @@ class Usuario implements Serializable {
     }
     
     public String toString (){
-        String mensaje="Usuario:"+nombre+" "+apellidoPat+" "+apellidoMat;
+        String mensaje="Usuario: "+nombre+" "+apellidoPat+" "+apellidoMat;
         return mensaje;
     }
 }

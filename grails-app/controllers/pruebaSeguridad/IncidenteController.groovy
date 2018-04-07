@@ -3,6 +3,7 @@ package pruebaSeguridad
 
 import java.text.SimpleDateFormat
 import java.text.DateFormat
+import java.text.DateFormatSymbols
 
 import static org.springframework.http.HttpStatus.*
 import static org.springframework.web.multipart.MultipartFile.*
@@ -161,8 +162,8 @@ class IncidenteController {
                 incident.asignadoA =Usuario.findByNombre(params.asignadoA)
                 incident.estatus = Estatus.get(2 as int)
                 def date = new Date()
-                def formatDate=date.format("dd/MMMMM/yyyy")
-	        incident.fechaAsignacion = new Date().parse("dd/MMMMM/yyyy", formatDate)            
+               
+	        incident.fechaAsignacion = new Date()            
                 incident.save()
                 def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incident)
             }
@@ -177,8 +178,8 @@ class IncidenteController {
         def id=params.id
         def incidente=Incidente.get(params.id as long)
         def date = new Date()
-        def formatDate=date.format("dd/MMMMM/yyyy")
-        incidente.fechaCerrado= new Date().parse("dd/MMMMM/yyyy", formatDate)
+      
+        incidente.fechaCerrado= new Date()
         incidente.estatus=Estatus.get(5 as int)
         def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,5,incidente)
         redirect (controller:"incidente", action:"index")
@@ -203,8 +204,8 @@ class IncidenteController {
         def id=params.id
         def incidente=incidenteService.cambiarEstatus(4,id)
         def date = new Date()
-        def formatDate=date.format("dd/MMMMM/yyyy")
-        incidente.fechaAtencion = new Date().parse("dd/MMMMM/yyyy", formatDate)
+    
+        incidente.fechaAtencion = new Date()
         incidente.solucion=params.solucion
         def uploadedFile = request.getFiles('file')
         println "::::::::::177"+uploadedFile
@@ -264,7 +265,16 @@ class IncidenteController {
         def incidente=Incidente.get(params.id as long)
         println "Incidente:::::::"+incidente
         def email=incidente.registradoPor.email
-       
+      
+        def fechaRegis=incidente.fechaRegistro
+        def fechaR=fechaRegis.format("'El día' EEEEEEEEE dd 'de' MMMMM 'del' yyyy     hh:mm a")
+        
+        def fechaAte=incidente.fechaAtencion
+        def fechaA=fechaAte.format("'El día' EEEEEEEEE dd 'de' MMMMM 'del' yyyy     hh:mm a")
+ 
+        def fechaCer=incidente.fechaCerrado
+        def fechaC=fechaCer.format("'El día' EEEEEEEE dd 'de' MMMMM 'del' yyyy     hh:mm a")
+        
         MailService.sendMail {
             to email
             multipart true
@@ -272,11 +282,11 @@ class IncidenteController {
             subject "Detalle de incidente cerrado"
             html "<h1>incidente con folio $incidente.folio </h1>\n\
                 <div><label><em><strong>Tema:</strong></label><p>$incidente.tema</p></em></div>\n\
-                <div><label><em><strong>Fecha de registro:</strong></label><p>$incidente.fechaRegistro</p></em></div>\n\
+                <div><label><em><strong>Fecha de registro:</strong></label><p>$fechaR</p></em></div>\n\
                 <div><label><em><strong>Lo atendió:</strong></label><p>$incidente.asignadoA</p></em></div>\n\
-                <div><label><em><strong>Fecha de atención:</strong></label><p>$incidente.fechaAtencion</p></em></div>\n\
+                <div><label><em><strong>Fecha de atención:</strong></label><p>$fechaA</p></em></div>\n\
                <div><label><em><strong>Solución:</strong></label><p>$incidente.solucion</p></em></div>\n\
-                <div><label><em><strong>Se finalizó el incidente:</strong></label><p>$incidente.fechaCerrado</p></em></div>"
+                <div><label><em><strong>Se finalizó el incidente:</strong></label><p>$fechaC</p></em></div>"
             flash.message = "Correo enviado con éxito"
             incidente.envioCorreo=true
             chain(controller:"incidente", action:"index")

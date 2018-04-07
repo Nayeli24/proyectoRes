@@ -5,8 +5,8 @@ class Incidente {
     String descripcion
     String tema
     def date = new Date()
-    def formatDate=date.format("dd/MMMMM/yyyy")
-    Date fechaRegistro = new Date().parse("dd/MMMMM/yyyy", formatDate)
+ 
+    Date fechaRegistro = new Date()
     Date fechaAtencion
     String folio
     Estatus estatus 

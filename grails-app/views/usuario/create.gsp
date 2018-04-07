@@ -123,9 +123,10 @@
                                             <label class="col-sm-3 control-label" for="empresa"> Empresa:</label>
                                             <span class="required-indicator">*</span></label>
                                             <div class="col-sm-9">
-
-                                                <g:select id="empresa" name="empresa.id" from="${pruebaSeguridad.Empresa.list()}" optionKey="id" value="${usuarioInstance?.empresa?.id}" class="form-control" onchange="usernameCrear()" required="" />
-                                               
+                                                <input type="hidden" name="idempresa" id="idempresa" value="${detalle.empresas.id}"  >
+                                                 <g:select  id="empresa" name="empresa"  from="${detalle.empresas.nombreEmpresa}" class="form-control" onchange="usernameCrear()"/>
+                                            <!--    <g:select id="empresa" name="empresa.id" from="${pruebaSeguridad.Empresa.list()}" optionKey="id" value="${usuarioInstance?.empresa?.id}" class="form-control" onchange="usernameCrear()" required="" />
+                                               -->
                                             </div>
                                         </div>
 
@@ -137,7 +138,7 @@
                                                 <span class="required-indicator">*</span></label>
                                             <div class="col-sm-9">
 
-                                                <input type="email" class="form-control" name="email" required="" value="${usuarioInstance?.email}" placeholder="ejemplo@gmail.com"  onkeyup="vNom(this)">
+                                                <input type="email" class="form-control" name="email" required="" value="${usuarioInstance?.email}" placeholder="ejemplo@gmail.com"  >
                                             </div> 
                                         </div>
                                         <div class="form-group">
@@ -238,7 +239,7 @@
                                         var contador2=0;
 
                                         var tipoUser="I"
-                                        document.f1.empresa.value=1;
+                                        document.f1.idempresa.value=1;
                                         if(contador2<=9){
                                         clave="000"+contador2
                                         }else if(contador2<= 99){
@@ -252,7 +253,7 @@
                                         contador2++;
 
                                         }
-                                        var empresa= document.f1.empresa.value
+                                        var empresa= document.f1.idempresa.value
                                         if(empresa <= 9){
                                         var noEmpresa="0"+empresa
                                         }else{

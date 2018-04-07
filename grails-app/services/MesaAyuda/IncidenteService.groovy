@@ -105,11 +105,14 @@ class IncidenteService {
         // def consulta = Usuario.executeQuery("SELECT u FROM Usuario u Where u.username <> '$usuario'")
         consulta.each{
             def user =[:]
+            def activo=it.usuario.enabled
+            if(activo==true){
             user.id=it.usuario.id
             user.nombre = it.usuario.nombre
             user.apellidoPat = it.usuario.apellidoPat
             user.apellidoMat = it.usuario.apellidoMat
             datos << user
+            }
         }
         return datos
     }

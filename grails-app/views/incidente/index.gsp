@@ -110,12 +110,10 @@
                                                             <g:if test="${it?.estatus?.tipoEstatus=='Cerrado'}"> 
 
                                                                 <td id="td">
-                                                                    <g:if test="${flash.message}">
-                                                                        <div class="message" role="status">${flash.message}</div>
-                                                                    </g:if>
-                                                                    <g:elseif test="${it.envioCorreo==true}">
+                                                                 
+                                                                    <g:if test="${it.envioCorreo==true}">
                                                                         <div class="message" role="status"><i class="fa fa-thumbs-o-up"> Hecho</i></div>
-                                                                    </g:elseif>
+                                                                    </g:if>
                                                                     <g:else><g:link controller="incidente" action="enviarEmail" id="${it.id}">   <i class="fa fa-envelope"></i>
                                                                         </g:link></g:else>
                                                                     </td>

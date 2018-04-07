@@ -58,19 +58,38 @@ class UsuarioService {
         return datos      
     }
     
+    
     def obtenerEmpresas(){
-        def empresa = Empresa.findAll();
-        def empresaList = []
-        empresa.each {
-            if(it.enabled==true){
-                def respuesta2 = [:]
-                respuesta2.id=it.id
-                respuesta2.nombreEmpresa=it.nombreEmpresa
-                empresaList << respuesta2
-            }       
+        def datos = []
+        def  consulta= Empresa.executeQuery("select ur from Empresa ur where ur.enabled='true'")
+        println consulta
+        // def consulta = Usuario.executeQuery("SELECT u FROM Usuario u Where u.username <> '$usuario'")
+        consulta.each{
+            def empresa =[:]
+            def activo=it.enabled
+            if(activo==true){
+                empresa.id=it.id
+                empresa.nombreEmpresa = it.nombreEmpresa
+                datos << empresa
+            }
         }
-        println empresaList
-        return empresaList      
+        return datos
     }
+    
+    
+//    def obtenerEmpresas(){
+//        def empresa = Empresa.findAll();
+//        def empresaList = []
+//        empresa.each {
+//            if(it.enabled==true){
+//                def respuesta2 = [:]
+//                respuesta2.id=it.id
+//                respuesta2.nombreEmpresa=it.nombreEmpresa
+//                empresaList << respuesta2
+//            }       
+//        }
+//        println empresaList
+//        return empresaList      
+//    }
 }
 

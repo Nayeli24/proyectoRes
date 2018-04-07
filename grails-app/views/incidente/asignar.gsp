@@ -66,6 +66,7 @@
                                                 <g:submitButton name="asignar" class="btn btn-success" value="Asignar" />
                                             </g:if> 
                                             <g:else>
+                                                <br>
                                                 <div class="alert alert-danger">
                                                     ${flash.error?.encodeAsHTML()}
                                                 </div>

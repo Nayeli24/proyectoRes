@@ -152,12 +152,12 @@
                                         </div>
                                         <br><br>
                                     </div>
-
-                                    <fieldset class="buttons">
-     <!--    <input id="boton" type="button" value="Actualizar" onClick="comprobarClave()" action="update" > 
--->                                 <g:actionSubmit class="btn btn-success" value="${message(code: 'default.button.update.label', default: 'Update')}" action="update" />
-                                    </fieldset>
-                                </g:form>
+                                    <div class="form-group" align="center">
+                                        <fieldset class="buttons">
+         <!--    <input id="boton" type="button" value="Actualizar" onClick="comprobarClave()" action="update" > 
+    -->                                 <g:actionSubmit class="btn btn-success" value="${message(code: 'default.button.actualizar.label', default: 'Actualizar')}" action="update" />
+                                        </fieldset>  </div>
+                                    </g:form>
                                 <script type="text/javascript">
                                     function comprobarClave(){
                                     password = document.f1.password.value

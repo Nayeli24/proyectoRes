@@ -137,7 +137,7 @@
                                 <br>
                             </div>
                             <div>
-                                <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
+                            
                                     <g:if test="${incidenteInstance?.estatus?.id==2 || incidenteInstance?.estatus?.id==3}">
                                         <g:formRemote name="formComentario" url="[controller:'incidente',action:'enviarComentario']" update="[success:'message',failure:'error']">
                                             <input type="hidden" name="id" value="${incidenteInstance.id}"/>
@@ -152,7 +152,7 @@
                                     <div id="message"></div>
                                     <div id="error"></div>
                                     <br>
-                                </sec:ifAnyGranted>
+                             
                                 <sec:ifAnyGranted roles='ROLE_CLIENTE'>
                                     <g:if test="${incidenteInstance?.estatus?.id==1}">
                                         <g:form url="[resource:incidenteInstance, action:'delete']" method="DELETE">
@@ -162,25 +162,7 @@
                                             </fieldset>
                                         </g:form>
                                     </g:if>
-                                    <g:if  test="${incidenteInstance?.estatus?.id==2}">
-                                        <div class="alert alert-danger">
-                                            <g:message code="El usuario está revisando el incidente" />
-                                        </div>
-                                    </g:if> 
-
-
-                                    <g:if test="${incidenteInstance?.estatus?.id==3}">
-                                        <g:formRemote name="formComentario" url="[controller:'incidente',action:'enviarComentario']" update="[success:'message',failure:'error']">
-                                            <input type="hidden" name="id" value="${incidenteInstance.id}"/>
-                                            <textarea class="form-control" onclick="javascript: limpia(this);"  name="comentario" required="" rows="5" cols="20"  placeholder="Escribe un comentario..."></textarea>
-                                            <br><input type="submit" class="btn btn-success" value="Enviar Comentario" />
-                                        </g:formRemote>
-                                        <div id="message"></div>
-                                        <div id="error"></div>
-                                        <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message2',failure:'error2']"> Ver comentarios (${Comentario.count()})</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
-                                            <div id="message2"></div>
-                                            <div id="error2"></div>
-                                    </g:if>
+                               
                                     <g:if test="${incidenteInstance?.estatus?.id==4}">
                                         <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Documentos </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
                                             <div id="message"></div>

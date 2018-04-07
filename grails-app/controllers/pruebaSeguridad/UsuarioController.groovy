@@ -25,8 +25,15 @@ class UsuarioController {
                
     }
 
-    def create() {      
-        respond new Usuario(params)
+    def create() {
+         def data = [:]
+         def id
+        data.empresas= usuarioService.obtenerEmpresas()
+        data.each{
+            id=it.id
+            println "id empresa:::::::::."+id
+        }
+         render (view:"create", model: [detalle: data ])
                    
     }
 

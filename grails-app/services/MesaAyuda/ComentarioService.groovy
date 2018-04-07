@@ -12,7 +12,7 @@ class ComentarioService {
       
         def consulta
         def datosComentario=[] 
-       consulta = Comentario.executeQuery("SELECT c FROM Comentario c WHERE c.incidente = :inc order by id_comentario desc",[inc: Incidente.findById(incidente)],[offset:0, max:5])
+       consulta = Comentario.executeQuery("SELECT c FROM Comentario c WHERE c.incidente = :inc order by fecha_comentario desc",[inc: Incidente.findById(incidente)])
         println "consulta::::::::::::::::::::::::::::...."+consulta
         consulta.each{
             def comentario = [:]
@@ -27,4 +27,6 @@ class ComentarioService {
         return datosComentario
 
     }
+    
+  
 }
