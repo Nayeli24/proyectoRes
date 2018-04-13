@@ -13,15 +13,12 @@ class IncidenteService {
     
     
     def verIncidentes(def role,def usuario){
-        println "role service::::::::"+role
-        println "usuario service ::::::::"+usuario
         def consulta
         def datosIncidente=[]
          
         if(role == '[ROLE_CLIENTE]'){
             println "role if "+role
             consulta = Incidente.executeQuery("SELECT t FROM Incidente t WHERE t.registradoPor = :user order by estatus_id desc ",[user: Usuario.findByUsername(usuario) ])
-            println "consulta::::::::::::::::::::::::::::...."+consulta
             consulta.each{
                 def incidente = [:]
                 incidente.id = it.id
@@ -38,13 +35,11 @@ class IncidenteService {
             }
         }else if(role=='[ROLE_ADMIN]'){
             def consulta2 = Incidente.executeQuery("SELECT i FROM Incidente i order by estatus_id asc")
-            println "consulta2"+consulta2
             consulta2.each{
                 def incidente = [:]
                 incidente.id = it.id
                 incidente.folio = it.folio
                 incidente.estatus=it.estatus
-                println "estatus:::::::::::::::::::::::::::::::::::::::::::::"+incidente.estatus
                 incidente.tema = it.tema
                 incidente.fechaRegistro = it.fechaRegistro
                 incidente.registradoPor=it.registradoPor
@@ -107,14 +102,16 @@ class IncidenteService {
             def user =[:]
             def activo=it.usuario.enabled
             if(activo==true){
-            user.id=it.usuario.id
-            user.nombre = it.usuario.nombre
-            user.apellidoPat = it.usuario.apellidoPat
-            user.apellidoMat = it.usuario.apellidoMat
-            datos << user
+                user.id=it.usuario.id
+                user.nombre = it.usuario.nombre
+                user.apellidoPat = it.usuario.apellidoPat
+                user.apellidoMat = it.usuario.apellidoMat
+                user.nombreCompleto = user.nombre+" "+user.apellidoPat+" "+user.apellidoMat
+                datos << user
             }
         }
         return datos
+        
     }
     
     def guardarFlujo(def usuario , def estatus , def folio){
@@ -142,20 +139,15 @@ class IncidenteService {
         def sql = new Sql(dataSource)
         def resultado = sql.rows(query)
         def idt = resultado
-        println "incidente service"+idt
         return idt
     }
     
 
     def cambiarEstatus(def estatus, def idIncidente){
-        println "::::::::::INcidente:::::$idIncidente"
-        println "::::::::::::::::::::::Estatus:::::::$estatus"
         def  consulta= Incidente.get(idIncidente as long)       
-        println ":::::::::::::::::::::::::::::...servicecaadfgfbb"+consulta
         consulta.estatus = Estatus.get(estatus)  
         consulta.save()
         def gf = guardarFlujo(springSecurityService.currentUser.username,estatus,consulta)
-    
         return consulta
         
     }

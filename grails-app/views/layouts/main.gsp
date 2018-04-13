@@ -34,6 +34,8 @@
     <g:external dir="js/datatables/extras/TableTools/media/css" file="TableTools.min.css"/>
       <!-- FONTS -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <!-- DROPZONE -->
+    <g:external dir="js/dropzone" file="dropzone.min.css" />
 
     <g:layoutHead/>
 </head>

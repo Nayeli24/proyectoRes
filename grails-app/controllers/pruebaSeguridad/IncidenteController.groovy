@@ -67,7 +67,7 @@ class IncidenteController {
         println us
         incidenteInstance.registradoPor = Usuario.findByUsername(us)
         incidenteInstance.estatus = Estatus.get(1 as long)
-        incidenteInstance.save flush:true
+        incidenteInstance.save()
         def inf = incidenteService.guardarFlujo(us,1,incidenteInstance)
         
         request.withFormat {
@@ -149,26 +149,22 @@ class IncidenteController {
     }
     def asignarIncidente (){
         println ":::::asignar incidente::::::::::::::$params"
-        def usuario=Usuario.findByNombre(params.asignadoA)
-        println "usuario________"+usuario.nombre
         def lista=[]
         lista=params.incidente
         for( i in lista){
             println ":::::::::::::"+i
-
-            lista.each{
-                def incident=Incidente.findByTema(it)
+            i.each{
+                def incident=Incidente.findById(it)
                 println "incidente:::::::::::"+incident
-                incident.asignadoA =Usuario.findByNombre(params.asignadoA)
+                incident.asignadoA =Usuario.findById(params.asignadoA as long)
                 incident.estatus = Estatus.get(2 as int)
-                def date = new Date()
-               
+                def date = new Date()      
 	        incident.fechaAsignacion = new Date()            
                 incident.save()
                 def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incident)
             }
         }
-        redirect (action: "index")
+       redirect (action: "index")
     }
     
     
@@ -195,18 +191,37 @@ class IncidenteController {
         response.getOutputStream() << new ByteArrayInputStream(file.getBytes())
  
     }
-   
+    def idUpload
+    def cargaArchivos(){
+        println ":::::::::::::::cargaArchivos::::::$params"
+        idUpload=params.id
+      
+        render (template: "cargaArchivos")
+    }
+
+     def guardarSolucion(){
+        println "::::::::::::::::::::$params"
+        def id=params.id
+         def incidente=incidenteService.cambiarEstatus(4,id)
+       def date = new Date()
+       incidente.fechaAtencion = new Date()
+        incidente.solucion=params.solucion
+        redirect(contoller:"incidente", action:"index")
+    }
+    
+    def atender(){
+        println "::::::::::::::::::::$params"
+        def id=params.id
+        return[id:id]
+        render (view: "atender")
+    }
+  
     def upload(){ 
         println "::::::::::::::::::::173:$params"
         def archivos = []
         def mapa 
         int i=0
-        def id=params.id
-        def incidente=incidenteService.cambiarEstatus(4,id)
-        def date = new Date()
-    
-        incidente.fechaAtencion = new Date()
-        incidente.solucion=params.solucion
+      def id=idUpload
         def uploadedFile = request.getFiles('file')
         println "::::::::::177"+uploadedFile
         for (def values: uploadedFile){
@@ -217,14 +232,14 @@ class IncidenteController {
             mapa.nombreDelArchivo =values.originalFilename
             //mapa.extension = fileLabel.toLowerCase()
             archivos << mapa
-          
+            println "Archivos::0::::."+archivos
             def archivo = archivos.getAt(i)
             println archivo.nombreDelArchivo
                 
             def documento = new Documento ()
-            documento.incidente = incidente
+            documento.incidente = Incidente.get(id as long)
             
-            def nombre="Achivo_Incidente_"+params.id+"_"+(archivo.nombreDelArchivo).toString()
+            def nombre="Achivo_Incidente_"+id+"_"+(archivo.nombreDelArchivo).toString()
             println "nombre archivo:::::::::::::::::"+nombre
             documento.nombre = nombre
             documento.fechaSubio = new Date ()
@@ -253,13 +268,7 @@ class IncidenteController {
     }
     
     
-    def atender(){
-        println "::::::::::::::::::::$params"
-        def id=params.id
-        return ["id":id]
-        render (view: "atender")
-    }
-  
+   
     def enviarEmail(){
         println "::::::::::$params"
         def incidente=Incidente.get(params.id as long)
@@ -336,5 +345,7 @@ class IncidenteController {
         render "Comentario enviado con éxito"
     }
     
-    
+   def alert(){
+       render (view:"alert")
+   }
 }

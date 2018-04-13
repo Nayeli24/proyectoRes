@@ -49,7 +49,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label" for="asignadoA"> Usuario asignado:</label>
                                                 <div class="col-sm-9">
-                                                    <g:select id="asignadoA" name="asignadoA" from="${detalle.usuarios.nombre}"  class="form-control"  />
+                                                    <g:select id="asignadoA" name="asignadoA" from="${detalle.usuarios}" optionKey="id" optionValue="nombreCompleto"  class="form-control"  />
                                                 </div>
                                             </div>
                                         </fieldset><p>
@@ -57,7 +57,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label" for="incidente"> Incidente a asignar:</label>
                                                 <div class="col-sm-9">
-                                                    <g:select   multiple="true" id="incidente" name="incidente"  value="${detalle.incidentes?.id}" from="${detalle.incidentes.tema}" class="form-control" />
+                                                    <g:select   multiple="true" id="incidente" name="incidente"   from="${detalle.incidentes}" optionKey="id" optionValue="tema" value="${detalle.incidentes?.id}" class="form-control" />
                                                 </div>
                                             </div>
                                         </fieldset>

@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 @Transactional//(readOnly = true)
 class UsuarioController {
     def springSecurityService
-
+   
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     def usuarioService
     def index(Integer max) {
@@ -26,15 +26,12 @@ class UsuarioController {
     }
 
     def create() {
-         def data = [:]
-         def id
+        def data = [:]
         data.empresas= usuarioService.obtenerEmpresas()
-        data.each{
-            id=it.id
-            println "id empresa:::::::::."+id
-        }
-         render (view:"create", model: [detalle: data ])
-                   
+       def resp= usuarioService.ultimoRegistro()  
+       data.id=resp
+       println ";;;;;;;;;;;;;;;;$data.id"
+        render (view:"create", model: [detalle: data])              
     }
 
     @Transactional

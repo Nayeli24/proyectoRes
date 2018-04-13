@@ -7,7 +7,7 @@ import groovy.sql.Sql
 
 @Transactional
 class UsuarioService {
-    
+    def dataSource
     def usuarioId(){
         def usuario = Usuario.findAll();
         def userList = []
@@ -77,19 +77,11 @@ class UsuarioService {
     }
     
     
-//    def obtenerEmpresas(){
-//        def empresa = Empresa.findAll();
-//        def empresaList = []
-//        empresa.each {
-//            if(it.enabled==true){
-//                def respuesta2 = [:]
-//                respuesta2.id=it.id
-//                respuesta2.nombreEmpresa=it.nombreEmpresa
-//                empresaList << respuesta2
-//            }       
-//        }
-//        println empresaList
-//        return empresaList      
-//    }
+    def ultimoRegistro(){
+        def query=("select id from usuario  order by id desc limit 1 ")
+        def sql = new Sql(dataSource)
+        def resultado = sql.rows(query)
+        def idt = resultado.id 
+        return idt.first()
+    }
 }
-

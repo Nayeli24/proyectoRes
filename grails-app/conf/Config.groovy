@@ -49,7 +49,7 @@ grails {
         username = "neli1124.sc@gmail.com"
         password = "170424neli"
         props = ["mail.smtp.auth":"true", "mail.smtp.starttls.enable":"true"
-                 ]
+        ]
     }
     views {
         gsp {
@@ -158,14 +158,17 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/incidente/welcome':  ['ROLE_DESARROLLADOR','ROLE_CLIENTE'],
     '/incidente/enviarComentario':  ['ROLE_DESARROLLADOR','ROLE_CLIENTE'],
     '/incidente/enviarEmail':  ['ROLE_ADMIN'],
+     '/incidente/alert':  ['ROLE_ADMIN'],
       '/incidente/atender':  ['ROLE_DESARROLLADOR'],
       '/incidente/upload':  ['ROLE_DESARROLLADOR'],
      '/incidente/descarga':  ['isFullyAuthenticated()'],
      '/incidente/welcome':  ['permitAll'],
     '/incidente/cerrarIncidente':  ['ROLE_CLIENTE'],
     '/incidente/printReport':  ['ROLE_CLIENTE'],
- 
+    '/incidente/cargaArchivos':  ['ROLE_DESARROLLADOR'],
+     '/incidente/guardarSolucion':  ['ROLE_DESARROLLADOR'],
     '/usuario/**':  ['ROLE_ADMIN'],
+     '/usuario/usuarioLog':  ['isFullyAuthenticated()'],
     '/comentario/index':  ['ROLE_DESARROLLADOR','ROLE_CLIENTE'],
     '/jasper/**':    ['permitAll'],
     '/documento/**':    ['isFullyAuthenticated()'],

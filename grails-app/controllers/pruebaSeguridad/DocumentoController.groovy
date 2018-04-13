@@ -102,7 +102,7 @@ class DocumentoController {
 
     @Transactional
     def delete(Documento documentoInstance) {
-
+        println "params::::::::.documeneto delete :$params"
         if (documentoInstance == null) {
             notFound()
             return
