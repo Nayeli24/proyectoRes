@@ -13,19 +13,19 @@
                         <h4><i class="fa fa-comment-o"></i>Solución</h4>
                     </div>
                     <div class="box-body big">
-                        <g:formRemote name="f1" url="[controller:'incidente',action:'guardarSolucion']" update="[success:'message2',failure:'error']" onsubmit="return sendForm();">
+                        <form name="f1" id="f1" action="http://localhost:8080/MesaAyuda/incidente/guardarSolucion" >      
                             <fieldset>
-                                <textarea class="form-control" name="solucion" required="" value="${incidenteInstance?.solucion}"  rows="10" cols="20"  placeholder="Escribe solución..."></textarea>
+                                <textarea id="txtAten" name="txtAten" onkeyup="mostrar();"  class="form-control" name="solucion" required="" value="${incidenteInstance?.solucion}"   rows="10" cols="20"  placeholder="Escribe solución..."></textarea>
                             </fieldset>
                             <fieldset>
                                 <input type="hidden" id="${id}" name="id" value="${id}"  >                                
                             </fieldset><br>
                             <fieldset class="buttons">
-                                <button name="atender" class="btn btn-success" >Enviar Solución</button>
-                                <g:remoteLink controller="incidente" action="cargaArchivos" id="${id}" update ="[success:'message2',failure:'error']"> <button  class="btn btn-primary" >Cargar archivos ${idUpload}</button></g:remoteLink>
+                                <input type="button" name="atender" id="atender" onclick="confirmFunction();" value="Enviar solución" class="btn btn-success" style="display:none" />
+                                <g:remoteLink controller="incidente" action="cargaArchivos" id="${id}" update ="[success:'message2',failure:'error']" > <input type="button" class="btn btn-primary" id="ca" name="ca"  value="Cargar archivos" style="display:none"/></g:remoteLink>
                                 </fieldset>
 
-                        </g:formRemote>
+                        </form>
                         <br>
                         <div id="message2"> </div>
                     </div>
@@ -47,64 +47,99 @@
 
         </script>
         <script>
-            function sendForm(){
-            var t = false
-            //Por aqui valida cosas
-
-            //llega al swal
-
+            function confirmFunction() {
+            $("#ca").hide()
             swal({
-            title: "¿Desea actualizar las demas cuentas?",
-            text: "Esta a punto de registrar una cuenta que es nómina",
-            type: "warning",
+            title: '¿Deseas cargar archivos?',
+            text: 'Antes de enviar la solución si lo requiere, cargar los archivos correspondientes',
+            type: 'warning',
             showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Eliminar",
-            cancelButtonText: "Cancelar",
-            closeOnConfirm: true,
-            closeOnCancel: true,
-
-            }, function(isConfirm) {
-            //Es en este punto que necesito detener la ejecucion de la función x a la espera de lo que haga con el swal
-            var formulario = document.getElementById("f1"); 
-            if (isConfirm) {
-            t = true;
-            return false;
+            confirmButtonText: 'Sí, cargar archivos',
+            cancelButtonText: 'No, enviar solución'
+}).then((result) => {
+            console.log(result);
+            if (result.value) {
+            swal(
+            '¡Cargar archivos!',
+            'Cargar archivos correspondientes y necesarios',
+            'warning'
+            )
+            $("#ca").show();
             } else {
-             formulario.submit();
-            return true;
+            swal(
+            'Enviando solución...',
+            'Solución enviada...',
 
+            'success',
+            2000
+
+            )
+            $("#f1").submit();
             }
-
             });
-
-
             }
-   
+
+
+
+            function mostrar()
+            {
+            var text = document.getElementById("txtAten");
+
+            if(text== " ") 
+            {      
+            swal(
+            '¡Escribe la solución!',
+            'Escribe la solución',
+            'error'
+            )
+            document.getElementById('atender').style.display = 'none';
+            }else{
+            $('#atender').show();
+            }
+            }
 
         </script>
-<!--        <script>
-       // bind the on-change event
-       $(document).ready(function() {
-       $("#upload-file-input").on("change", uploadFile);
-       });
 
-       /**
-       * Upload the file sending it via Ajax at the Spring Boot server.
-       */
-       function uploadFile() {
-       $.ajax({
-       url: "http://localhost:8080/MesaAyuda/incidente/upload",
-       type: "POST",
-       data: new FormData($("#my-awesome-dropzone")[0]),
+<!--           function sendForm(){
+var formulario = document.getElementById("f1"); 
+var r = confirm("¿Deseas subir archivos?");
+if (r == true) {
+swal("Cargar archivos")
+return false;
+} else {
+swal({
+title: "¡Bien!",
+text: "Enviando formulario..",
+type: "success",
+timer: 3000
+});
+formulario.submit();
+return true;
+} 
+}-->
 
-       processData: false,
-       contentType: false,
-       cache: false,
-
-       });
-       } // function uploadFile
-   </script>-->
+        <!--        <script>
+               // bind the on-change event
+               $(document).ready(function() {
+               $("#upload-file-input").on("change", uploadFile);
+               });
+        
+               /**
+               * Upload the file sending it via Ajax at the Spring Boot server.
+               */
+               function uploadFile() {
+               $.ajax({
+               url: "http://localhost:8080/MesaAyuda/incidente/upload",
+               type: "POST",
+               data: new FormData($("#my-awesome-dropzone")[0]),
+        
+               processData: false,
+               contentType: false,
+               cache: false,
+        
+               });
+               } // function uploadFile
+           </script>-->
 
     </body>
 

@@ -166,6 +166,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/incidente/cerrarIncidente':  ['ROLE_CLIENTE'],
     '/incidente/printReport':  ['ROLE_CLIENTE'],
     '/incidente/cargaArchivos':  ['ROLE_DESARROLLADOR'],
+    '/incidente/eliminarArchivo':  ['ROLE_DESARROLLADOR'],
      '/incidente/guardarSolucion':  ['ROLE_DESARROLLADOR'],
     '/usuario/**':  ['ROLE_ADMIN'],
      '/usuario/usuarioLog':  ['isFullyAuthenticated()'],

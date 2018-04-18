@@ -149,22 +149,19 @@ class IncidenteController {
     }
     def asignarIncidente (){
         println ":::::asignar incidente::::::::::::::$params"
-        def lista=[]
-        lista=params.incidente
-        for( i in lista){
-            println ":::::::::::::"+i
-            i.each{
-                def incident=Incidente.findById(it)
-                println "incidente:::::::::::"+incident
-                incident.asignadoA =Usuario.findById(params.asignadoA as long)
-                incident.estatus = Estatus.get(2 as int)
-                def date = new Date()      
-	        incident.fechaAsignacion = new Date()            
-                incident.save()
-                def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incident)
-            }
+        List lista = params.list ('incidente')
+        lista.each{
+            def incident=Incidente.findById(it)
+            println "incidente:::::::::::"+incident
+            incident.asignadoA =Usuario.findById(params.asignadoA as long)
+            incident.estatus = Estatus.get(2 as int)
+            def date = new Date()      
+            incident.fechaAsignacion = new Date()            
+            incident.save()
+            def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incident)
         }
-       redirect (action: "index")
+        
+        redirect (action: "index")
     }
     
     
@@ -199,14 +196,20 @@ class IncidenteController {
         render (template: "cargaArchivos")
     }
 
-     def guardarSolucion(){
+    def guardarSolucion(){
         println "::::::::::::::::::::$params"
         def id=params.id
-         def incidente=incidenteService.cambiarEstatus(4,id)
-       def date = new Date()
-       incidente.fechaAtencion = new Date()
+        def incidente=incidenteService.cambiarEstatus(4,id)
+        def date = new Date()
+        incidente.fechaAtencion = new Date()
         incidente.solucion=params.solucion
         redirect(contoller:"incidente", action:"index")
+    }    
+    
+    
+    def eliminarArchivo(){
+        println ":::::::::::::::::hggjygygfuyg:::::$params"
+        
     }
     
     def atender(){
@@ -221,7 +224,7 @@ class IncidenteController {
         def archivos = []
         def mapa 
         int i=0
-      def id=idUpload
+        def id=idUpload
         def uploadedFile = request.getFiles('file')
         println "::::::::::177"+uploadedFile
         for (def values: uploadedFile){
@@ -345,7 +348,7 @@ class IncidenteController {
         render "Comentario enviado con éxito"
     }
     
-   def alert(){
-       render (view:"alert")
-   }
+    def alert(){
+        render (view:"alert")
+    }
 }
