@@ -3,10 +3,11 @@ package MesaAyuda
 import grails.transaction.Transactional
 import static org.springframework.http.HttpStatus.*
 import pruebaSeguridad.*
+import groovy.sql.Sql
 
 @Transactional
 class DocumentoService {
-
+def dataSource
     def listarDocumentos(def incidente) {
       
         def consulta
@@ -25,4 +26,16 @@ class DocumentoService {
         return docs
 
     }
+    
+    
+      def borrarArchivo(def name,def id){
+          def nombre="Archivo_Incidente_"+id+"_"+name
+          println "nombre archiv     o"    +nombre
+        println Documento.executeUpdate("delete from Documento where nombre=':nombre'")
+     
+        def consulta = Documento.executeUpdate("delete from Documento where nombre='$nombre'")
+        println "consulta::::::::::::::::::::::::::::...."+consulta
+
+    }
+    
 }

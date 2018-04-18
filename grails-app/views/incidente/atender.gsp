@@ -79,8 +79,6 @@
             });
             }
 
-
-
             function mostrar()
             {
             var text = document.getElementById("txtAten");
@@ -100,23 +98,7 @@
 
         </script>
 
-<!--           function sendForm(){
-var formulario = document.getElementById("f1"); 
-var r = confirm("¿Deseas subir archivos?");
-if (r == true) {
-swal("Cargar archivos")
-return false;
-} else {
-swal({
-title: "¡Bien!",
-text: "Enviando formulario..",
-type: "success",
-timer: 3000
-});
-formulario.submit();
-return true;
-} 
-}-->
+
 
         <!--        <script>
                // bind the on-change event

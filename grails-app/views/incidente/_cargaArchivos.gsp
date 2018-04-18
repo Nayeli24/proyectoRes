@@ -40,7 +40,6 @@
     $(document).ready(function() {
     $("#upload-file-input").on("change", uploadFile);
     });
-
     
     function uploadFile() {
     $.ajax({

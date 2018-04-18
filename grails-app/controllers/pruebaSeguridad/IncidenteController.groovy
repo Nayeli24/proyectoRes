@@ -21,6 +21,7 @@ class IncidenteController {
     def springSecurityService
     def incidenteService
     def comentarioService
+    def documentoService
     static final  int i=0
     def flujoController
     def fechaCerrado
@@ -209,6 +210,9 @@ class IncidenteController {
     
     def eliminarArchivo(){
         println ":::::::::::::::::hggjygygfuyg:::::$params"
+        def documento = documentoService.borrarArchivo(params.name, idUpload);
+          
+        println "se elimino :::::$documento"
         
     }
     
@@ -236,7 +240,7 @@ class IncidenteController {
             //mapa.extension = fileLabel.toLowerCase()
             archivos << mapa
             println "Archivos::0::::."+archivos
-            def archivo = archivos.getAt(i)
+         def archivo = archivos.getAt(i)
             println archivo.nombreDelArchivo
                 
             def documento = new Documento ()
@@ -265,11 +269,11 @@ class IncidenteController {
            
             }
             i=i+1
-        }
+    }
     
         redirect (controller: "incidente", action: "index")
     }
-    
+   
     
    
     def enviarEmail(){

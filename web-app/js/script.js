@@ -1521,7 +1521,7 @@ var App = function () {
                     $.ajax({
                         type: 'POST',
                         url: 'http://localhost:8080/MesaAyuda/incidente/eliminarArchivo',
-                        data: "id=" + name,
+                        data: "name=" + name,
                         dataType: 'html'
                     });
                     var _ref;
@@ -1533,6 +1533,10 @@ var App = function () {
                 //change the previewTemplate to use Bootstrap progress bars
                 previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-sm progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>"
 
+            });
+            $(".dropzone").on("success", function (file, id) {
+                var file_serve_id = id;
+                console.log(file_serve_id);
             });
         } catch (e) {
             alert('Dropzone.js does not support older browsers!');
@@ -3222,16 +3226,16 @@ var App = function () {
     }
     return {
 
-        //Initialise theme pages
+//Initialise theme pages
         init: function () {
 
             if (App.isPage("index")) {
                 handleDateTimePickers(); //Function to display Date Timepicker
-                handleSparkline();		//Function to display Sparkline charts
+                handleSparkline(); //Function to display Sparkline charts
                 handleDashFlotCharts(); //Function to display flot charts in dashboard
                 handleChat('chat-window'); //Function to handle chat
-                handleCalendar();	//Function to display calendar
-                handleGritter();	//Function to display Gritter notifications
+                handleCalendar(); //Function to display calendar
+                handleGritter(); //Function to display Gritter notifications
             }
             if (App.isPage("widgets_box")) {
                 handleBoxSortable(); //Function to handle Box sortables
@@ -3245,82 +3249,82 @@ var App = function () {
             }
             if (App.isPage("button_icons")) {
                 handleStatefulButtons(); //Function to display stateful buttons
-                handleToggle(); 		//Function to handle toggle buttons
+                handleToggle(); //Function to handle toggle buttons
             }
             if (App.isPage("sliders_progress")) {
                 handleSliders(); //Function to display sliders
                 handleProgress(); //Function to display progress bars
-                handleKnobs();	//Function to display knobs
+                handleKnobs(); //Function to display knobs
             }
             if (App.isPage("treeview")) {
-                handleTree();	//Function to handle tree display
+                handleTree(); //Function to handle tree display
             }
             if (App.isPage("nestable_lists")) {
-                handleNestableLists();	//Function to handle nestable lists
+                handleNestableLists(); //Function to handle nestable lists
             }
             if (App.isPage("simple_table")) {
-                handleTablecloth();	//Function to display tablecloth.js options
+                handleTablecloth(); //Function to display tablecloth.js options
             }
             if (App.isPage("dynamic_table")) {
-                handleDataTables();	//Function to display data tables
+                handleDataTables(); //Function to display data tables
             }
             if (App.isPage("jqgrid_plugin")) {
-                handleJqgrid();	//Function to display jqGrid
+                handleJqgrid(); //Function to display jqGrid
             }
             if (App.isPage("forms")) {
-                handleTypeahead();	//Function to display autocomplete
+                handleTypeahead(); //Function to display autocomplete
                 handleAutosize(); //Function to handle textarea autosize
                 handleCountable(); //Function to handle char count
                 handleSelect2(); //Function to handle select2
-                handleUniform();	//Function to handle uniform inputs
+                handleUniform(); //Function to handle uniform inputs
                 handleTimeAgo(); //Function to handle timestamps
             }
             if (App.isPage("rich_text_editors")) {
-                handleWysiwyg();	//Function to display wysiwyg
+                handleWysiwyg(); //Function to display wysiwyg
             }
             if (App.isPage("dropzone_file_upload")) {
-                handleDropzone();	//Function to display wysiwyg
+                handleDropzone(); //Function to display wysiwyg
             }
             if (App.isPage("xcharts")) {
-                handleXcharts();	//Function to display xcharts
+                handleXcharts(); //Function to display xcharts
             }
             if (App.isPage("others")) {
-                handleGage();	//Function to display justgage
-                handleEasyPie();	//Function to display easy pie charts
-                handleSparkline();	//Function to display sparklines
+                handleGage(); //Function to display justgage
+                handleEasyPie(); //Function to display easy pie charts
+                handleSparkline(); //Function to display sparklines
             }
             if (App.isPage("calendar")) {
-                handleCalendar();	//Function to display calendar
-                handleUniform();	//Function to handle uniform inputs
+                handleCalendar(); //Function to display calendar
+                handleUniform(); //Function to handle uniform inputs
             }
             if (App.isPage("vector_maps")) {
-                handleJqvmaps();	//Function to display vector maps
+                handleJqvmaps(); //Function to display vector maps
             }
             if (App.isPage("gallery")) {
-                handleIsotope();	//Function to display portfolio
-                handleHover();		//Function to display hover-content
-                handleColorbox();		//Function to display colorbox
+                handleIsotope(); //Function to display portfolio
+                handleHover(); //Function to display hover-content
+                handleColorbox(); //Function to display colorbox
             }
             if (App.isPage("login")) {
-                handleUniform();	//Function to handle uniform inputs
+                handleUniform(); //Function to handle uniform inputs
             }
             if (App.isPage("wizards_validations")) {
-                handleUniform();	//Function to handle uniform inputs
+                handleUniform(); //Function to handle uniform inputs
             }
             if (App.isPage("login_bg")) {
-                handleUniform();	//Function to handle uniform inputs
-                handleBackstretch();	//Function to handle background images
+                handleUniform(); //Function to handle uniform inputs
+                handleBackstretch(); //Function to handle background images
             }
             if (App.isPage("chats")) {
-                handleChat('chat-window');	//Function to handle chat
-                handleChat('chat-widget');	//Function to handle chat
+                handleChat('chat-window'); //Function to handle chat
+                handleChat('chat-widget'); //Function to handle chat
                 initTimeAgo(); //Function to init timestamps
             }
             if (App.isPage("todo_timeline")) {
-                handleTimeline();	//Function to display timeline
+                handleTimeline(); //Function to display timeline
             }
             if (App.isPage("address_book")) {
-                handleSliderNav();	//Function to display address book
+                handleSliderNav(); //Function to display address book
             }
             if (App.isPage("orders")) {
                 initTimeAgo(); //Function to init timestamps
@@ -3330,21 +3334,21 @@ var App = function () {
             }
             if (App.isPage("user_profile")) {
                 handleProfileSkillPie(); //Function to show skills in pie
-                handleSparkline();	//Function to display sparklines
-                handleUniform();	//Function to handle uniform inputs
-                handleProfileEdit();	//Function to handle profile edit tab
+                handleSparkline(); //Function to display sparklines
+                handleUniform(); //Function to handle uniform inputs
+                handleProfileEdit(); //Function to handle profile edit tab
             }
             if (App.isPage("mini_sidebar")) {
-                collapseSidebar();	//Function to display mini menu				
+                collapseSidebar(); //Function to display mini menu				
             }
             if (App.isPage("fixed_header_sidebar")) {
-                handleFixedSidebar();	//Function to display fixed sidebar
+                handleFixedSidebar(); //Function to display fixed sidebar
             }
-            checkLayout();	//Function to check if mini menu/fixed header is activated
+            checkLayout(); //Function to check if mini menu/fixed header is activated
             handleSidebar(); //Function to display the sidebar
             handleSidebarCollapse(); //Function to hide or show sidebar
-            handleSidebarAndContentHeight();  //Function to hide sidebar and main content height
-            responsiveSidebar();		//Function to handle sidebar responsively
+            handleSidebarAndContentHeight(); //Function to hide sidebar and main content height
+            responsiveSidebar(); //Function to handle sidebar responsively
             handleTeamView(); //Function to toggle team view
             handleHomePageTooltips(); //Function to handle tooltips
             handleBoxTools(); //Function to handle box tools
@@ -3353,16 +3357,14 @@ var App = function () {
             handleMessenger(); //Function to handle messenger
             handleAlerts(); //Function to handle alerts
             handleCustomTabs(); //Function to handle min-height of custom tabs
-            handleGoToTop(); 	//Funtion to handle goto top buttons
-            handleNavbarFixedTop();		//Function to check & handle if navbar is fixed top
-            handleThemeSkins();		//Function to handle theme skins
+            handleGoToTop(); //Funtion to handle goto top buttons
+            handleNavbarFixedTop(); //Function to check & handle if navbar is fixed top
+            handleThemeSkins(); //Function to handle theme skins
         },
-
         //Set page
         setPage: function (name) {
             currentPage = name;
         },
-
         isPage: function (name) {
             return currentPage == name ? true : false;
         },
@@ -3377,7 +3379,6 @@ var App = function () {
                 scrollTop: pos + (offeset ? offeset : 0)
             }, 'slow');
         },
-
         // function to scroll to the top
         scrollTop: function () {
             App.scrollTo();
@@ -3412,7 +3413,6 @@ var App = function () {
                 }
             });
         },
-
         // wrapper function to  un-block element(finish loading)
         unblockUI: function (el) {
             jQuery(el).unblock({
@@ -3442,8 +3442,6 @@ var App = function () {
         return this
     }
 })(window.jQuery);
-
-
 (function () {
     this.Theme = (function () {
         function Theme() {}
