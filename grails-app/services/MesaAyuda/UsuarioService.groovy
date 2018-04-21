@@ -78,10 +78,10 @@ class UsuarioService {
     
     
     def ultimoRegistro(){
-        def query=("select id from usuario  order by id desc limit 1 ")
+        def query=("select id_usuario from usuario  order by id_usuario desc limit 1 ")
         def sql = new Sql(dataSource)
         def resultado = sql.rows(query)
-        def idt = resultado.id 
+        def idt = resultado.id_usuario
         return idt.first()
     }
 }

@@ -16,6 +16,6 @@ if (typeof jQuery !== 'undefined') {
 			$('#spinner').fadeIn();
 		}).ajaxStop(function(){
 			$('#spinner').fadeOut();
-		});
+                });
 	})(jQuery);
-}
+                    }

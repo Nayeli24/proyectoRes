@@ -52,7 +52,7 @@
         <!-- /BOX -->
     </div>
 </div>
-<script src="http://localhost:8080/MesaAyuda/js/script.js"></script>
+    <asset:javascript src="script.js"/>
         <script>
             jQuery(document).ready(function() {		
             App.setPage("dynamic_table");  //Set current page

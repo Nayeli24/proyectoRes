@@ -4,6 +4,7 @@
         <title><g:layoutTitle default="Inicio"/></title>
 
     <r:layoutResources />
+ 
 <!--    <asset:stylesheet src="application.css"/>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -75,7 +76,7 @@
     <g:external dir="js/jQuery-Cookie" file="jquery.cookie.min.js" />
 
    <!-- CUSTOM SCRIPT -->
-    <script src="http://localhost:8080/MesaAyuda/js/script.js"></script>
+       <asset:javascript src="script.js"/>
     <script>
         jQuery(document).ready(function() {		
         App.setPage("dynamic_table");  //Set current page

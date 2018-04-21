@@ -1,5 +1,6 @@
 
 <%@ page import="pruebaSeguridad.Incidente" %>
+<%@ page import="pruebaSeguridad.Documento" %>
 <%@ page import="pruebaSeguridad.Comentario" %>
 
 <!DOCTYPE html>
@@ -11,7 +12,7 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
         <meta name="layout" content="main">
-       
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.3.5/sweetalert2.all.min.js"></script>
 
     </head>
@@ -141,16 +142,20 @@
                             <div>
 
                                 <g:if test="${incidenteInstance?.estatus?.id==2 || incidenteInstance?.estatus?.id==3}">
+                                     <sec:ifAnyGranted roles='ROLE_DESARROLLADOR,ROLE_CLIENTE'>
                                     <g:formRemote name="formComentario" url="[controller:'incidente',action:'enviarComentario']" update="[success:'message',failure:'error']">
                                         <input type="hidden" name="id" value="${incidenteInstance.id}"/>
                                         <textarea   class="form-control"  onclick="javascript: limpia(this);"  name="comentario" required="" rows="5" cols="20"  placeholder="Escribe un comentario..."></textarea>
                                         <br><input  type="submit" class="btn btn-success" value="Enviar Comentario" />
                                     </g:formRemote>
+                                    </sec:ifAnyGranted>
                                     <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Ver comentarios (<g:include controller="comentario" action="contarComentarios" id="${incidenteInstance.id}" />)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
                                 </g:if>
-                                <g:if test="${incidenteInstance?.estatus?.id==3}">
-                                    <i class="fa fa-check fa-fw"></i><g:remoteLink controller="incidente" action="atender" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Dar solución a incidente con folio ${incidenteInstance.folio} </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
-                                </g:if>
+                                <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
+                                    <g:if test="${incidenteInstance?.estatus?.id==3}">
+                                        <i class="fa fa-check fa-fw"></i><g:remoteLink controller="incidente" action="atender" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Dar solución a incidente con folio ${incidenteInstance.folio} </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                    </g:if>
+                                </sec:ifAnyGranted>
                                 <div id="message"></div>
                                 <div id="error"></div>
                                 <br>
@@ -165,13 +170,13 @@
                                         </g:form>
                                     </g:if>
 
-                                    <g:if test="${incidenteInstance?.estatus?.id==4}">
-                                        <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Documentos </g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                </sec:ifAnyGranted>
+                                <g:if test="${incidenteInstance?.estatus?.id > 3}">
+                                    <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Ver comentarios (<g:include controller="comentario" action="contarComentarios" id="${incidenteInstance.id}" />)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                        <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'message',failure:'error']"> Documentos (<g:include controller="documento" action="contarDocumentos" id="${incidenteInstance.id}" />)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
                                             <div id="message"></div>
                                             <div id="error"></div>
                                     </g:if>
-
-                                </sec:ifAnyGranted>
                                 <script>
                                     function limpia(elemento)
                                     {

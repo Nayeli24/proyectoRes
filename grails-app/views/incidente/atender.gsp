@@ -13,9 +13,9 @@
                         <h4><i class="fa fa-comment-o"></i>Solución</h4>
                     </div>
                     <div class="box-body big">
-                        <form name="f1" id="f1" action="http://localhost:8080/MesaAyuda/incidente/guardarSolucion" >      
+                        <g:form name="f1" id="f1" url="[action:'guardarSolucion',controller:'incidente']">      
                             <fieldset>
-                                <textarea id="txtAten" name="txtAten" onkeyup="mostrar();"  class="form-control" name="solucion" required="" value="${incidenteInstance?.solucion}"   rows="10" cols="20"  placeholder="Escribe solución..."></textarea>
+                                <textarea id="txtAten" name="solucion" onkeyup="mostrar();"  class="form-control" required="" value="${incidenteInstance?.solucion}"   rows="10" cols="20"  placeholder="Escribe solución..."></textarea>
                             </fieldset>
                             <fieldset>
                                 <input type="hidden" id="${id}" name="id" value="${id}"  >                                
@@ -25,7 +25,7 @@
                                 <g:remoteLink controller="incidente" action="cargaArchivos" id="${id}" update ="[success:'message2',failure:'error']" > <input type="button" class="btn btn-primary" id="ca" name="ca"  value="Cargar archivos" style="display:none"/></g:remoteLink>
                                 </fieldset>
 
-                        </form>
+                        </g:form>
                         <br>
                         <div id="message2"> </div>
                     </div>
@@ -37,7 +37,7 @@
 
 
 
-        <script src="http://localhost:8080/MesaAyuda/js/script.js"></script>
+    <asset:javascript src="script.js"/>
         <script>
             jQuery(document).ready(function() {		
             App.setPage("dropzone_file_upload");  //Set current page
@@ -66,14 +66,7 @@
             )
             $("#ca").show();
             } else {
-            swal(
-            'Enviando solución...',
-            'Solución enviada...',
-
-            'success',
-            2000
-
-            )
+            
             $("#f1").submit();
             }
             });
@@ -100,29 +93,7 @@
 
 
 
-        <!--        <script>
-               // bind the on-change event
-               $(document).ready(function() {
-               $("#upload-file-input").on("change", uploadFile);
-               });
-        
-               /**
-               * Upload the file sending it via Ajax at the Spring Boot server.
-               */
-               function uploadFile() {
-               $.ajax({
-               url: "http://localhost:8080/MesaAyuda/incidente/upload",
-               type: "POST",
-               data: new FormData($("#my-awesome-dropzone")[0]),
-        
-               processData: false,
-               contentType: false,
-               cache: false,
-        
-               });
-               } // function uploadFile
-           </script>-->
-
+  
     </body>
 
 </html>

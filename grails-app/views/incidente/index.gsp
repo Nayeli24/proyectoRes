@@ -8,7 +8,6 @@
         <title>Incidentes</title>
 <!--        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">-->
         <meta name="layout" content="main">
-
     </head>
     <body>
 
@@ -107,22 +106,21 @@
                                                         </sec:ifAnyGranted>
                                                         <sec:ifAnyGranted roles='ROLE_ADMIN'>
                                                             <td class="center hidden-xs">${it?.asignadoA?.nombre} ${it?.asignadoA?.apellidoPat} ${it?.asignadoA?.apellidoMat}</td>
-                                                            <g:if test="${it?.estatus?.tipoEstatus=='Cerrado'}"> 
+                                                          
 
                                                                 <td id="td">
                                                                  
                                                                     <g:if test="${it.envioCorreo==true}">
                                                                         <div class="message" role="status"><i class="fa fa-thumbs-o-up"> Hecho</i></div>
                                                                     </g:if>
-                                                                    <g:else><g:link controller="incidente" action="enviarEmail" id="${it.id}">   <i class="fa fa-envelope"></i>
-                                                                        </g:link></g:else>
+                                                                    <g:elseif test="${it?.estatus?.tipoEstatus=='Cerrado' && it?.envioCorreo==false}"><g:link controller="incidente" action="enviarEmail" id="${it.id}">   <i class="fa fa-envelope"></i>
+                                                                        </g:link> </g:elseif>
+                                                                    <g:else> Sin finalizar</g:else>
                                                                     </td>
                              <!-- <td><g:link controller="incidente" action="enviarEmail" id="${it.id}">Enviar </g:link></td>-->
 
-                                                            </g:if>
-                                                            <g:else>
-                                                                <td>Sin finalizar</td>
-                                                            </g:else>
+                                                            
+                                                           
                                                         </sec:ifAnyGranted>
                                                         </tr>
                                                     </g:each>

@@ -41,6 +41,12 @@ class DocumentoController {
         nomArchivo.add(archivo.originalFilename)
         render (view:'importarArchivos', model:[nomArchivo:nomArchivo])
     }
+    def contarDocumentos(){
+         def documentos=documentoService.listarDocumentos(params.id)
+        def id= params.id
+        println "Docuemntos:::::.....Controller"+ documentos.size()
+        render documentos.size()
+    }
     
     def create() {
         

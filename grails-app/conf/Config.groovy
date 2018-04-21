@@ -170,7 +170,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
      '/incidente/guardarSolucion':  ['ROLE_DESARROLLADOR'],
     '/usuario/**':  ['ROLE_ADMIN'],
      '/usuario/usuarioLog':  ['isFullyAuthenticated()'],
-    '/comentario/index':  ['ROLE_DESARROLLADOR','ROLE_CLIENTE'],
+    '/comentario/index':  ['isFullyAuthenticated()'],
     '/jasper/**':    ['permitAll'],
     '/documento/**':    ['isFullyAuthenticated()'],
     '/**/fonts/**':  ['permitAll'],

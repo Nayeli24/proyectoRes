@@ -13,6 +13,7 @@ import grails.transaction.Transactional
 import org.codehaus.groovy.grails.plugins.jasper.JasperExportFormat
 import org.codehaus.groovy.grails.plugins.jasper.JasperReportDef
 
+
 @Transactional//(readOnly = true)
 class IncidenteController {
 
@@ -31,7 +32,7 @@ class IncidenteController {
         def incidentes=[]
         //  respond Incidente.list(params), model:[incidenteInstanceCount: Incidente.count()]
         incidentes=incidenteService.verIncidentes(springSecurityService.currentUser.authorities.authority as String,springSecurityService.currentUser.username)
-        println "fbbvbbvvvbnvbnvbn.....Controller"+ incidentes
+        //println "fbbvbbvvvbnvbnvbn.....Controller"+ incidentes
         render (view:"index", model: [incidentesVer: incidentes, incidenteInstanceCount: incidentes.size()])
         
     } 
@@ -204,13 +205,45 @@ class IncidenteController {
         def date = new Date()
         incidente.fechaAtencion = new Date()
         incidente.solucion=params.solucion
+         
+        def email=incidente.registradoPor.email
+        println "emaiol guardar solucion::::"+email
+      
+        def fechaRegis=incidente.fechaRegistro
+        def fechaR=fechaRegis.format("'El día' EEEEEEEEE dd 'de' MMMMM 'del' yyyy     hh:mm a")
+        
+        def fechaAte=incidente.fechaAtencion
+        def fechaA=fechaAte.format("'El día' EEEEEEEEE dd 'de' MMMMM 'del' yyyy     hh:mm a")
+ 
+       
+        
+        MailService.sendMail {
+            to email
+            multipart true
+            from "neli1124.sc@gmail.com"
+            subject "Detalle de incidente atendido"
+            html "<h1>incidente con folio $incidente.folio </h1>\n\
+                <div><label><em><strong>Tema:</strong></label><p>$incidente.tema</p></em></div>\n\
+                <div><label><em><strong>Fecha de registro:</strong></label><p>$fechaR</p></em></div>\n\
+                <div><label><em><strong>Lo atendió:</strong></label><p>$incidente.asignadoA</p></em></div>\n\
+                <div><label><em><strong>Fecha de atención:</strong></label><p>$fechaA</p></em></div>\n\
+               <div><label><em><strong>Solución:</strong></label><p>$incidente.solucion</p></em></div>\n\
+              "
+            incidente.envioCorreo=true
+        }
+        
+    
         redirect(contoller:"incidente", action:"index")
     }    
     
     
     def eliminarArchivo(){
-        println ":::::::::::::::::hggjygygfuyg:::::$params"
-        def documento = documentoService.borrarArchivo(params.name, idUpload);
+        def id=idUpload
+        println "::::params de eliminarArchivo:::::$params"
+      def nombre= "Achivo_Incidente_"+id+"_"+(params.name).toString()
+          println "nombre ::::::::::"    +nombre
+       def documento = documentoService.borrarArchivo(nombre);
+     
           
         println "se elimino :::::$documento"
         
@@ -350,6 +383,7 @@ class IncidenteController {
         comentario.save()
         println "incidente:::enviarComentario:::::::::::::..."+b
         render "Comentario enviado con éxito"
+     
     }
     
     def alert(){

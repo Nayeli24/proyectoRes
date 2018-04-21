@@ -56,11 +56,12 @@ class Usuario implements Serializable {
         nombre blank: false
         apellidoPat blank: false
         apellidoMat blank: false
-         empresa (nullable:true)
+        empresa (nullable:true)
         email (email:true, blank:false)
     }
 
     static mapping = {
+        id generator: 'sequence', column: 'id_usuario', params:[sequence:'sec_id_usuario']
         password column: '`password`'
     }
     

@@ -4,6 +4,7 @@ import grails.transaction.Transactional
 import static org.springframework.http.HttpStatus.*
 import pruebaSeguridad.*
 import groovy.sql.Sql
+import java.sql.*
 
 @Transactional
 class DocumentoService {
@@ -28,12 +29,10 @@ def dataSource
     }
     
     
-      def borrarArchivo(def name,def id){
-          def nombre="Archivo_Incidente_"+id+"_"+name
-          println "nombre archiv     o"    +nombre
-        println Documento.executeUpdate("delete from Documento where nombre=':nombre'")
-     
-        def consulta = Documento.executeUpdate("delete from Documento where nombre='$nombre'")
+      def borrarArchivo(def name){
+          println "name:::::::::$name"
+          def consulta = Documento.executeUpdate("delete from Documento where nombre='"+name+"'")
+        //def consulta = Documento.executeUpdate("delete from Documento where nombre='Achivo_Incidente_7_Red_Hat_JBoss_Fuse-6.2.1-Fabric_Guide-en-US.pdf'")
         println "consulta::::::::::::::::::::::::::::...."+consulta
 
     }

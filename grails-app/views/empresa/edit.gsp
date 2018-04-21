@@ -4,7 +4,7 @@
     <head>
 
         <script src="./path/to/dropzone.js"></script>
-        <title>Simple Ajax</title>
+        <title>Dar de baja empresa</title>
 
 
         <g:external dir="js/dropzone" file="dropzone.min.js" />     
