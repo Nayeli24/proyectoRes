@@ -28,7 +28,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="wthree-container">
                 <div class="wthree-form">
                     <div class="agileits-2">
-                        <h2>login</h2>
+                        <h2>Acceso al sistema</h2>
                     </div>
                     <g:if test='${flash.message}'>
                         <div style="color: #ffffff" class='login_message'>${flash.message}</div>
@@ -37,13 +37,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
                         <div class="w3-user">
                             <span><i class="fa fa-user-o" aria-hidden="true"></i></span>
-                            <input type='text' class='text_' name='j_username' id='username' placeholder="Username"/>
+                            <input type='text' class='text_' name='j_username' id='username' placeholder="Usuario"/>
 
                         </div>
                         <div class="clear"></div>
                         <div class="w3-psw">
                             <span><i class="fa fa-key" aria-hidden="true"></i></span>
-                            <input type='password' class='text_' name='j_password' id='password' placeholder="Password" required=""/>
+                            <input type='password' class='text_' name='j_password' id='password' placeholder="Contraseña" required=""/>
 
                         </div>
 

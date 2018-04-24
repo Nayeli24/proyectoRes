@@ -111,7 +111,7 @@ security {
 	// successHandler
 	successHandler {
 		defaultTargetUrl = '/incidente/index'
-		alwaysUseDefault = false
+		alwaysUseDefault = true
 		targetUrlParameter = SpringSecurityUtils.DEFAULT_TARGET_PARAMETER // 'spring-security-redirect'
 		ajaxSuccessUrl = '/login/ajaxSuccess'
 		useReferer = false
