@@ -28,10 +28,19 @@ class ComentarioController {
         respond comentarioInstance
     }
      def contarComentarios(){
-         def comentarios=comentarioService.listarComentarios(params.id)
-        def id= params.id
-        println "Comentarios:::::.....Controller"+ comentarios.size()
-        render comentarios.size()
+       println "comentariov  $params"
+       def id=params.id
+       def respuesta
+            def contador = Comentario.countByIncidente(Incidente.get(id))
+            println "contador $contador"
+            if (contador==null){
+                respuesta= 0
+            }else{
+                respuesta= contador
+            }
+        println "Comentarios:::::.....Controller"+ respuesta
+        render respuesta as String
+ 
     }
 
     def create() {
@@ -55,7 +64,7 @@ class ComentarioController {
         def us = springSecurityService.currentUser.username
         println us
         comentarioInstance.usuario = Usuario.findByUsername(us)
-        comentarioInstance.save flush:true
+        comentarioInstance.save()
 
         request.withFormat {
             form multipartForm {

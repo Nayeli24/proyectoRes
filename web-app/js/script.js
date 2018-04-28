@@ -1,7 +1,7 @@
 var App = function () {
 
     var currentPage = ''; // current page
-    var collapsed = false; //sidebar collapsed
+    var collapsed = true; //sidebar collapsed
     var is_mobile = false; //is screen mobile?
     var is_mini_menu = false; //is mini-menu activated
     var is_fixed_header = false; //is fixed header activated
@@ -1521,7 +1521,7 @@ var App = function () {
                     var name = file.name;
                     $.ajax({
                         type: 'POST',
-                        url: 'http://localhost:8080/MesaAyuda/incidente/eliminarArchivo',
+                        url: 'http://172.16.0.105:8080/MesaAyuda/incidente/eliminarArchivo',
                         data: {name : name},
                  
                     });

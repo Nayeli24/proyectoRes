@@ -45,10 +45,15 @@ class IncidenteController {
     def create() {
         println "31:::::::::::::$params"
         def resp= incidenteService.ultimoRegistro()
+        def valor
         // def valor =resp.id_ticket as int
-        //        def valor=Integer.valueOf(resp)
-        params.folio=resp
-        println "Folio$params.folio"    
+        if(resp==null){
+            valor=0
+        }else{
+            valor=resp[0]
+        }
+        params.folio="F000${valor}"
+        println "Folio$params.folio"  
         respond new Incidente(params)
     }
 
@@ -240,11 +245,9 @@ class IncidenteController {
     def eliminarArchivo(){
         def id=idUpload
         println "::::params de eliminarArchivo:::::$params"
-      def nombre= "Achivo_Incidente_"+id+"_"+(params.name).toString()
-          println "nombre ::::::::::"    +nombre
-       def documento = documentoService.borrarArchivo(nombre);
-     
-          
+        def nombre= "Achivo_Incidente_"+id+"_"+(params.name).toString()
+        println "nombre ::::::::::"    +nombre
+        def documento = documentoService.borrarArchivo(nombre); 
         println "se elimino :::::$documento"
         
     }
@@ -262,6 +265,7 @@ class IncidenteController {
         def mapa 
         int i=0
         def id=idUpload
+        println "id archivo:::::::::::::"+id
         def uploadedFile = request.getFiles('file')
         println "::::::::::177"+uploadedFile
         for (def values: uploadedFile){
@@ -273,7 +277,7 @@ class IncidenteController {
             //mapa.extension = fileLabel.toLowerCase()
             archivos << mapa
             println "Archivos::0::::."+archivos
-         def archivo = archivos.getAt(i)
+            def archivo = archivos.getAt(i)
             println archivo.nombreDelArchivo
                 
             def documento = new Documento ()
@@ -281,6 +285,9 @@ class IncidenteController {
             
             def nombre="Achivo_Incidente_"+id+"_"+(archivo.nombreDelArchivo).toString()
             println "nombre archivo:::::::::::::::::"+nombre
+            def us = springSecurityService.currentUser.username
+            println us
+            documento.usuario = Usuario.findByUsername(us)
             documento.nombre = nombre
             documento.fechaSubio = new Date ()
             documento.urlArchivo = "/var/documentos/" + nombre
@@ -302,7 +309,7 @@ class IncidenteController {
            
             }
             i=i+1
-    }
+        }
     
         redirect (controller: "incidente", action: "index")
     }
@@ -382,11 +389,13 @@ class IncidenteController {
         comentario.fechaComentario = new Date()
         comentario.save()
         println "incidente:::enviarComentario:::::::::::::..."+b
-        render "Comentario enviado con éxito"
-     
+        chain (controller:"incidente", action:"show", id:params.id)
     }
     
     def alert(){
         render (view:"alert")
     }
 }
+
+
+ 

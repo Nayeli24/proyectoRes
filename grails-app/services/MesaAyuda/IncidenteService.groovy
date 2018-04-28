@@ -129,8 +129,8 @@ class IncidenteService {
         def query=("select id_incidente from Incidente  order by id_incidente desc limit 1 ")
         def sql = new Sql(dataSource)
         def resultado = sql.rows(query)
-        def idt = resultado.id_incidente
-        return idt
+        println resultado[0]
+        return resultado[0]
     }
     
     

@@ -3,16 +3,15 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link type="text/javascript" href="${resource(dir: 'js/jquery', file: 'jquery-3.3.1.min.js')}" />
+        <link type="text/javascript" href="${resource(dir: 'js/chosen-js', file: 'chosen.jquery.js')}" />
+        <link type="text/css" href="${resource(dir: 'css', file: 'chosen.min.css')}" />
         <meta name="layout" content="main">
         <g:set var="entityName" value="${message(code: 'usuario.label', default: 'Usuario')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
     </head>
     <body>
-
-
-
         <section id="page">
-
             <div id="main-content">
          <!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
                 <div class="container">
@@ -28,9 +27,8 @@
                                             <li>
                                                 <i class="fa fa-pencil-square-o"></i> <g:link class="" action="edit" resource="${usuarioInstance}">Modificar usuario</g:link>
                                                 </li>
-
-                                        </ul>
-                                        <!-- /BREADCRUMBS -->
+                                            </ul>
+                                            <!-- /BREADCRUMBS -->
                                         <div class="clearfix">
                                             <h3 class="content-title pull-left">Actualizar usuario</h3>
                                         </div>
@@ -103,16 +101,11 @@
                                                 <option>Sistemas e Informática</option>
                                                 <option>Otro</option>
                                             </select>
-
-
                                             <br>
                                         </div>
                                         <br>
-
                                     </div>
-
                                     <br>
-
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" for="email"> Correo electrónico:
                                         </label>
@@ -143,7 +136,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" >Agregar tipo de usuario:</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="rolUsuario">
+                                            <select class="chosen" name="rolUsuario" multiple>
                                                 <option selected disabled hidden>Seleccione tipo de usuario</option>
                                                 <option  value="cliente" >Cliente</option>
                                                 <option  value="empleado">Empleado Nuuptech</option> 
@@ -271,6 +264,8 @@
                                     var txt = solicitar.value;
                                     solicitar.value = (txt.substring(0,1).toUpperCase() + txt.substring(1,txt.length)).trim();
                                     }
+
+
                                 </script>
                                 <br>
                             </div>
@@ -280,6 +275,11 @@
             </div>
         </div>
     </section>
-    <!--PAGE-->
+    <script>
+       $(document).ready(function(){
+        $(".chosen").chosen({rtl: true});
+        });
+    </script>
+<!--PAGE-->
 </body>
 </html>

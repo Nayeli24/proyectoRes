@@ -8,14 +8,15 @@ import java.io.File
 
 @Transactional(readOnly = true)
 class DocumentoController {
-   def documentoService
+    def documentoService
+    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
   
     def index(Integer max) {
-      println "documento index::::::::::::::::::::$params"
+        println "documento index::::::::::::::::::::$params"
         params.max = Math.min(max ?: 10, 100)
-       // respond Comentario.list(params), model:[comentarioInstanceCount: Comentario.count()]
+        // respond Comentario.list(params), model:[comentarioInstanceCount: Comentario.count()]
         def documentos=documentoService.listarDocumentos(params.id)
         def id= params.id
  
@@ -41,16 +42,28 @@ class DocumentoController {
         nomArchivo.add(archivo.originalFilename)
         render (view:'importarArchivos', model:[nomArchivo:nomArchivo])
     }
+    
+    
     def contarDocumentos(){
-         def documentos=documentoService.listarDocumentos(params.id)
-        def id= params.id
-        println "Docuemntos:::::.....Controller"+ documentos.size()
-        render documentos.size()
+       println "comentariov  $params"
+       def id=params.id
+       def respuesta
+            def contador = Documento.countByIncidente(Incidente.get(id))
+            println "contador $contador"
+            if (contador==null){
+                respuesta= 0
+            }else{
+                respuesta= contador
+            }
+        println "docuemntos:::::.....Controller"+ respuesta
+        render respuesta as String
+ 
     }
+    
     
     def create() {
         
-          params.incidente=params.id
+        params.incidente=params.id
        
         respond new Documento(params)
     }
@@ -67,8 +80,10 @@ class DocumentoController {
             respond documentoInstance.errors, view:'create'
             return
         }
-        
-        documentoInstance.save flush:true
+        def us = springSecurityService.currentUser.username
+        println us
+        documentoInstance.usuario = Usuario.findByUsername(us)
+        documentoInstance.save()
 
         request.withFormat {
             form multipartForm {

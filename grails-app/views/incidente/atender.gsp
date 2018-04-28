@@ -28,6 +28,7 @@
                         </g:form>
                         <br>
                         <div id="message2"> </div>
+                        <div id="error"> </div>
                     </div>
 
                 </div>
@@ -38,63 +39,63 @@
 
 
     <asset:javascript src="script.js"/>
-        <script>
-            jQuery(document).ready(function() {		
-            App.setPage("dropzone_file_upload");  //Set current page
-            App.init(); //Initialise plugins and elements
-            });
+    <script>
+        jQuery(document).ready(function() {		
+        App.setPage("dropzone_file_upload");  //Set current page
+        App.init(); //Initialise plugins and elements
+        });
 
 
-        </script>
-        <script>
-            function confirmFunction() {
-            $("#ca").hide()
-            swal({
-            title: '¿Deseas cargar archivos?',
-            text: 'Antes de enviar la solución si lo requiere, cargar los archivos correspondientes',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, cargar archivos',
-            cancelButtonText: 'No, enviar solución'
+    </script>
+    <script>
+        function confirmFunction() {
+        $("#ca").hide()
+        swal({
+        title: '¿Deseas cargar archivos?',
+        text: 'Antes de enviar la solución si lo requiere, cargar los archivos correspondientes',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, cargar archivos',
+        cancelButtonText: 'No, enviar solución'
 }).then((result) => {
-            console.log(result);
-            if (result.value) {
-            swal(
-            '¡Cargar archivos!',
-            'Cargar archivos correspondientes y necesarios',
-            'warning'
-            )
-            $("#ca").show();
-            } else {
-            
-            $("#f1").submit();
-            }
-            });
-            }
+        console.log(result);
+        if (result.value) {
+        swal(
+        '¡Cargar archivos!',
+        'Cargar archivos correspondientes y necesarios',
+        'warning'
+        )
+        $("#ca").show();
+        } else {
 
-            function mostrar()
-            {
-            var text = document.getElementById("txtAten");
+        $("#f1").submit();
+        }
+        });
+        }
 
-            if(text== " ") 
-            {      
-            swal(
-            '¡Escribe la solución!',
-            'Escribe la solución',
-            'error'
-            )
-            document.getElementById('atender').style.display = 'none';
-            }else{
-            $('#atender').show();
-            }
-            }
+        function mostrar()
+        {
+        var text = document.getElementById("txtAten");
 
-        </script>
+        if(text== " ") 
+        {      
+        swal(
+        '¡Escribe la solución!',
+        'Escribe la solución',
+        'error'
+        )
+        document.getElementById('atender').style.display = 'none';
+        }else{
+        $('#atender').show();
+        }
+        }
+
+    </script>
 
 
 
-  
-    </body>
+
+</body>
 
 </html>
 

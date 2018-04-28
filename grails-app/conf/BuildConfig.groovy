@@ -72,7 +72,8 @@ grails.project.dependency.resolution = {
         compile "org.grails.plugins:jasper:1.11.0"
         compile ":jasper-response:1.0.1"
         compile ":mail:1.0.7"
-
+        compile ':quartz:1.0.1'
+        compile ":facebook-sdk:0.5.0"
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
         //compile ":less-asset-pipeline:1.10.0"

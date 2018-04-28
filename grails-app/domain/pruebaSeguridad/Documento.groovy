@@ -3,7 +3,8 @@ package pruebaSeguridad
 class Documento {
 
   Incidente incidente
-  
+      Usuario usuario
+
     String nombre
   
     Date fechaSubio = new Date()

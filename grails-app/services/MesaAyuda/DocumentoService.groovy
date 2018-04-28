@@ -8,7 +8,7 @@ import java.sql.*
 
 @Transactional
 class DocumentoService {
-def dataSource
+    def dataSource
     def listarDocumentos(def incidente) {
       
         def consulta
@@ -22,6 +22,8 @@ def dataSource
             documento.nombre = it.nombre
             documento.urlArchivo=it.urlArchivo
             documento.fechaSubio=it.fechaSubio
+            documento.usuario=it.usuario 
+
             docs << documento
         }
         return docs
@@ -29,9 +31,9 @@ def dataSource
     }
     
     
-      def borrarArchivo(def name){
-          println "name:::::::::$name"
-          def consulta = Documento.executeUpdate("delete from Documento where nombre='"+name+"'")
+    def borrarArchivo(def name){
+        println "name:::::::::$name"
+        def consulta = Documento.executeUpdate("delete from Documento where nombre='"+name+"'")
         //def consulta = Documento.executeUpdate("delete from Documento where nombre='Achivo_Incidente_7_Red_Hat_JBoss_Fuse-6.2.1-Fabric_Guide-en-US.pdf'")
         println "consulta::::::::::::::::::::::::::::...."+consulta
 

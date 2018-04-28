@@ -21,7 +21,6 @@
     </script>-->
     <!-- STYLESHEETS --><!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
     <g:external dir="css" file="cloud-admin.css" />
-    <g:external dir="css" file="default.css" />
     <g:external dir="css/themes" file="night.css"  />
     <g:external dir="css" file="responsive.css"  />
     <g:external dir="font-awesome/css" file="font-awesome.min.css"  />            

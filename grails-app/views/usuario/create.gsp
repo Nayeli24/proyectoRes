@@ -163,7 +163,6 @@
                                         </div>
                                         <fieldset class="buttons">
                                             <g:submitButton name="create" onclick="comprobarClave()" class="btn btn-success" value="Agregar usuario" />
-                                            <button id="btn-load" class="btn btn-primary" >Click to Refresh</button>
                                         </fieldset>
                                     </g:form>
 

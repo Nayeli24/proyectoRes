@@ -1,5 +1,6 @@
 <%@ page import="pruebaSeguridad.Usuario" %>
 <%@ page import="pruebaSeguridad.Incidente" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,8 +11,8 @@
         <meta name="layout" content="main">
     </head>
     <body>
-
-<!-- PAGE -->
+    <sec:ifLoggedIn>
+    <!-- PAGE -->
         <section id="page">
             <div id="main-content">
         <!-- SAMPLE BOX CONFIGURATION MODAL FORM-->
@@ -106,21 +107,21 @@
                                                         </sec:ifAnyGranted>
                                                         <sec:ifAnyGranted roles='ROLE_ADMIN'>
                                                             <td class="center hidden-xs">${it?.asignadoA?.nombre} ${it?.asignadoA?.apellidoPat} ${it?.asignadoA?.apellidoMat}</td>
-                                                          
 
-                                                                <td id="td">
-                                                                 
-                                                                    <g:if test="${it.envioCorreo==true}">
-                                                                        <div class="message" role="status"><i class="fa fa-thumbs-o-up"> Hecho</i></div>
-                                                                    </g:if>
-                                                                    <g:elseif test="${it?.estatus?.tipoEstatus=='Cerrado' && it?.envioCorreo==false}"><g:link controller="incidente" action="enviarEmail" id="${it.id}">   <i class="fa fa-envelope"></i>
-                                                                        </g:link> </g:elseif>
-                                                                    <g:else> Sin finalizar</g:else>
-                                                                    </td>
-                             <!-- <td><g:link controller="incidente" action="enviarEmail" id="${it.id}">Enviar </g:link></td>-->
 
-                                                            
-                                                           
+                                                            <td id="td">
+
+                                                                <g:if test="${it.envioCorreo==true}">
+                                                                    <div class="message" role="status"><i class="fa fa-thumbs-o-up"> Hecho</i></div>
+                                                                </g:if>
+                                                                <g:elseif test="${it?.estatus?.tipoEstatus=='Cerrado' && it?.envioCorreo==false}"><g:link controller="incidente" action="enviarEmail" id="${it.id}">   <i class="fa fa-envelope"></i>
+                                                                    </g:link> </g:elseif>
+                                                                <g:else> Sin finalizar</g:else>
+                                                                </td>
+                         <!-- <td><g:link controller="incidente" action="enviarEmail" id="${it.id}">Enviar </g:link></td>-->
+
+
+
                                                         </sec:ifAnyGranted>
                                                         </tr>
                                                     </g:each>
@@ -163,7 +164,13 @@
                 </div>
             </div>
         </section>
-        <!--/PAGE -->
-
-    </body>
+        <script>
+            jQuery(document).ready(function() {		
+            App.setPage("dynamic_table");  //Set current page
+          
+            });
+        </script>
+                <!--/PAGE -->
+    </sec:ifLoggedIn>
+</body>
 </html>

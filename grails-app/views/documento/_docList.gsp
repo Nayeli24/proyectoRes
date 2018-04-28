@@ -16,7 +16,7 @@
         <div class="box border green">
             <div class="box-title">
                 <h4><i class="fa fa-file-o fa-fw"></i>Documentos</h4>
-
+            
             </div>
             <g:paginate next="Forward" prev="Back"
                 maxsteps="0" controller="comentario"
@@ -28,7 +28,7 @@
                             <th>Id</th>
                             <th class="hidden-xs">Nombre de documento</th>
                             <th>Fecha</th>
-
+                            <th  class="hidden-xs">Usuario</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,7 +37,8 @@
                                 <tr >
                                     <td>${it.id}</td>
                                     <td  class="hidden-xs"><g:link controller="incidente" action="descarga" id="${it.id}"> ${it.nombre} </g:link></td>
-                                   <td><g:formatDate format="dd / MMMMM / yyyy hh:mm aa" date="${it.fechaSubio}"/></td>
+                                    <td><g:formatDate format="dd / MMMMM / yyyy hh:mm aa" date="${it.fechaSubio}"/></td>
+                                    <td  class="hidden-xs"> ${it?.usuario?.nombre} ${it?.usuario?.apellidoPat} ${it?.usuario?.apellidoMat}</td>
                                 </tr>
                             </g:each>
                         </g:if>
@@ -60,7 +61,7 @@
 <script>
     jQuery(document).ready(function() {		
     App.setPage("dynamic_table");  //Set current page
-    App.init(); //Initialise plugins and elements
+  
     });
 </script>
 

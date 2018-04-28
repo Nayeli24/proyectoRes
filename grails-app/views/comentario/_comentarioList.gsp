@@ -16,7 +16,7 @@
         <div class="box border green">
             <div class="box-title">
                 <h4><i class="fa fa-comments fa-fw"></i>Comentarios</h4>
-
+             
             </div>
             <div class="box-body">
                 <table id="datatable1" cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered table-hover">
@@ -59,6 +59,7 @@
             App.init(); //Initialise plugins and elements
             });
         </script>
+
 
 
 <!-- /EXPORT TABLES -->
