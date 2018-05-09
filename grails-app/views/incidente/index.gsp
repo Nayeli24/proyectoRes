@@ -114,9 +114,9 @@
                                                                 <g:if test="${it.envioCorreo==true}">
                                                                     <div class="message" role="status"><i class="fa fa-thumbs-o-up"> Hecho</i></div>
                                                                 </g:if>
-                                                                <g:elseif test="${it?.estatus?.tipoEstatus=='Cerrado' && it?.envioCorreo==false}"><g:link controller="incidente" action="enviarEmail" id="${it.id}">   <i class="fa fa-envelope"></i>
+                                                                <g:elseif test="${(it?.estatus?.tipoEstatus=='Atendido' || it?.estatus?.tipoEstatus=='Cerrado') && it?.envioCorreo==false}"><g:link controller="incidente" action="enviarEmail" id="${it.id}">   <i class="fa fa-envelope"></i>
                                                                     </g:link> </g:elseif>
-                                                                <g:else> Sin finalizar</g:else>
+                                                                <g:else>No ha sido atendido</g:else>
                                                                 </td>
                          <!-- <td><g:link controller="incidente" action="enviarEmail" id="${it.id}">Enviar </g:link></td>-->
 
@@ -164,12 +164,7 @@
                 </div>
             </div>
         </section>
-        <script>
-            jQuery(document).ready(function() {		
-            App.setPage("dynamic_table");  //Set current page
-          
-            });
-        </script>
+     
                 <!--/PAGE -->
     </sec:ifLoggedIn>
 </body>

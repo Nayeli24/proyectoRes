@@ -28,9 +28,9 @@ class UsuarioController {
     def create() {
         def data = [:]
         data.empresas= usuarioService.obtenerEmpresas()
-       def resp= usuarioService.ultimoRegistro()  
-       data.id=resp
-       println ";;;;;;;;;;;;;;;;$data.id"
+        def resp= usuarioService.ultimoRegistro()  
+        data.id=resp
+        println ";;;;;;;;;;;;;;;;$data.id"
         render (view:"create", model: [detalle: data])              
     }
 
@@ -88,6 +88,7 @@ class UsuarioController {
     
 
     def edit(Usuario usuarioInstance) {
+        
         respond usuarioInstance
     }
     
@@ -110,19 +111,15 @@ class UsuarioController {
             respond usuarioInstance.errors, view:'edit'
             return
         }
-        usuarioInstance.areaDpto=params.areaDpto
+        usuarioInstance.areaDpto=params.areaDpto     
         usuarioInstance.save()
-        def rolUsuario=UsuarioRole.findByUsuario(Usuario.get(params.id))    
-        def  clienteRole=Role.findByAuthority('ROLE_CLIENTE')
-        def  userRole=Role.findByAuthority('ROLE_DESARROLLADOR')
-        if(params.rolUsuario=="cliente"){ 
-            println rolUsuario
-            println clienteRole
-            UsuarioRole.create (usuarioInstance, clienteRole, true)
-        }else if(params.rolUsuario=="empleado"){
-            UsuarioRole.create (usuarioInstance, userRole, true)
+        UsuarioRole.removeAll(usuarioInstance)
+       
+        for (roleId in params.list('rolUsuario')){
+            Role r = Role.get(roleId)
+            UsuarioRole.create(usuarioInstance, r,true)
         }
-        
+      
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Usuario.label', default: 'Usuario'), usuarioInstance.id])

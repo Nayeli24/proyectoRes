@@ -36,19 +36,12 @@
                                 </div>
                             </div>
                             <!-- /PAGE HEADER -->
-
-                          
-
                             <g:if test="${empresaInstance?.nombreEmpresa}">
                                 <div class="form-group">
 
                                     <g:fieldValue bean="${empresaInstance}" field="nombreEmpresa"/> esta <g:formatBoolean boolean="${empresaInstance?.enabled}"  true="Activa" false="Inactiva"  />
                                 </div>
                             </g:if>
-
-
-
-
                         </div>
                     </div>
                 </div>

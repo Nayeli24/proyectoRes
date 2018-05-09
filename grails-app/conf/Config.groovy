@@ -46,8 +46,8 @@ grails {
     mail {
         host = "smtp.gmail.com"
         port = 587
-        username = "neli1124.sc@gmail.com"
-        password = "170424neli"
+        username = "mesa.ayuda.0001@gmail.com"
+        password = "m3s4yud4!"
         props = ["mail.smtp.auth":"true", "mail.smtp.starttls.enable":"true"
         ]
     }
@@ -126,10 +126,21 @@ log4j.main = {
 }
 
 
+  twitter4j {
+    enableTwitter4jController = true // To avoid intruders to use controller all together.
+    'default' {
+      debugEnabled           =false
+      OAuthConsumerKey       = '3vWgqVHhpxIpOK5m3uKdrjxA5'
+      OAuthConsumerSecret    = 'wVjwMfiDUsq91XzWyxOVNfog0va6F0gIAEEkDjtxn9iD02d4fk'
+      OAuthAccessToken       = '992471308117118976-V8HRf7GixtFR3C2XnFvRZfKnTHKPuEA'
+      OAuthAccessTokenSecret = 'sW86p0uBeCinzUB9u2Zl22ZQ4wAUeDKYpqog4zwz87XdK'
+    }
+  }
 
 //grails.plugin.springsecurity.auth.loginFormUrl = '/pruebaSeguridad/incidente/index'
 //grails.plugin.springsecurity.failureHandler.defaultFailureUrl = '/'
 
+grails.plugin.facebookcomments.href = { bean -> "http://localhost:8080/mesayuda/incidente/show?id=$bean.id"}
 
 
 // Added by the Spring Security Core plugin:
@@ -144,6 +155,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/js/**':        ['permitAll'],
 	'/**/css/**':       ['permitAll'],
 	'/**/images/**':    ['permitAll'],
+    '/twitter4j/**': ['permitAll'],
 '/**/favicon.ico':  ['permitAll'],
     '/estatus/**':  ['ROLE_ADMIN'],
     '/role/**':  ['ROLE_ADMIN'],
@@ -174,6 +186,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/jasper/**':    ['permitAll'],
     '/documento/**':    ['isFullyAuthenticated()'],
     '/**/fonts/**':  ['permitAll'],
-    '/tipoDoc/**':    ['ROLE_ADMIN'] 
+    '/tipoDoc/**':    ['ROLE_ADMIN']
+    
 ]
 

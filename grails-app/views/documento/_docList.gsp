@@ -16,7 +16,7 @@
         <div class="box border green">
             <div class="box-title">
                 <h4><i class="fa fa-file-o fa-fw"></i>Documentos</h4>
-            
+
             </div>
             <g:paginate next="Forward" prev="Back"
                 maxsteps="0" controller="comentario"
@@ -57,11 +57,11 @@
         <!-- /BOX -->
     </div>
 </div>
-    <asset:javascript src="script.js"/>
+<asset:javascript src="script.js"/>
 <script>
     jQuery(document).ready(function() {		
     App.setPage("dynamic_table");  //Set current page
-  
+    App.init(); //Initialise plugins and elements
     });
 </script>
 

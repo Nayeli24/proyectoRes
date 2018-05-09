@@ -1,0 +1,19 @@
+<plugin name='facebook-comments' version='1.0' grailsVersion='1.3 &gt; *'>
+  <author>Sudhir Nimavat</author>
+  <authorEmail>sudhir@nimavat.me</authorEmail>
+  <title>Facebook Comments Plugin</title>
+  <description>Easy Facebook Comments Integration</description>
+  <documentation>https://github.com/snimavat/grails-facebook-comments</documentation>
+  <type>FacebookCommentsGrailsPlugin</type>
+  <resources>
+    <resource>grails.plugin.facebookcomments.FacebookCommentTagLib</resource>
+  </resources>
+  <repositories>
+    <repository name='grailsCentral' url='http://grails.org/plugins' />
+    <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
+  </repositories>
+  <dependencies />
+  <plugins />
+  <runtimePluginRequirements />
+  <behavior />
+</plugin>

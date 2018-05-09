@@ -12,6 +12,12 @@ import static org.springframework.web.multipart.MultipartHttpServletRequest.*
 import grails.transaction.Transactional
 import org.codehaus.groovy.grails.plugins.jasper.JasperExportFormat
 import org.codehaus.groovy.grails.plugins.jasper.JasperReportDef
+import twitter4j.DirectMessage;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.Status;
+import twitter4j.auth.AccessToken;
 
 
 @Transactional//(readOnly = true)
@@ -26,6 +32,7 @@ class IncidenteController {
     static final  int i=0
     def flujoController
     def fechaCerrado
+    def twitter4jService 
    
     def index(Integer max) {
         params.max = Math.min(max ?: 10,100)
@@ -74,7 +81,8 @@ class IncidenteController {
         println us
         incidenteInstance.registradoPor = Usuario.findByUsername(us)
         incidenteInstance.estatus = Estatus.get(1 as long)
-        incidenteInstance.save()
+        println "estatus::::::::::::::::::."+incidenteInstance.estatus
+        incidenteInstance.save flush:true
         def inf = incidenteService.guardarFlujo(us,1,incidenteInstance)
         
         request.withFormat {
@@ -151,11 +159,12 @@ class IncidenteController {
         flash.error = "No existen incidentes nuevos para realizar la asignación"
         def data = [:]
         data.incidentes=incidenteService.obtenerIncidentes("SinAsignar" , "ROLE_CLIENTE",springSecurityService.currentUser.username)
-        data.usuarios = incidenteService.obtenerUsuarios("ROLE_DESARROLLADOR")
+        data.usuarios = incidenteService.obtenerUsuarios("ROLE_DESARROLLADOR")  
         render (view:"asignar", model: [detalle: data ])  
     }
     def asignarIncidente (){
         println ":::::asignar incidente::::::::::::::$params"
+         
         List lista = params.list ('incidente')
         lista.each{
             def incident=Incidente.findById(it)
@@ -165,7 +174,11 @@ class IncidenteController {
             def date = new Date()      
             incident.fechaAsignacion = new Date()            
             incident.save()
-            def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incident)
+            def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incident)          
+            //            Twitter sender = TwitterFactory.getSingleton();
+            //            DirectMessage message = sender.sendDirectMessage('https://twitter.com/_B_Lazlo', 'Hola esto es una prueba :)');
+
+            //             twitter4jService.updateStatus ( "Esta es una actualización de estado de Twitter" )
         }
         
         redirect (action: "index")
@@ -199,7 +212,6 @@ class IncidenteController {
     def cargaArchivos(){
         println ":::::::::::::::cargaArchivos::::::$params"
         idUpload=params.id
-      
         render (template: "cargaArchivos")
     }
 
@@ -210,34 +222,31 @@ class IncidenteController {
         def date = new Date()
         incidente.fechaAtencion = new Date()
         incidente.solucion=params.solucion
-         
         def email=incidente.registradoPor.email
         println "emaiol guardar solucion::::"+email
-      
         def fechaRegis=incidente.fechaRegistro
         def fechaR=fechaRegis.format("'El día' EEEEEEEEE dd 'de' MMMMM 'del' yyyy     hh:mm a")
-        
         def fechaAte=incidente.fechaAtencion
         def fechaA=fechaAte.format("'El día' EEEEEEEEE dd 'de' MMMMM 'del' yyyy     hh:mm a")
- 
-       
-        
-        MailService.sendMail {
-            to email
-            multipart true
-            from "neli1124.sc@gmail.com"
-            subject "Detalle de incidente atendido"
-            html "<h1>incidente con folio $incidente.folio </h1>\n\
-                <div><label><em><strong>Tema:</strong></label><p>$incidente.tema</p></em></div>\n\
-                <div><label><em><strong>Fecha de registro:</strong></label><p>$fechaR</p></em></div>\n\
-                <div><label><em><strong>Lo atendió:</strong></label><p>$incidente.asignadoA</p></em></div>\n\
-                <div><label><em><strong>Fecha de atención:</strong></label><p>$fechaA</p></em></div>\n\
-               <div><label><em><strong>Solución:</strong></label><p>$incidente.solucion</p></em></div>\n\
-              "
-            incidente.envioCorreo=true
-        }
-        
-    
+        try {
+            MailService.sendMail {
+                to email
+                multipart true
+                from grailsApplication.config.grails.mail.username
+                subject "Detalle de incidente atendido"
+                html "<h1>incidente con folio $incidente.folio </h1>\n\
+                        <div><label><em><strong>Tema:</strong></label><p>$incidente.tema</p></em></div>\n\
+                        <div><label><em><strong>Fecha de registro:</strong></label><p>$fechaR</p></em></div>\n\
+                        <div><label><em><strong>Lo atendió:</strong></label><p>$incidente.asignadoA</p></em></div>\n\
+                        <div><label><em><strong>Fecha de atención:</strong></label><p>$fechaA</p></em></div>\n\
+                       <div><label><em><strong>Solución:</strong></label><p>$incidente.solucion</p></em></div>\n\
+                      "
+                incidente.envioCorreo=true
+            }
+        } catch(Exception e) {
+            System.out.println("Fallo al enviar elcorreo");
+        }     
+             
         redirect(contoller:"incidente", action:"index")
     }    
     
@@ -327,14 +336,20 @@ class IncidenteController {
         
         def fechaAte=incidente.fechaAtencion
         def fechaA=fechaAte.format("'El día' EEEEEEEEE dd 'de' MMMMM 'del' yyyy     hh:mm a")
- 
-        def fechaCer=incidente.fechaCerrado
+        def fechaCer
+        if(incidente.fechaCerrado==null){
+            incidente.fechaCerrado=new Date()
+            fechaCer=incidente.fechaCerrado
+        }else{
+            fechaCer=incidente.fechaCerrado
+        }
         def fechaC=fechaCer.format("'El día' EEEEEEEE dd 'de' MMMMM 'del' yyyy     hh:mm a")
-        
+     
+        try{
         MailService.sendMail {
             to email
             multipart true
-            from "neli1124.sc@gmail.com"
+            from grailsApplication.config.grails.mail.username
             subject "Detalle de incidente cerrado"
             html "<h1>incidente con folio $incidente.folio </h1>\n\
                 <div><label><em><strong>Tema:</strong></label><p>$incidente.tema</p></em></div>\n\
@@ -347,7 +362,9 @@ class IncidenteController {
             incidente.envioCorreo=true
             chain(controller:"incidente", action:"index")
         }
-        
+           } catch(Exception e) {
+            System.out.println("Fallo al enviar elcorreo");
+        }   
     }
     
     def printReport(){
@@ -392,9 +409,7 @@ class IncidenteController {
         chain (controller:"incidente", action:"show", id:params.id)
     }
     
-    def alert(){
-        render (view:"alert")
-    }
+    
 }
 
 
