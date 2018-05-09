@@ -75,7 +75,7 @@ grails.project.dependency.resolution = {
         //compile ":quartz:1.0.2"
         compile ":quartz2:2.1.6.2"
         compile ":twitter4j:4.0.4.3"
-       compile ":facebook-comments:1.0"
+  
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
