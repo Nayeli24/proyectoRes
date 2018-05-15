@@ -42,7 +42,7 @@ function mostrar2() {
 }
 
 
-function caambiarRol() {
+function cambiarRol() {
     var selected = document.getElementById("rolUsuario").selectedIndex;
     console.log(selected);
     if (selected == 0) {
@@ -139,28 +139,29 @@ function usernameCrear() {
     } else if (selected == 0)
     {
         var tipoUser = "E"
-    } else {
+    } else if(selected == 1 || selected==2){
         var tipoUser = "I"
         document.f1.empresa.value = 1;
+         document.getElementById('twitterDiv').style.display = 'block';
     }
     var empresa = document.f1.empresa.value
     if (empresa <= 9)
     {
-        var noEmpresa = "0" + empresa
+        var noEmpresa = "0" + empresa;
     } else {
-        var noEmpresa = empresa
+        var noEmpresa = empresa;
     }
     if (idusuario <= 9)
     {
-        clave = "000" + idusuario
+        clave = "000" + idusuario;
     } else if (idusuario <= 99)
     {
-        clave = "00" + idusuario
+        clave = "00" + idusuario;
     } else if (idusuario <= 999)
     {
-        clave = "0" + idusuario
+        clave = "0" + idusuario;
     } else {
-        clave = idusuario
+        clave = idusuario;
     }
     var cadena = tipoUser + noEmpresa + subCadena.toUpperCase() + apellidoPat.toUpperCase() + subCadena2.toUpperCase() + clave;
     var patron = / /g;

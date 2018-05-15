@@ -29,19 +29,18 @@
 
       <!-- /BREADCRUMBS -->
                                         <div class="clearfix">
-                                            <h3 class="content-title pull-left">Empresa registrada</h3>
+                                            <h3 class="content-title pull-left">Empresa registrada: ${empresaInstance.nombreEmpresa}</h3>
                                         </div>
-                                        <div class="description">Nombre de empresa</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /PAGE HEADER -->
-                            <g:if test="${empresaInstance?.nombreEmpresa}">
-                                <div class="form-group">
+                                     <g:if test="${empresaInstance?.nombreEmpresa}">
+                                <div class="description">
 
                                     <g:fieldValue bean="${empresaInstance}" field="nombreEmpresa"/> esta <g:formatBoolean boolean="${empresaInstance?.enabled}"  true="Activa" false="Inactiva"  />
                                 </div>
                             </g:if>
+                                </div>
+                            </div>
+                            <!-- /PAGE HEADER -->
+                          
                         </div>
                     </div>
                 </div>

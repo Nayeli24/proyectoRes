@@ -124,53 +124,65 @@
                                             </div>                                        
                                         </div>
                                         <br>
-                                        <br>
-                                        <br>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" > Opciones de cuenta:</label>
-                                            <div class="col-sm-9">
-                                                <label for="accountLocked">
-                                                    <g:message code="usuario.accountLocked.label" default="Account Locked" />
-
-                                                </label>
-                                                <g:checkBox name="accountLocked" value="${usuarioInstance?.accountLocked}" />
-                                                <label for="enabled">
-                                                    <g:message code="usuario.enabled.label" default="Enabled" />
-
-                                                </label>
-                                                <g:checkBox name="enabled" value="${usuarioInstance?.enabled}" />
-                                            </div> 
+                                        <g:if test="${usuarioInstance?.twitterName}">
                                             <br>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" >Agregar tipo de usuario:</label>
-                                            <div class="col-sm-9">   
-                                                <g:select id="rolUsuario" name="rolUsuario" from="${pruebaSeguridad.Role.list()}" optionKey="id" multiple="true" class="chosen-select" value="${usuarioInstance?.authorities?.id}" onchange="cambiarRol()" required="" />
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label" for="empresa"><i class="fa fa-twitter-square fa-fw"></i>Cuenta Twitter :</label>
+                                                <div class="col-sm-9">
+                                                    <fieldset>
+                                                        <label for="d1">@</label>
+                                                        <input id="d1" type="text" required=""  onclick="javascript: limpia(this);" name="twitterName"  placeholder="abc12" value="${usuarioInstance.twitterName}">
+                                                    </fieldset>
+                                                </div>
+                                            </g:if>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label" > Opciones de cuenta:</label>
+                                                <div class="col-sm-9">
+                                                    <label for="accountLocked">
+                                                        <g:message code="usuario.accountLocked.label" default="Account Locked" />
+
+                                                    </label>
+                                                    <g:checkBox name="accountLocked" value="${usuarioInstance?.accountLocked}" />
+                                                    <label for="enabled">
+                                                        <g:message code="usuario.enabled.label" default="Enabled" />
+
+                                                    </label>
+                                                    <g:checkBox name="enabled" value="${usuarioInstance?.enabled}" />
+                                                </div> 
+                                                <br>
                                             </div>
-                                            <br><br>
-                                        </div>
-                                        <div class="form-group" align="center">
-                                            <fieldset class="buttons">
-             <!--    <input id="boton" type="button" value="Actualizar" onClick="comprobarClave()" action="update" > 
-        -->                                 <g:actionSubmit class="btn btn-success" value="${message(code: 'default.button.actualizar.label', default: 'Actualizar')}" action="update" />
-                                            </fieldset>  </div>
-                                        </g:form>
-                                   
-                                    <br>
-                                </div>
-                                  <script>
+                                            <br>
+                                            <br>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label" >Agregar tipo de usuario:</label>
+                                                <div class="col-sm-9">   
+                                                    <g:select id="rolUsuario" name="rolUsuario" from="${pruebaSeguridad.Role.list()}" optionKey="id" multiple="true" class="chosen-select" value="${usuarioInstance?.authorities?.id}" onchange="cambiarRol()" required="" />
+                                                </div>
+                                                <br><br>
+                                            </div>
+                                            <div class="form-group" align="center">
+                                                <fieldset class="buttons">
+                 <!--    <input id="boton" type="button" value="Actualizar" onClick="comprobarClave()" action="update" > 
+            -->                                 <g:actionSubmit class="btn btn-success" value="${message(code: 'default.button.actualizar.label', default: 'Actualizar')}" action="update" />
+                                                </fieldset>  </div>
+                                            </g:form>
+
+                                        <br>
+                                    </div>
+                                    <script>
                                         $(".chosen-select").chosen();
-                                      
+
                                     </script>
+                                </div>
                             </div>
+
                         </div>
 
                     </div>
-
                 </div>
-            </div>
 
         </section>
 

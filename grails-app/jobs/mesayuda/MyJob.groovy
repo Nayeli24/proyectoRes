@@ -8,6 +8,7 @@ import twitter4j.auth.AccessToken;
 import pruebaSeguridad.IncidenteController;
 import pruebaSeguridad.Incidente;
 import pruebaSeguridad.Estatus;
+import pruebaSeguridad.Usuario;
 
 
 class MyJob {
@@ -15,7 +16,7 @@ class MyJob {
     def grailsApplication
    
     static triggers = {      
-        cron name: 'envioMensajeTweet', cronExpression: "0 10 10 * * ?" 
+        cron name: 'envioMensajeTweet', cronExpression: "0 10 * * * ?" 
     }
 
     def execute() {
@@ -29,14 +30,17 @@ class MyJob {
             def id = it.id   
             if(it.estatus==Estatus.findByTipoEstatus("Asignado")){
                 print"entro condicion incidente asignado"   
-                String mensaje="Holaa mensaje conQuartz con id ${id} desde el domain de incidente\n Suerte ;)!"
+                String mensaje="Hola! El incidente con id ${id} que le fue asignado no ha sido atendido \n Darle atención a la brevedad \n Gracias!... http://172.16.0.105:8080/mesayuda/"
                 TwitterFactory factory = new TwitterFactory()
                 Twitter twitter = factory.getInstance()
                 twitter.setOAuthConsumer(grailsApplication.config.twitter4j.default.OAuthConsumerKey,grailsApplication.config.twitter4j.default.OAuthConsumerSecret)
                 AccessToken accessToken = new AccessToken(grailsApplication.config.twitter4j.default.OAuthAccessToken, grailsApplication.config.twitter4j.default.OAuthAccessTokenSecret)
                 twitter.setOAuthAccessToken(accessToken) 
+                def usuario= it.asignadoA.twitterName
+        
+                println "twitererrrr"+usuario
                 try{
-                    DirectMessage directMessage2 = twitter.sendDirectMessage('_B_Lazlo', mensaje);
+                    DirectMessage directMessage2 = twitter.sendDirectMessage(usuario, mensaje);
                     System.out.println("Tweet enviado!");
                 } catch(TwitterException e){
                     System.out.println("Erro ao enviar o tweet");

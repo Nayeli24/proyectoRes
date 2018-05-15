@@ -28,13 +28,13 @@ class UsuarioController {
     def create() {
         def data = [:]
         data.empresas= usuarioService.obtenerEmpresas()
-        def resp= usuarioService.ultimoRegistro()  
-        data.id=resp
-        println ";;;;;;;;;;;;;;;;$data.id"
+        data.id= usuarioService.ultimoRegistro()  
+        
+        println ";;;;;;;;;;;;;;;;$data"
         render (view:"create", model: [detalle: data])              
     }
 
-    @Transactional
+     @Transactional
     def save(Usuario usuarioInstance) {
         println params
         if (usuarioInstance == null) {
@@ -60,21 +60,10 @@ class UsuarioController {
                
         usuarioInstance.save()
        
-        def rolUsuario=params.rolUsuario
-    
-        def  clienteRole=Role.findByAuthority('ROLE_CLIENTE')
-        def  userRole=Role.findByAuthority('ROLE_DESARROLLADOR') 
-        def  adminRole=Role.findByAuthority('ROLE_ADMIN')   
-    
-        if(params.rolUsuario=="cliente"){ 
-            UsuarioRole.create (usuarioInstance, clienteRole, true)
-          
-        }else if(params.rolUsuario=="empleado"){
-            UsuarioRole.create (usuarioInstance, userRole, true)
-            
-        }else if(params.rolUsuario=="admin"){
-            UsuarioRole.create (usuarioInstance, userRole, true)
-            
+        for (roleId in params.list('rolUsuario')){
+                println "roleeeeeeeeeeeeeee"+roleId
+            Role r = Role.get(roleId)
+            UsuarioRole.create(usuarioInstance, r,true)
         }
 
         request.withFormat {

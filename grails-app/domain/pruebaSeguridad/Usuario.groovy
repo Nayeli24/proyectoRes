@@ -15,6 +15,7 @@ class Usuario implements Serializable {
     String apellidoPat
     String apellidoMat
     String areaDpto
+    String twitterName
     Empresa empresa
     String email
     String username
@@ -54,10 +55,11 @@ class Usuario implements Serializable {
         username blank: false, unique: true
         password blank: false
         nombre blank: false
+        twitterName  (blank: false, nullable:true)
         apellidoPat blank: false
         apellidoMat blank: false
         empresa (nullable:true)
-        email (email:true, blank:false)
+         email (email:true, blank:false)
     }
 
     static mapping = {

@@ -74,7 +74,7 @@
                                         <input type="hidden" name="idusuario" id="idusuario" value="${detalle.id}"  >
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" > Tipo de usuario:</label>
-                                            <div class="col-sm-9">   
+                                            <div class="col-sm-9">
                                                 <g:select id="rolUsuario" name="rolUsuario" from="${pruebaSeguridad.Role.list()}" optionKey="id" multiple="true" class="chosen-select" value="${usuarioInstance?.authorities?.id}" onchange="usernameCrear()" required=""  />
                                             </div>
                                         </div>
@@ -162,6 +162,13 @@
                                                 <input  class="form-control" name="password2" required="" value="${usuarioInstance?.password}" placeholder="Confirmación de contraseña" type="password" onchange="comprobarClave()">
                                             </div>
                                         </div>
+                                        <div class="form-group" style="display:none;" id="twitterDiv">
+                                            <label class="col-sm-3 control-label" for="twitterName"><i class="fa  fa-twitter fa-fw"></i>Twittter:
+                                                <span class="required-indicator">*</span></label>
+                                            <div class="col-sm-9">
+                                                <span>@ </span><input  name="twitterName" value="${usuarioInstance?.twitterName}">
+                                            </div>
+                                        </div>
                                         <fieldset class="buttons">
                                             <g:submitButton name="create" onclick="comprobarClave()" class="btn btn-success" value="Agregar usuario" />
                                         </fieldset>
@@ -178,7 +185,7 @@
                                         $('#mostrar').show();
                                         } else {
                                         $('#mostrar').css("display", "none");
-                                        }
+                                        } 
                                         });
                                         });
                                     </script>
