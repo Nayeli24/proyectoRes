@@ -54,8 +54,8 @@ invokeTag('sortableColumn','g',27,['property':("descripcion"),'title':(message(c
 printHtmlPart(13)
 if(true && (comentariosVer)) {
 printHtmlPart(14)
-for( _it1004676352 in (comentariosVer) ) {
-changeItVariable(_it1004676352)
+for( _it528981624 in (comentariosVer) ) {
+changeItVariable(_it528981624)
 printHtmlPart(15)
 expressionOut.print(it?.usuario?.username)
 printHtmlPart(16)

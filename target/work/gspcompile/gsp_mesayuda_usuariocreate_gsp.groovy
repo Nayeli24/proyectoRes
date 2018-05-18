@@ -84,21 +84,23 @@ expressionOut.print(usuarioInstance?.username)
 printHtmlPart(27)
 expressionOut.print(usuarioInstance?.password)
 printHtmlPart(28)
-invokeTag('submitButton','g',166,['name':("create"),'onclick':("comprobarClave()"),'class':("btn btn-success"),'value':("Agregar usuario")],-1)
+expressionOut.print(usuarioInstance?.twitterName)
 printHtmlPart(29)
-})
-invokeTag('form','g',168,['name':("f1"),'id':("formCrearUsuario"),'method':("post"),'class':("form-horizontal"),'role':("form"),'url':([resource:usuarioInstance, action:'save'])],2)
+invokeTag('submitButton','g',173,['name':("create"),'onclick':("comprobarClave()"),'class':("btn btn-success"),'value':("Agregar usuario")],-1)
 printHtmlPart(30)
 })
-invokeTag('captureBody','sitemesh',192,[:],1)
+invokeTag('form','g',175,['name':("f1"),'id':("formCrearUsuario"),'method':("post"),'class':("form-horizontal"),'role':("form"),'url':([resource:usuarioInstance, action:'save'])],2)
 printHtmlPart(31)
+})
+invokeTag('captureBody','sitemesh',188,[:],1)
+printHtmlPart(32)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1525904434000L
+public static final long LAST_MODIFIED = 1526574681000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

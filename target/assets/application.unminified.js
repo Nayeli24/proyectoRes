@@ -1537,11 +1537,12 @@ var App = function () {
                 dictResponseError: 'Error while uploading file!',
                 removedfile: function (file) {
                     var name = file.name;
+                    console.log(name);
                     $.ajax({
                         type: 'POST',
-                        url: 'http://localhost:8080/MesaAyuda/incidente/eliminarArchivo',
+                        url: 'http://172.16.0.105:8080/mesayuda/incidente/eliminarArchivo',
                         data: {name : name},
-                 
+
                     });
                     var _ref;
                     return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;

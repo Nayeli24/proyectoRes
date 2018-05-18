@@ -10,7 +10,7 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
         <meta name="layout" content="main">
-    
+
     </head>
     <body>
 
@@ -90,7 +90,6 @@
                                         <g:fieldValue bean="${usuarioInstance}" field="email"/>
                                     </div>
                                 </g:if>
-                                
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Cuenta Activa:</label>
                                     <g:formatBoolean boolean="${usuarioInstance?.enabled}"  true="Sí" false="No"  />

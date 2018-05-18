@@ -16,7 +16,7 @@ class MyJob {
     def grailsApplication
    
     static triggers = {      
-        cron name: 'envioMensajeTweet', cronExpression: "0 10 * * * ?" 
+        cron name: 'envioMensajeTweet', cronExpression: "0 0 10 * * ?" 
     }
 
     def execute() {

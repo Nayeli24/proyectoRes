@@ -45,9 +45,11 @@ class IncidenteController {
     } 
 
     def show(Incidente incidenteInstance) {
-         
-  
-        respond incidenteInstance   }
+      
+        
+        respond incidenteInstance   
+        
+    }
 
     def create() {
         println "31:::::::::::::$params"
@@ -79,9 +81,14 @@ class IncidenteController {
         
         def us = springSecurityService.currentUser.username
         println us
+      
+   
         incidenteInstance.registradoPor = Usuario.findByUsername(us)
         incidenteInstance.estatus = Estatus.get(1 as long)
         println "estatus::::::::::::::::::."+incidenteInstance.estatus
+
+        incidenteInstance.noComentarios=0
+       
         incidenteInstance.save flush:true
         def inf = incidenteService.guardarFlujo(us,1,incidenteInstance)
         
@@ -172,7 +179,8 @@ class IncidenteController {
             incident.asignadoA =Usuario.findById(params.asignadoA as long)
             incident.estatus = Estatus.get(2 as int)
             def date = new Date()      
-            incident.fechaAsignacion = new Date()            
+            incident.fechaAsignacion = new Date()    
+            incident.noComentarios=0
             incident.save()
             def gf = incidenteService.guardarFlujo(springSecurityService.currentUser.username,2,incident)          
             //            Twitter sender = TwitterFactory.getSingleton();
@@ -250,14 +258,13 @@ class IncidenteController {
         redirect(contoller:"incidente", action:"index")
     }    
     
-    
     def eliminarArchivo(){
         def id=idUpload
         println "::::params de eliminarArchivo:::::$params"
         def nombre= "Achivo_Incidente_"+id+"_"+(params.name).toString()
         println "nombre ::::::::::"    +nombre
         def documento = documentoService.borrarArchivo(nombre); 
-        println "se elimino :::::$documento"
+        println "se elimino :::::$documento"  
         
     }
     
@@ -346,23 +353,23 @@ class IncidenteController {
         def fechaC=fechaCer.format("'El día' EEEEEEEE dd 'de' MMMMM 'del' yyyy     hh:mm a")
      
         try{
-        MailService.sendMail {
-            to email
-            multipart true
-            from grailsApplication.config.grails.mail.username
-            subject "Detalle de incidente cerrado"
-            html "<h1>incidente con folio $incidente.folio </h1>\n\
+            MailService.sendMail {
+                to email
+                multipart true
+                from grailsApplication.config.grails.mail.username
+                subject "Detalle de incidente cerrado"
+                html "<h1>incidente con folio $incidente.folio </h1>\n\
                 <div><label><em><strong>Tema:</strong></label><p>$incidente.tema</p></em></div>\n\
                 <div><label><em><strong>Fecha de registro:</strong></label><p>$fechaR</p></em></div>\n\
                 <div><label><em><strong>Lo atendió:</strong></label><p>$incidente.asignadoA</p></em></div>\n\
                 <div><label><em><strong>Fecha de atención:</strong></label><p>$fechaA</p></em></div>\n\
                <div><label><em><strong>Solución:</strong></label><p>$incidente.solucion</p></em></div>\n\
                 <div><label><em><strong>Se finalizó el incidente:</strong></label><p>$fechaC</p></em></div>"
-            flash.message = "Correo enviado con éxito"
-            incidente.envioCorreo=true
-            chain(controller:"incidente", action:"index")
-        }
-           } catch(Exception e) {
+                flash.message = "Correo enviado con éxito"
+                incidente.envioCorreo=true
+                chain(controller:"incidente", action:"index")
+            }
+        } catch(Exception e) {
             System.out.println("Fallo al enviar elcorreo");
         }   
     }
@@ -395,7 +402,7 @@ class IncidenteController {
     
     def enviarComentario(){
         println "comentarios::::::::....$params"
-        
+        flash.message = "Comentario enviado con éxito"
         def b =  incidenteService.cambiarEstatus(3,params.id)
         println "::::::::::::b$b"
         def us = springSecurityService.currentUser.username
@@ -405,8 +412,11 @@ class IncidenteController {
         comentario.usuario=Usuario.findByUsername(us)
         comentario.fechaComentario = new Date()
         comentario.save()
-        println "incidente:::enviarComentario:::::::::::::..."+b
-        chain (controller:"incidente", action:"show", id:params.id)
+        def incidente=Incidente.get(params.id as long)
+        def comentarios=Integer.parseInt(params.comentarios )
+        incidente.noComentarios=comentarios
+        println "incidente:::enviarComentario:::::::::::::..."+incidente.noComentarios
+        render " "
     }
     
     

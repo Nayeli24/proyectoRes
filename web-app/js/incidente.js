@@ -46,26 +46,32 @@ function mostrar()
     }
 }
 
+
 function limpia(elemento)
 {
     elemento.value = "";
+  
 }
 
-function limpia2()
-{
-    var id = document.formComentario.id.value
-    swal({
-        title: "¡Comentario enviado!",
-        text: "El comentario ha sido enviado con éxito",
-        type: 'success'
-    }).then((result) => {
-        console.log(result);
-        if (result.value) {
-            $("#fc").submit()
-            document.formComentario.comentario.value = "";
-        }
+function sumar(valor) {
+      swal("¡Comentario enviado!","El correo fue enviado exitosamente","success");
+    var total = 0;
+    valor = parseInt(valor); // Convertir el valor a un entero (número).
 
-    });
+    total = document.getElementById('noComen').innerHTML;
+
+    // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+    total = (total == null || total == undefined || total == "") ? 0 : total;
+
+    /* Esta es la suma. */
+    total = (parseInt(total) + parseInt(valor));
+
+    // Colocar el resultado de la suma en el control "span".
+    document.getElementById('noComen').innerHTML = total;
+    document.getElementById('comentarios').value = total;
+    document.getElementById('atencion').style.display = 'block';
+
+      
 }
 
 

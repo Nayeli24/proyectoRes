@@ -1,7 +1,4 @@
-
 package pruebaSeguridad
-
-
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -27,21 +24,7 @@ class ComentarioController {
     def show(Comentario comentarioInstance) {
         respond comentarioInstance
     }
-     def contarComentarios(){
-       println "comentariov  $params"
-       def id=params.id
-       def respuesta
-            def contador = Comentario.countByIncidente(Incidente.get(id))
-            println "contador $contador"
-            if (contador==null){
-                respuesta= 0
-            }else{
-                respuesta= contador
-            }
-        println "Comentarios:::::.....Controller"+ respuesta
-        render respuesta as String
- 
-    }
+    
 
     def create() {
         params.incidente=params.id

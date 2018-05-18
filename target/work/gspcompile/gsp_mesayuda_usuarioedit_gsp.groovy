@@ -101,23 +101,23 @@ expressionOut.print(usuarioInstance.twitterName)
 printHtmlPart(35)
 }
 printHtmlPart(36)
-invokeTag('message','g',141,['code':("usuario.accountLocked.label"),'default':("Account Locked")],-1)
+invokeTag('message','g',145,['code':("usuario.accountLocked.label"),'default':("Account Locked")],-1)
 printHtmlPart(37)
-invokeTag('checkBox','g',144,['name':("accountLocked"),'value':(usuarioInstance?.accountLocked)],-1)
+invokeTag('checkBox','g',148,['name':("accountLocked"),'value':(usuarioInstance?.accountLocked)],-1)
 printHtmlPart(38)
-invokeTag('message','g',146,['code':("usuario.enabled.label"),'default':("Enabled")],-1)
+invokeTag('message','g',150,['code':("usuario.enabled.label"),'default':("Enabled")],-1)
 printHtmlPart(37)
-invokeTag('checkBox','g',149,['name':("enabled"),'value':(usuarioInstance?.enabled)],-1)
+invokeTag('checkBox','g',153,['name':("enabled"),'value':(usuarioInstance?.enabled)],-1)
 printHtmlPart(39)
-invokeTag('select','g',158,['id':("rolUsuario"),'name':("rolUsuario"),'from':(pruebaSeguridad.Role.list()),'optionKey':("id"),'multiple':("true"),'class':("chosen-select"),'value':(usuarioInstance?.authorities?.id),'onchange':("cambiarRol()"),'required':("")],-1)
+invokeTag('select','g',162,['id':("rolUsuario"),'name':("rolUsuario"),'from':(pruebaSeguridad.Role.list()),'optionKey':("id"),'multiple':("true"),'class':("chosen-select"),'value':(usuarioInstance?.authorities?.id),'onchange':("cambiarRol()"),'required':("")],-1)
 printHtmlPart(40)
-invokeTag('actionSubmit','g',165,['class':("btn btn-success"),'value':(message(code: 'default.button.actualizar.label', default: 'Actualizar')),'action':("update")],-1)
+invokeTag('actionSubmit','g',169,['class':("btn btn-success"),'value':(message(code: 'default.button.actualizar.label', default: 'Actualizar')),'action':("update")],-1)
 printHtmlPart(41)
 })
-invokeTag('form','g',167,['url':([resource:usuarioInstance, action:'update']),'method':("PUT"),'name':("f1")],2)
+invokeTag('form','g',171,['url':([resource:usuarioInstance, action:'update']),'method':("PUT"),'name':("f1")],2)
 printHtmlPart(42)
 })
-invokeTag('captureBody','sitemesh',186,[:],1)
+invokeTag('captureBody','sitemesh',190,[:],1)
 printHtmlPart(43)
 }
 public static final Map JSP_TAGS = new HashMap()
@@ -125,7 +125,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1525896900000L
+public static final long LAST_MODIFIED = 1526400042000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

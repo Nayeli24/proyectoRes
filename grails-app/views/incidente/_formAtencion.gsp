@@ -6,14 +6,6 @@
 <%@ page import="pruebaSeguridad.Incidente" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-    <div >
-        <label for="Solución">
-            <g:message code="incidente.solucion.label" default="Solución" />
-        </label>
-        <g:textArea name="solucion" required="" value="${incidenteInstance?.solucion}" rows="20" cols="40"/>
-        </div>
-    <div >
-        <label for="Seleccionar archivo ">
-            <g:message code="incidente.seleccionararchivo.label" default="Seleccionar Archivo" />
-            <span class="required-indicator">*</span>
-        </label>
+<div >
+   
+</div>

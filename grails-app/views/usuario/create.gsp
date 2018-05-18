@@ -176,18 +176,7 @@
 
                                     <script>
                                         $(".chosen-select").chosen();
-                                        $("#btn-load").click(function (event) {
-                                        $("#formCrearUsuario")[0].reset();
-                                        });
-                                        $(function () {
-                                        $('#areaDpto').mousedown(function () {
-                                        if ($('#areaDpto').val() == "Otro") {
-                                        $('#mostrar').show();
-                                        } else {
-                                        $('#mostrar').css("display", "none");
-                                        } 
-                                        });
-                                        });
+                                       
                                     </script>
                                 </div>
                             </div>

@@ -19,8 +19,8 @@ printHtmlPart(1)
 printHtmlPart(2)
 if(true && (comentariosVer)) {
 printHtmlPart(3)
-for( _it1695528207 in (comentariosVer) ) {
-changeItVariable(_it1695528207)
+for( _it1847150903 in (comentariosVer) ) {
+changeItVariable(_it1847150903)
 printHtmlPart(4)
 invokeTag('formatDate','g',35,['format':("dd / MMMMM / yyyy hh:mm aa"),'date':(it.fechaComentario)],-1)
 printHtmlPart(5)

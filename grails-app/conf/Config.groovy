@@ -11,6 +11,7 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
+
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 
 // The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
@@ -95,6 +96,11 @@ grails.hibernate.osiv.readonly = false
 
 environments {
     development {
+        
+
+      
+
+
         grails.logging.jul.usebridge = true
         jasper.dir.reports = '/home/larzate/MesaAyuda/web-app/reports'
     }
@@ -126,16 +132,16 @@ log4j.main = {
 }
 
 
-  twitter4j {
+twitter4j {
     enableTwitter4jController = true // To avoid intruders to use controller all together.
     'default' {
-      debugEnabled           =false
-      OAuthConsumerKey       = '3vWgqVHhpxIpOK5m3uKdrjxA5'
-      OAuthConsumerSecret    = 'wVjwMfiDUsq91XzWyxOVNfog0va6F0gIAEEkDjtxn9iD02d4fk'
-      OAuthAccessToken       = '992471308117118976-V8HRf7GixtFR3C2XnFvRZfKnTHKPuEA'
-      OAuthAccessTokenSecret = 'sW86p0uBeCinzUB9u2Zl22ZQ4wAUeDKYpqog4zwz87XdK'
+        debugEnabled           =false
+        OAuthConsumerKey       = '3vWgqVHhpxIpOK5m3uKdrjxA5'
+        OAuthConsumerSecret    = 'wVjwMfiDUsq91XzWyxOVNfog0va6F0gIAEEkDjtxn9iD02d4fk'
+        OAuthAccessToken       = '992471308117118976-V8HRf7GixtFR3C2XnFvRZfKnTHKPuEA'
+        OAuthAccessTokenSecret = 'sW86p0uBeCinzUB9u2Zl22ZQ4wAUeDKYpqog4zwz87XdK'
     }
-  }
+}
 
 //grails.plugin.springsecurity.auth.loginFormUrl = '/pruebaSeguridad/incidente/index'
 //grails.plugin.springsecurity.failureHandler.defaultFailureUrl = '/'
@@ -178,7 +184,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/incidente/cerrarIncidente':  ['ROLE_CLIENTE'],
     '/incidente/printReport':  ['ROLE_CLIENTE'],
     '/incidente/cargaArchivos':  ['ROLE_DESARROLLADOR','ROLE_CLIENTE'],
-    '/incidente/eliminarArchivo':  ['ROLE_DESARROLLADOR'],
+    '/incidente/eliminarArchivo':  ['ROLE_DESARROLLADOR','ROLE_CLIENTE'],
      '/incidente/guardarSolucion':  ['ROLE_DESARROLLADOR'],
     '/usuario/**':  ['ROLE_ADMIN'],
      '/usuario/usuarioLog':  ['isFullyAuthenticated()'],

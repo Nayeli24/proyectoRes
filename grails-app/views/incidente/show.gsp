@@ -10,6 +10,7 @@
         <title>Detalle incidente</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
         <meta name="layout" content="main">
+        <g:external dir="js/jquery" file="jquery-2.0.3.min.js" />
         <script src="${resource (dir: 'js', file: 'incidente.js')}"> </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.3.5/sweetalert2.all.min.js"></script>
     </head>
@@ -161,8 +162,15 @@
                                     </sec:ifAnyGranted>
                             </g:if>
                             <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
-                                <g:if test="${incidenteInstance?.estatus?.id==3}">
-                                    <div class="form-group" align="center">
+                                <g:if test="${incidenteInstance?.estatus?.id==2}">
+                                    <div  id="atencion" class="form-group" align="center" style="display:none;">
+ <fieldset>
+                                            <g:remoteLink controller="incidente" action="atender" id="${incidenteInstance.id}" update ="[success:'divSolucion',failure:'errorSolucion']"><input type="button" class="btn btn-success" value="Solucionar incidente" /> </g:remoteLink>
+                                            </fieldset>
+                                        </div>
+  </g:if>
+  <g:if test="${incidenteInstance?.estatus?.id==3}">
+     <div  id="atencion" class="form-group" align="center" >
                                         <fieldset>
                                             <g:remoteLink controller="incidente" action="atender" id="${incidenteInstance.id}" update ="[success:'divSolucion',failure:'errorSolucion']"><input type="button" class="btn btn-success" value="Solucionar incidente" /> </g:remoteLink>
                                             </fieldset>
@@ -171,6 +179,10 @@
                             </sec:ifAnyGranted>
                             <br>
                         </div>
+  <g:if test="${incidenteInstance?.estatus?.id > 1}">
+                            <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'divCom',failure:'errorCom']"> Ver comentarios (<span id="noComen"> <g:if test="${incidenteInstance?.estatus?.id==2}" > 0 </g:if><g:else> ${incidenteInstance?.noComentarios} </g:else></span>)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'divDoc',failure:'errorDoc']"> Documentos (<g:include controller="documento" action="contarDocumentos" id="${incidenteInstance.id}" />)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                            </g:if>
                         <div id="divSolucion"></div>
                         <div id="errorSolucion"></div>
                        <!--<div class="fb-comments" bean="${incidenteInsance}" ></div>
@@ -178,21 +190,17 @@
                         <div>
 
                             <g:if test="${incidenteInstance?.estatus?.id==2 || incidenteInstance?.estatus?.id==3}">
-                                <sec:ifAnyGranted roles='ROLE_DESARROLLADOR,ROLE_CLIENTE'>
-                                    <g:form id="fc" name="formComentario" url="[controller:'incidente',action:'enviarComentario']" >
-                                        <input  type="hidden" name="id" value="${incidenteInstance.id}"/>
-                                        <textarea id="comentario"  class="form-control"   name="comentario" required="" rows="5" cols="20"  placeholder="Escribe un comentario..."></textarea>
-                                        <br><input  type="button" class="btn btn-success" value="Enviar Comentario" onclick="limpia2();" />
-                                    </g:form>
-                                </sec:ifAnyGranted>
-                            </g:if>
-                            <br>
+                                <div id="message"></div>
+                                <div id="error"> </div> 
+                                <g:formRemote onLoading="sumar(1);" name="formComentario" url="[controller:'incidente',action:'enviarComentario']" update="[success:'message',failure:'error']" onSuccess="javascript: limpia(getElementById('comentario'));">
+                                    <input type="hidden" name="id" value="${incidenteInstance.id}"/>
+                                    <input type="hidden" name="comentarios"  id="comentarios"/>
+                                    <textarea  class="form-control"  onclick="javascript: limpia(this);"  id="comentario" name="comentario" required="" rows="5" cols="20"  placeholder="Escribe un comentario..."></textarea>
+                                    <br><button id="comentarioBtn" class="btn btn-success" >Enviar Comentario</button>
+                                </g:formRemote>
 
-
-                            <g:if test="${incidenteInstance?.estatus?.id > 1}">
-                            <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'divCom',failure:'errorCom']"> Ver comentarios (<g:include controller="comentario" action="contarComentarios" id="${incidenteInstance.id}" />)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
-                                <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'divDoc',failure:'errorDoc']"> Documentos (<g:include controller="documento" action="contarDocumentos" id="${incidenteInstance.id}" />)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
                             </g:if>
+                            <br>                    
 
                             <g:if test="${incidenteInstance?.estatus?.id==1}">
                                 <sec:ifAnyGranted roles='ROLE_CLIENTE'>
@@ -202,8 +210,9 @@
                                             <g:remoteLink controller="incidente" action="cargaArchivos" id="${incidenteInstance.id}" update ="[success:'message3',failure:'error3']" > <input type="button" class="btn btn-primary" id="ca" name="ca"  value="Cargar archivos" /></g:remoteLink>
                                             </fieldset>
                                     </g:form> <br> 
-                                </sec:ifAnyGranted>    
-                                <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'divDoc',failure:'errorDoc']"> Documentos (<g:include controller="documento" action="contarDocumentos" id="${incidenteInstance.id}" />)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                                </sec:ifAnyGranted>  
+
+                                <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'divDoc',failure:'errorDoc']"> Documentos (<span id="noDoc"><g:include controller="documento" action="contarDocumentos" id="${incidenteInstance.id}" /></span>)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
                                     <div id="message3"></div>
                                     <div id="error3"></div>
                             </g:if>
@@ -214,6 +223,9 @@
                             <div id="errorCom"> </div>
                         </div>
                     </div>
+                    <script>
+
+                    </script>
                 </div>
             </div>
         </div>

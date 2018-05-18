@@ -31,6 +31,8 @@
        <asset:javascript src="script.js"/>
 
 <script>
+    
+    
     jQuery(document).ready(function() {		
     App.setPage("dropzone_file_upload");  //Set current page
     App.init(); //Initialise plugins and elements

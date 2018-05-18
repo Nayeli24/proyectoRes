@@ -109,6 +109,7 @@ function mostrar()
 {
     var combo = document.getElementById("areaDpto");
     var selected = combo.options[combo.selectedIndex].text;
+    console.log(selected);
     if (selected == "Otro")
     {
         document.getElementById('mostrar').style.display = 'block';
@@ -132,7 +133,7 @@ function usernameCrear() {
         swal({
             title: "¡Seleccionar un tipo de usuario!",
             text: "Este campo no puede quedar vacío, no se podrá crear el usuario",
-            timer: 7000,
+            timer: 4000,
             type: 'error'
         });
         var tipoUser = "U"

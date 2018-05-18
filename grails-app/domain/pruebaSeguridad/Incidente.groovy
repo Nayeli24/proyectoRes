@@ -5,7 +5,7 @@ class Incidente {
     String descripcion
     String tema
     def date = new Date()
- 
+    int noComentarios
     Date fechaRegistro = new Date()
     Date fechaAtencion
     String folio
@@ -19,6 +19,7 @@ class Incidente {
     
     static constraints = {
         descripcion blank: false 
+        noComentarios blank :false
         tema blank:false
         estatus (nullable: true)
         folio blank: false
