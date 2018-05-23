@@ -7,6 +7,8 @@
         <title>Nuevo usuario</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
         <meta name="layout" content="main">
+
+        <g:external dir="js/jquery" file="jquery-2.0.3.min.js" />
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
         <script type="text/javascript" src="https://harvesthq.github.io/chosen/chosen.jquery.js"></script>   
         <link rel="stylesheet" type="text/css" href="https://harvesthq.github.io/chosen/chosen.css" />
@@ -107,16 +109,18 @@
                                             <label class="col-sm-3 control-label" for="areaDpto"> Área / Departamento:
                                                 <span class="required-indicator">*</span></label>
                                             <div class="col-sm-9">
-                                                <select  required="" class="chosen-select" name="areaDpto" id="areaDpto" >
-                                                    <option onclick="mostrar()">Dirección General</option>
-                                                    <option onclick="mostrar()">Administración y Recursos Humanos</option> 
-                                                    <option onclick="mostrar()">Producción</option>
-                                                    <option onclick="mostrar()">Finanzas y Contabilidad</option>
-                                                    <option onclick="mostrar()">Publicidad y Mercadotecnia</option>
-                                                    <option onclick="mostrar()">Sistemas e Informática</option>
-                                                    <option onclick="mostrar()">Otro</option>
+                                                <select  required="" class="chosen-select" name="areaDpto" id="areaDpto"  onchange="mostrar3();">
+                                                    <option >Dirección General</option>
+                                                    <option >Administración y Recursos Humanos</option> 
+                                                    <option >Producción</option>
+                                                    <option >Finanzas y Contabilidad</option>
+                                                    <option >Publicidad y Mercadotecnia</option>
+                                                    <option >Sistemas e Informática</option>
+                                                    <option >Otro</option>
                                                 </select>
-                                                <input style="display:none;" class="form-control"  id="mostrar" name="areaDpto" value="${usuarioInstance?.areaDpto}" placeholder="Área/Dep" type="text">
+                                                <br>
+                                                <br>
+                                                <input style="display:none;"  class="form-control"  id="mostrar" name="areaDpto" value="${usuarioInstance?.areaDpto}" placeholder="Área/Dep" type="text">
                                             </div>
 
                                         </div>
@@ -166,7 +170,7 @@
                                             <label class="col-sm-3 control-label" for="twitterName"><i class="fa  fa-twitter fa-fw"></i>Twittter:
                                                 <span class="required-indicator">*</span></label>
                                             <div class="col-sm-9">
-                                                <span>@ </span><input  name="twitterName" value="${usuarioInstance?.twitterName}">
+                                                <span>@ </span><input id="twitter"  name="twitterName" value="${usuarioInstance?.twitterName}">
                                             </div>
                                         </div>
                                         <fieldset class="buttons">
@@ -176,7 +180,7 @@
 
                                     <script>
                                         $(".chosen-select").chosen();
-                                       
+
                                     </script>
                                 </div>
                             </div>

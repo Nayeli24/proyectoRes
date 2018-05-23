@@ -124,16 +124,19 @@
                                             </div>                                        
                                         </div>
                                         <br>
+
+                                        <br>
+                                  
                                         <g:if test="${usuarioInstance?.twitterName}">
-                                            <br>
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label" for="empresa"><i class="fa fa-twitter-square fa-fw"></i>Cuenta Twitter :</label>
-                                                <div class="col-sm-9">
-                                                    <fieldset>
-                                                        <label for="d1">@</label>
-                                                        <input id="d1" type="text" required=""  onclick="javascript: limpia(this);" name="twitterName"  placeholder="abc12" value="${usuarioInstance.twitterName}">
-                                                    </fieldset>
-                                                </div>
+                                        <div class="form-group"  id="twitterDiv">
+                                            <label class="col-sm-3 control-label" for="twitterName"><i class="fa fa-twitter-square fa-fw"></i>Cuenta Twitter :</label>
+                                            <div class="col-sm-9">
+                                                <fieldset>
+                                                    <label for="d1">@</label>
+                                                    <input id="d1" type="text" required=""  onclick="javascript: limpia(this);" name="twitterName"  placeholder="abc12" value="${usuarioInstance.twitterName}">
+                                                </fieldset>
+                                            </div>
+                                            </div>
                                             </g:if>
                                             <br>
                                             <br>

@@ -30,7 +30,7 @@ class MyJob {
             def id = it.id   
             if(it.estatus==Estatus.findByTipoEstatus("Asignado")){
                 print"entro condicion incidente asignado"   
-                String mensaje="Hola! El incidente con id ${id} que le fue asignado no ha sido atendido \n Darle atención a la brevedad \n Gracias!... http://172.16.0.105:8080/mesayuda/"
+                String mensaje="Hola! El incidente con id ${id} que le fue asignado no ha sido atendido \n Darle atención a la brevedad \n Gracias!..."
                 TwitterFactory factory = new TwitterFactory()
                 Twitter twitter = factory.getInstance()
                 twitter.setOAuthConsumer(grailsApplication.config.twitter4j.default.OAuthConsumerKey,grailsApplication.config.twitter4j.default.OAuthConsumerSecret)
@@ -43,7 +43,7 @@ class MyJob {
                     DirectMessage directMessage2 = twitter.sendDirectMessage(usuario, mensaje);
                     System.out.println("Tweet enviado!");
                 } catch(TwitterException e){
-                    System.out.println("Erro ao enviar o tweet");
+                    System.out.println("Error al enviar  tweet");
                 }
             }
         }

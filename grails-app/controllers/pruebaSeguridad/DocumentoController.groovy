@@ -1,7 +1,4 @@
 package pruebaSeguridad
-
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import java.io.File
@@ -45,7 +42,7 @@ class DocumentoController {
     
     
     def contarDocumentos(){
-       println "comentariov  $params"
+       println "docuemtno  $params"
        def id=params.id
        def respuesta
             def contador = Documento.countByIncidente(Incidente.get(id))
@@ -55,7 +52,7 @@ class DocumentoController {
             }else{
                 respuesta= contador
             }
-        println "docuemntos:::::.....Controller"+ respuesta
+        println "documentos:::::.....Controller"+ respuesta
         render respuesta as String
  
     }

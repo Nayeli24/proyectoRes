@@ -2,6 +2,7 @@
 <%@ page import="pruebaSeguridad.Documento" %>
 <%@ page import="pruebaSeguridad.Comentario" %>
 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -164,13 +165,13 @@
                             <sec:ifAnyGranted roles='ROLE_DESARROLLADOR'>
                                 <g:if test="${incidenteInstance?.estatus?.id==2}">
                                     <div  id="atencion" class="form-group" align="center" style="display:none;">
- <fieldset>
+                                        <fieldset>
                                             <g:remoteLink controller="incidente" action="atender" id="${incidenteInstance.id}" update ="[success:'divSolucion',failure:'errorSolucion']"><input type="button" class="btn btn-success" value="Solucionar incidente" /> </g:remoteLink>
                                             </fieldset>
                                         </div>
-  </g:if>
-  <g:if test="${incidenteInstance?.estatus?.id==3}">
-     <div  id="atencion" class="form-group" align="center" >
+                                </g:if>
+                                <g:if test="${incidenteInstance?.estatus?.id==3}">
+                                    <div  id="atencion" class="form-group" align="center" >
                                         <fieldset>
                                             <g:remoteLink controller="incidente" action="atender" id="${incidenteInstance.id}" update ="[success:'divSolucion',failure:'errorSolucion']"><input type="button" class="btn btn-success" value="Solucionar incidente" /> </g:remoteLink>
                                             </fieldset>
@@ -179,10 +180,10 @@
                             </sec:ifAnyGranted>
                             <br>
                         </div>
-  <g:if test="${incidenteInstance?.estatus?.id > 1}">
-                            <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'divCom',failure:'errorCom']"> Ver comentarios (<span id="noComen"> <g:if test="${incidenteInstance?.estatus?.id==2}" > 0 </g:if><g:else> ${incidenteInstance?.noComentarios} </g:else></span>)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
-                                <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'divDoc',failure:'errorDoc']"> Documentos (<g:include controller="documento" action="contarDocumentos" id="${incidenteInstance.id}" />)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
-                            </g:if>
+                        <g:if test="${incidenteInstance?.estatus?.id > 1}">
+                        <i class="fa fa-comments fa-fw"></i><g:remoteLink controller="comentario" action="index" id="${incidenteInstance.id}" update ="[success:'divCom',failure:'errorCom']"> Ver comentarios (<span id="noComen"> <g:if test="${incidenteInstance?.estatus?.id==2}" > 0 </g:if><g:else> ${incidenteInstance?.noComentarios} </g:else></span>)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                            <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'divDoc',failure:'errorDoc']"> Documentos (<span id="noDoc"><g:include controller="documento" action="contarDocumentos" id="${incidenteInstance.id}" /></span>)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
+                        </g:if>
                         <div id="divSolucion"></div>
                         <div id="errorSolucion"></div>
                        <!--<div class="fb-comments" bean="${incidenteInsance}" ></div>
@@ -207,16 +208,18 @@
                                     <g:form url="[resource:incidenteInstance, action:'delete']" method="DELETE" id="delete" name="delete">
                                         <fieldset class="buttons">
                                             <input type="button" name="atender" id="atender" onclick="eliminarFunction();" value="Eliminar incidente" class="btn btn-success"  />
-                                            <g:remoteLink controller="incidente" action="cargaArchivos" id="${incidenteInstance.id}" update ="[success:'message3',failure:'error3']" > <input type="button" class="btn btn-primary" id="ca" name="ca"  value="Cargar archivos" /></g:remoteLink>
+                                            <g:remoteLink controller="incidente" action="cargaArchivos" id="${incidenteInstance.id}" update ="[success:'message3',failure:'error3']" > <input type="button" class="btn btn-primary" id="ca" name="ca"  value="Cargar archivos" onclick="enviar();"/></g:remoteLink><br>
+                                            </fieldset>
+                                            <br>
+                                            <fieldset class="buttons" id="doc" style="display:none;">
+                                            <g:remoteLink controller="documento" action="contarDocumentos" id="${incidenteInstance.id}" update ="[success:'noDoc',failure:'error3']" > <input type="button" class="btn btn-primary"  name="doc"  value="Enviar archivos"  /></g:remoteLink>
                                             </fieldset>
                                     </g:form> <br> 
                                 </sec:ifAnyGranted>  
-
                                 <i class="fa fa-folder fa-fw"></i><g:remoteLink controller="documento" action="index" id="${incidenteInstance.id}" update ="[success:'divDoc',failure:'errorDoc']"> Documentos (<span id="noDoc"><g:include controller="documento" action="contarDocumentos" id="${incidenteInstance.id}" /></span>)</g:remoteLink><i class="fa fa-angle-double-down fa-fw"></i>
                                     <div id="message3"></div>
                                     <div id="error3"></div>
                             </g:if>
-
                             <div id="divDoc"></div>
                             <div id="divCom"> </div>                                
                             <div id="errorDoc"> </div>

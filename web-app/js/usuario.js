@@ -3,7 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+function mostrar3()
+{
+    console.log("holaa")
+    var combo = document.getElementById("areaDpto");
+    var selected = combo.options[combo.selectedIndex].text;
+    console.log(selected);
+    if (selected == "Otro")
+    {
+        document.getElementById('mostrar').style.display = 'block';
+    } else {
+        document.getElementById('mostrar').style.display = 'none';
+    }
+}
 
 function mostrar2() {
     var op = document.getElementById("areaDpto2");
@@ -49,6 +61,7 @@ function cambiarRol() {
         var tipoUser = "E"
     } else if (selected == 1 || selected == 2) {
         var tipoUser = "I"
+          document.getElementById('twitterDiv').style.display = 'block';
     } else {
         swal({
             title: "¡Seleccionar un tipo de usuario!",
@@ -105,18 +118,7 @@ function limpia(elemento)
 }
 
 
-function mostrar()
-{
-    var combo = document.getElementById("areaDpto");
-    var selected = combo.options[combo.selectedIndex].text;
-    console.log(selected);
-    if (selected == "Otro")
-    {
-        document.getElementById('mostrar').style.display = 'block';
-    } else {
-        document.getElementById('mostrar').style.display = 'none';
-    }
-}
+
 
 
 function usernameCrear() {
@@ -140,10 +142,11 @@ function usernameCrear() {
     } else if (selected == 0)
     {
         var tipoUser = "E"
-    } else if(selected == 1 || selected==2){
+    } else if (selected == 1 || selected == 2) {
         var tipoUser = "I"
         document.f1.empresa.value = 1;
-         document.getElementById('twitterDiv').style.display = 'block';
+        document.getElementById('twitterDiv').style.display = 'block';
+         document.getElementById('twitter').required = true;
     }
     var empresa = document.f1.empresa.value
     if (empresa <= 9)

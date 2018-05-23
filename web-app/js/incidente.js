@@ -74,6 +74,10 @@ function sumar(valor) {
       
 }
 
+function enviar(){
+    document.getElementById('doc').style.display = 'block';
+  
+}
 
 function eliminarFunction() {
     swal({

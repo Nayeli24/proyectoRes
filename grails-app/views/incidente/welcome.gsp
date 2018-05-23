@@ -13,10 +13,10 @@
         <script src="./path/to/dropzone.js"></script>
         <title>Simple Ajax</title>
 
-        
-      <g:external dir="js/dropzone" file="dropzone.min.js" />     
-<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
-<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+
+        <g:external dir="js/dropzone" file="dropzone.min.js" />     
+        <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+        <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
     </head>
     <body>
         <div class="row">
@@ -69,7 +69,7 @@
             });
             } // function uploadFile
         </script>
-    
+
     </body>
 
 </html>

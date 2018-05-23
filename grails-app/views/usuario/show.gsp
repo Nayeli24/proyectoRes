@@ -1,6 +1,7 @@
 
 <%@ page import="pruebaSeguridad.Usuario" %>
 <%@ page import="pruebaSeguridad.Incidente" %>
+<%@ page import="pruebaSeguridad.UsuarioRole" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -105,7 +106,7 @@
                                         <label class="control-label col-md-3"><i class="fa fa-twitter-square fa-fw"></i>Twitter :</label>
                                         <g:fieldValue bean="${usuarioInstance}" field="twitterName"/>
                                     </div>
-                                </g:if>
+                                    </g:if>
                             </div>
                         </div>
                     </div>
